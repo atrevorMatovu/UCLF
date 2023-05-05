@@ -1,0 +1,10 @@
+CRITICAL - 2023-03-06 08:11:03 --> Call to undefined function set_value()
+in APPPATH\Views\auth\registration.php on line 23.
+ 1 SYSTEMPATH\View\View.php(213): include()
+ 2 SYSTEMPATH\View\View.php(216): CodeIgniter\View\View->CodeIgniter\View\{closure}()
+ 3 SYSTEMPATH\Common.php(1177): CodeIgniter\View\View->render('auth/registration', [], true)
+ 4 APPPATH\Controllers\Reg.php(16): view('auth/registration')
+ 5 SYSTEMPATH\CodeIgniter.php(934): App\Controllers\Reg->register()
+ 6 SYSTEMPATH\CodeIgniter.php(499): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\Reg))
+ 7 SYSTEMPATH\CodeIgniter.php(368): CodeIgniter\CodeIgniter->handleRequest(null, Object(Config\Cache), false)
+ 8 FCPATH\index.php(67): CodeIgniter\CodeIgniter->run()
