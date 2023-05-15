@@ -42,6 +42,7 @@ $routes->get('dashboard/logout', 'Login::logout');
 $routes->add('signup', 'Reg::register');
 $routes->get('signup', 'Reg::register');
 $routes->post('signup','Reg::register');
+$routes->add('dashboard/signup', 'Reg::register');
 
 //ACTIVATION ROUTES
 //$routes->add('activate/index', 'Auth::index');
