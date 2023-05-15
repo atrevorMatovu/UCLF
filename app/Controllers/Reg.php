@@ -106,7 +106,7 @@ class Reg extends BaseController
                 ]; 
                 if($this->memberRegModel->createUser($userdata))
                 {
-                    $logo_path = 'public/assets/img/logo-rmbg.png';
+                    $logo_path = 'public/assets/img/logo49x52.png';
                     $logo_data = file_get_contents($logo_path);
 
                     // Encode the logo data as a base64 string
@@ -160,26 +160,26 @@ class Reg extends BaseController
                         
                         $status = $this->memberRegModel->updateStatus($userdata->user_id);
                         if ($status) {
-                            $this->session->setFlashdata('success', 'Account activated successfully, proceed to log in.', 3);
+                            $this->session->setFlashdata('success', 'Account activated successfully, proceed to log in.');
                             return redirect()->to('acti');
                         }
                     } 
                     else 
                     {
-                        $this->session->setFlashdata('success', 'Account was already successfully activated, please proceed to login.',3);
+                        $this->session->setFlashdata('success', 'Account was already successfully activated, please proceed to login.');
                         return redirect()->to('acti');
                     }
                 }
                     else
                     {
-                        $this->session->setFlashdata('error', 'Activation link is expired, you are advised to get another one.',3);
+                        $this->session->setFlashdata('error', 'Activation link is expired, you are advised to get another one.');
                         return redirect()->to('/'); 
                     }
                    
                 } 
                 else 
                 {
-                    $this->session->setFlashdata('error', 'Sorry! something with the activation link. Please contact support.', 3);
+                    $this->session->setFlashdata('error', 'Sorry! something with the activation link. Please contact support.');
                     return redirect()->to('/');
                 }
             }
