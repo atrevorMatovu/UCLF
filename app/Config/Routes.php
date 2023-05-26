@@ -36,7 +36,7 @@ $routes->add('verify/login', 'Login::login');
 $routes->post('login', 'Login::login');
 
 //logout
-$routes->get('dashboard/logout', 'Login::logout');
+
 
 //SIGNUP/REGISTER ROUTES
 $routes->add('signup', 'Reg::register');
@@ -58,7 +58,14 @@ $routes->get('pwdReset/(:any)', 'Password_reset::index/$1');
 
 //DASHBOARDS
 $routes->get('dashboard', 'AccDashboard::userdash');
-
+$routes->get('adminDash', 'AccDashboard::adminDash');
+$routes->get('dashboard/logout', 'AccDashboard::logout');
+$routes->get('userprofile', 'AccDashboard::profDash');
+$routes->group('', ['filter'=>'isLoggedIn'],function($routes)
+{
+    $routes->get('dashboard', 'AccDashboard::userdash');
+    $routes->get('dashboard/logout', 'AccDashboard::logout');
+});
 /*
  * --------------------------------------------------------------------
  * Additional Routing

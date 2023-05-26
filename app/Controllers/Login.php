@@ -69,7 +69,7 @@ class Login extends BaseController
                         {
                             $this->session->set('logged_user', $userdata['user_id']);
                             session()->setFlashdata('success', 'Welcome aboard the UCLF experience.');
-                            return redirect()->to('dashboard');
+                            return redirect()->to('userprofile');
                         }
                         else if($userdata['Account_status'] == 'Approved')
                         {
@@ -105,14 +105,7 @@ class Login extends BaseController
         return View("auth/login", $data);
     }
 
-    public function logout()
-    {
-        // Destroy session data to log out user
-        $session = session();
-        $this->session->setTempdata('success', 'You have logged out successfully.',3);
-        $session->destroy();
-        return view("auth/login");
-    }
+    
 
     public function forgotPwd(){
         $data = [];
@@ -129,9 +122,11 @@ class Login extends BaseController
 
             ];
             if($this->validate($rules)){
-                $Email = ['Email' => $this->request->getVar('email',FILTER_SANITIZE_EMAIL)];
+                $Email = [
+                    'Email' => $this->request->getVar('email',FILTER_SANITIZE_EMAIL)
+                ];
                 $userdata = $this->loginModel->verifyEmail($Email);
-                var_dump($Email);
+                //var_dump($Email);
                 if($userdata)
                 {
                     if($this->loginModel->updateAt($userdata->user_id))
