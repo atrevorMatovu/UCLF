@@ -29,6 +29,13 @@
 
   <!--  Main CSS File -->
   <link href="public/assets/css/style.css" rel="stylesheet">
+  <style>
+    .banner-bg {
+    background: linear-gradient(180deg, rgb(71 112 190), rgba(255, 255, 255, 0)), url(public/assets/img/hammer2.jpg) no-repeat center center;
+    min-height: 200px;
+    background-size: cover;
+    }
+  </style>
 
 
 </head>
@@ -36,6 +43,7 @@
 <body>
 
   <main>
+    <div class="banner-bg">
     <div class="container">
 
       <section class="section register min-vh-100 d-flex flex-column align-items-center justify-content-center py-4">
@@ -47,17 +55,17 @@
               <div class="card mb-8">
 
                 <div class="card-body">
-                    <div class="d-flex justify-content-center py-4">
-                      <a href="login" class="logo d-flex align-items-center w-auto">
+                    <div class="justify-content-center py-4">
+                      <a href="login" class="logo1 d-flex align-items-center w-auto">
                         <img src="public/assets/img/logo-rmbg.png" alt="">
                         
                       </a>
-                    </div><!-- End Logo -->
+                    <!-- End Logo -->
 
                   <div class="pt-0 pb-1">
                     <h5 class="card-title text-center pb-0 fs-4">Have you forgotten your password?</h5>
                     <p class="text-center small">Provide your email to proceed with password reset.</p>
-                  </div>
+                  
                   
                   <?php if(session()->getTempdata('success')): ?>
                   <div class='alert alert-success'><?= session()->getTempdata('success');?></div>
@@ -93,6 +101,8 @@
                       <button class="btn btn-primary w-100" type="submit">Proceed</button>
                     </div>
                   </form>
+                  </div>
+                    </div>
 
                 </div>
               </div>
@@ -107,6 +117,7 @@
 
       </section>
 
+    </div>
     </div>
   </main><!-- End #main -->
 

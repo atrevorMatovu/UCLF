@@ -32,35 +32,37 @@
   <!-- Main CSS File -->
   <link href="public/assets/css/style.css" rel="stylesheet">
 
+  <style>
+    .banner-bg {
+    background: linear-gradient(180deg, rgb(18 64 152), rgba(255, 255, 255, 0)), url(public/assets/img/hammer2.jpg) no-repeat center center;
+    min-height: 200px;
+    background-size: cover;
+    background-attachment: fixed;
+	}
+  </style>
 </head>
 
 <body>
 
   <main>
+	<div class="banner-bg">
     <div class="container">
 
       <section class="section register min-vh-100 d-flex flex-column align-items-center justify-content-center py-4">
         <div class="container">
           <div class="row justify-content-center">
             <div class="col-lg-7 col-md-7 d-flex flex-column align-items-center justify-content-center">
-
-              
-			  <!-- End Logo -->
-			  <!--div class="d-flex justify-content-center py-2">
-                  <h5 class="d-none d-lg-block">UCLF-MIS</h5>
-			  </div-->
-
-              <div class="card mb-3">
-			  <div class="card-body">
-				<div class="d-flex justify-content-center py-2">
-				<a href="login" class="logo d-flex align-items-center w-auto margin= 0 auto;" >
+			  <div class="card mb-3">
+			  	<div class="card-body">
+				<div class="justify-content-center py-2">
+				<a href="login" class="logo1 d-flex align-items-center w-auto margin= 0 auto;" >
 					<img src="public/assets/img/logo-rmbg.png" alt="">
 					</a>
-				</div>
+				
                   <div class="pt-0 pb-2">
                     <h5 class="card-title text-center pb-0 fs-4">Create an Account</h5>
                     <p class="text-center small">Sign up to join the UCLF Membership Fraternity</p>
-                  </div>
+                  
 
 				  	<?php if(session()->getTempdata('success')): ?>
                     <div class='alert alert-success'><?= session()->getTempdata('success');?></div>
@@ -74,7 +76,7 @@
                         <div class="alert alert-danger"><?= $validation->listErrors();?></div>
                     <?php endif;?>
 				
-					<!--?= form_open('register'); ?-->
+					
 					<form action="http://localhost/UCLF/signup" method="post" accept-charset="utf-8">
 					<div class="row g-3">
                     <div class="col-md-6">
@@ -209,6 +211,8 @@
 					</div>
 					</form>
 				  <!--?= form_close(); ?-->
+				  </div>
+				</div>
 
                 </div>
               </div>
@@ -216,10 +220,7 @@
               <div class="copyright">
                 &copy; Copyright <strong><span>UCLF-MIS 2023</span></strong>. All Rights Reserved
               </div>
-			  <!--div class="credits">
-                <strong>Designed by <a href="https://www.lwegatech.com/">DEVS</a></strong>
-              </div-->
-
+			  
             </div>
           </div>
         </div>
@@ -227,6 +228,7 @@
       </section>
 
     </div>
+	</div>
   </main><!-- End #main -->
 
   <a href="#" class="back-to-top d-flex align-items-center justify-content-center"><i class="bi bi-arrow-up-short"></i></a>

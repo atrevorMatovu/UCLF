@@ -56,6 +56,9 @@ $routes->add('forgotpwd', 'Login::forgotPwd');
 $routes->post('forgotpwd', 'Login::forgotPwd');
 $routes->get('pwdReset/(:any)', 'Password_reset::index/$1');
 
+//ONBOARD
+$routes->get('onboard', 'Reg::onboarding');
+
 //DASHBOARDS
 $routes->get('dashboard', 'AccDashboard::userdash');
 $routes->get('adminDash', 'AccDashboard::adminDash');

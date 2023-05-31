@@ -32,6 +32,21 @@ h5,
 h6 {
   font-family: "Nunito", sans-serif;
 }
+.h3, h3 {
+  font-size: 1.3rem;
+  color: #124098;
+}
+h3 {
+  font-size: 1.1rem;
+  color: #124098;
+}
+lable {
+  font-size: 1.1rem;
+  color: #124098;
+}
+.hidden-form {
+  display: none;
+}
 
 /*--------------------------------------------------------------
 # Main
@@ -219,6 +234,13 @@ h6 {
   border-radius: 5px;
   box-shadow: 0px 0 30px rgba(1, 41, 112, 0.1);
 }
+.card1 {
+  background-image: url('public/assets/img/card.jpg');
+  margin-bottom: 30px;
+  border: none;
+  border-radius: 5px;
+  box-shadow:  30px 30px 30px 30px rgba(1, 41, 112, 0.1);
+}
 
 .card-header,
 .card-footer {
@@ -235,6 +257,29 @@ h6 {
   color: #012970;
   font-family: "Poppins", sans-serif;
 }
+.footer {
+  position: relative;
+  clear: both;
+  color: #b0b0b0;
+  background: #113f97;
+}
+footer {
+  font-size: 14px;
+  transition: all 0.3s;
+  position: fixed;
+  bottom: 0;
+  right: 0;
+  left: 0;
+}
+
+
+.footer-copyright {
+  position: relative;
+  clear: both;
+  border-top: 1px solid #fff8f81c;
+  padding: 15px 0;
+  text-align: center;
+}
 
 .card-title span {
   color: #899bbd;
@@ -244,6 +289,7 @@ h6 {
 
 .card-body {
   padding: 0 20px 20px 20px;
+  display: flex;
 }
 
 .card-img-overlay {
@@ -355,6 +401,14 @@ h6 {
   line-height: 1;
   width: 50%;
     max-width: 300px;
+}
+.logo1 {
+  line-height: 1;
+  /* width: 100%!important; */
+  max-width: 300px;
+  /* text-align: center; */
+  /* margin-left: 110px; */
+  margin: 0 auto;
 }
 
 @media (min-width: 1200px) {
@@ -616,6 +670,16 @@ h6 {
 
 .header-nav .profile .dropdown-item:hover {
   background-color: #f6f9ff;
+}
+/**CHOSEN**/
+.custom-input {
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  padding: 8px;
+  font-size: 14px;
+  color: #333;
+  background-color: #f9f9f9;
+  /* Add any other desired custom styles */
 }
 
 /*--------------------------------------------------------------
@@ -1056,6 +1120,10 @@ h6 {
 
 .profile .profile-overview .card-title {
   color: #012970;
+}
+label {
+  display: inline-block;
+  color: black;
 }
 
 .profile .profile-overview .label {

@@ -204,4 +204,100 @@ class Reg extends BaseController
         }
 
       }
+
+      public function onboarding($id = null)
+      {
+        $data = [];
+        $data['validation'] = null;
+        $email = \Config\Services::email();
+        $this->session = \Config\Services::session();
+        
+        if($this->request->getPost())
+        {
+            $rules = [
+                'region' =>[
+                    'rules'=> 'required',
+                    'errors'=> [
+                        'required'=>'Region is required',
+                    ]
+                ],
+                'state' =>[
+                    'rules'=> 'required|alpha',
+                    'errors'=> [
+                        'required'=>'State name is required',
+                        'alpha'=>'Name can only be of alphabets'
+                    ]
+                ],
+                'city' =>[
+                    'rules'=> 'required|alpha',
+                    'errors'=> [
+                        'required'=>'City name is required',
+                        'alpha'=>'City name can only be of alphabets'
+                    ]
+                ],
+                'address' =>[
+                    'rules'=>'required|alpha',
+                    'errors'=> [
+                        'required'=>'Address is required',
+                        'alpha'=>'Address name can only be of alphabets'
+                    ],
+                ],
+                'practice_area' =>[
+                    'rules'=>'required',
+                    'errors'=> [
+                        'required'=>'Choose your practice areas.',
+                    ],
+                ],
+                'company' =>[
+                    'rules'=>'required|alpha',
+                    'errors'=> [
+                        'required'=>'Company name is required.',
+                        'alpha'   => 'Company name can only be of alphabets'
+                    ],
+                ],
+                'position' =>[
+                    'rules'=>'required|alpha_space',
+                    'errors'=> [
+                        'required'=>'Company name is required.',
+                        'alpha_space'   => 'Company name can only be of alphabets'
+                    ],
+                ],
+                'photo'   =>[
+                    'rules'=>'uploaded[photo]|max_dims[photo,500,500]|is_image[photo]',
+                    'errors'=> [
+                        'uploaded[photo]'=>'Photo/Logo is required',
+                        'max_dims[photo,500,500]'=>'Photo/Logo size is exceeding limit',
+                        'is_image[photo]'=>'File uploaded is not of type photo' 
+                    ],
+                ]
+            ];
+            if($this->validate($rules))
+            {
+                $user_id = $this->memberRegModel->getUserID($id);
+                $status = $user_id['Account_status'];
+                //$membership = ;
+                $userdata = [
+                    'Region' => $this->request->getVar('region'),
+                    'State' => $this->request->getVar('state'),
+                    'City' => $this->request->getVar('city'),
+                    'Address' => $this->request->getVar('address'),
+                    'Company' => $this->request->getVar('company'),
+                    'Position' => $this->request->getVar('position'),
+                    'Practice_area' => $this->request->getVar('practice_area'),
+                    'Photo' => $this->request->getVar('photo'),
+                    //'Membership_type'=> $membership,
+                    'Account_status' => $status,
+                    'user_id' => $user_id,
+                    'activation_date' => date("Y-m-d h:i:s")
+                ];
+                //if($this->membershipModel->createUser($userdata)){} 
+            }
+            else
+            {
+                $data['validation'] = $this->validator;
+            }
+        }
+
+        return view('auth/onboarding', $data);
+      }
 }

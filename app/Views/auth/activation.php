@@ -4,7 +4,7 @@
 	<title>UCLF Activation</title>
     <meta charset="utf-8">
     <meta content="width=device-width, initial-scale=1.0" name="viewport">
-    <meta http-equiv="refresh" content="45;url='login'">
+    <meta http-equiv="refresh" content="600;url='login'">
 	<!-- The above meta tag sets a 30-second time limit before redirecting the user to the login page -->
 
     <meta content="" name="description">
@@ -38,11 +38,17 @@
       background-image: url('public/assets/img/AVA2.jpg');
       /* additional styles */
     }
+    .banner-bg {
+    background: linear-gradient(90deg, rgb(71 112 190), rgba(255, 255, 255, 0)), url(public/assets/img/UCLF-Dinner.jpg) no-repeat center center;
+    min-height: 200px;
+    background-size: cover;
+    }
     </style>
 
 </head>
 <body>
     <main>
+        <div class="banner-bg">
         <div class="container">
             <section class="section register min-vh-100 d-flex flex-column align-items-center justify-content-center py-8">
                 <div class="container">
@@ -98,6 +104,7 @@
                     </div>
                 </div>
             </section>
+        </div>
         </div>
     </main>
 </body>

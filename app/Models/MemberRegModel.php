@@ -28,8 +28,6 @@ class MemberRegModel extends Model
         $builder = $memberRegModel->builder();
         $builder = $this->db->table('members');
         $res = $builder->insert($data);
-        // $result = $builder->get()->getRow();
-        // return $result;
        if($this->db->affectedRows()==1)
         {
             return true;
@@ -55,6 +53,25 @@ class MemberRegModel extends Model
         $result = $builder->get()->getRow();
         return $result; 
       }
+
+    public function getUserID($user_id)
+      {
+        $builder = $this->db->table('members');
+        $builder->select('*');
+        $builder->where('user_id',$user_id,);
+        $result = $builder->get()->getRow();
+        return $result; 
+      }
+
+    public function getStatus($user_id)
+      {
+        $builder = $this->db->table('members');
+        $builder->select('*');
+        $builder->where('user_id',$user_id,);
+        $result = $builder->get()->getRow();
+        return $result; 
+      }
+
 
     public function getAll()
     {
