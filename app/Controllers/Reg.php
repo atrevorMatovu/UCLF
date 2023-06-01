@@ -101,7 +101,7 @@ class Reg extends BaseController
                     'Password' => password_hash($this->request->getVar('password'), PASSWORD_DEFAULT),
                     'Membership_type'=> $this->request->getVar('membership-type'),
                     'Tel' => $this->request->getVar('telephone'),
-                    'Address' => $this->request->getVar('address'),
+                    'Gender' => $this->request->getVar('gender'),
                     'Account_status' => $status,
                     'user_id' => $user_id,
                     'activation_date' => date("Y-m-d h:i:s")

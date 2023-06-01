@@ -170,17 +170,21 @@
 
 					
 						<div class="col-md-6">
-							<label for="yourAddress" class="form-label">Address:</label>
+							<label for="gender" class='form-group'>Gender:</label>
 							<div class="input-group has-validation">
 								<span class="input-group-text" id="inputGroupPrepend">
-									<div class="icon">
-										<i class="bi bi-geo-alt-fill"></i>
-									</div>
+										<div class="icon">
+											<i class="bi bi-people-fill"></i>
+										</div>
 								</span>
-							<input type="text" name="address" class="form-control" id="yourAddress" placeholder="Place of residence" value='<?= set_value('address')?>' required>
-							<div class="invalid-feedback">Address is required!</div>
+								<select id="gender" name="gender" class="form-select" placeholder="Select your gender:" value='<?= set_value('gender')?>' required>
+								<option value=""></option>
+								<option value="male">Male</option>
+								<option value="female">Female</option>
+								</select>
+								<div class="invalid-feedback">Address is required!</div>
 							</div>
-						</div>
+						</div>										
 						
 						<div class="col-md-6">
 							<label for="membType" class="form-label">Membership type:</label>
@@ -458,3 +462,13 @@
 	</script>
 </body>
 </html-->
+<!--label for="yourAddress" class="form-label">Address:</label>
+							<div class="input-group has-validation">
+								<span class="input-group-text" id="inputGroupPrepend">
+									<div class="icon">
+										<i class="bi bi-geo-alt-fill"></i>
+									</div>
+								</span>
+							<input type="text" name="address" class="form-control" id="yourAddress" placeholder="Place of residence" value='<?= set_value('address')?>' required>
+							<div class="invalid-feedback">Address is required!</div>
+							</div-->

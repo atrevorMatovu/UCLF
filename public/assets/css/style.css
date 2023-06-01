@@ -44,6 +44,14 @@ lable {
   font-size: 1.1rem;
   color: #124098;
 }
+.desc {
+  font-size: 1rem!important;
+  color:black;
+}
+.examples {
+  font-size: 0.8rem!important;
+  color:rgb(9, 34, 119);
+}
 .hidden-form {
   display: none;
 }

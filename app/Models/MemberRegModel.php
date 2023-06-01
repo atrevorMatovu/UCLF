@@ -14,7 +14,7 @@ class MemberRegModel extends Model
     protected $returnType     = 'array';
     protected $useSoftDeletes = true;
 
-    protected $allowedFields = ['Firstname', 'Lastname', 'Email', 'Password', 'Membership_type', 'Account_status', 'user_id', 'Address', 'Tel', 'activation_date'];
+    protected $allowedFields = ['Firstname', 'Lastname', 'Email', 'Password', 'Membership_type', 'Account_status', 'user_id', 'Gender', 'Tel', 'activation_date'];
 
     protected $useTimestamps = false;
     protected $dateFormat    = 'datetime';

@@ -37,15 +37,22 @@
 
   <!-- Include Chosen JavaScript -->
   <script src="https://cdnjs.cloudflare.com/ajax/libs/chosen/1.8.7/chosen.jquery.min.js"></script>
-
+  <style>
+    .banner-bg {
+    background: linear-gradient(180deg, rgb(18 64 152), rgba(255, 255, 255, 0)), url(public/assets/img/hammer2.jpg) no-repeat center center;
+    min-height: 200px;
+    background-size: cover;
+    background-attachment: fixed;
+	}
+  </style>
 
 </head>
 
 <body>
 
   <main>
-    
-
+  <div class="">
+  <div class="container">
       <section class="section register  d-flex flex-column align-items-center justify-content-center py-3">
         <div class="container">
           <div class="row justify-content-center">
@@ -55,24 +62,33 @@
               <div class="mb-8">
 
                 <div class="card-body">
-                <div class="col-lg-5 col-md-2 d-flex flex-column justify-content-center py-3 pt-0 pb-1">
-                  <div class="card1 col-lg-9 d-flex flex-column align-items-center justify-content-center py-3 pt-0 pb-1">
+                <div class="col-lg-5 col-md-2  flex-column justify-content-center py-3 pt-0 pb-1">
+                  <div class="card1 col-lg-9  flex-column align-items-center justify-content-center py-3 pt-0 pb-1">
                   <a href="#" class="logo d-flex align-items-center w-auto">
                     <img src="public/assets/img/logo-rmbg.png" alt="">
                  </a>
-                 <!--div class="col-lg-8 mx-3 pt-2">
-                  <h3 class="card-title pb-0 fs-3 hidden">Practice Area:</h3>
-                  <p><strong>
-                    shbcerbsnstvntzscmtkasbuttnasntvts.
-                    cutvstnctectkemteacyitbwtywbteiac
-                    atycnatkcbtcawbt
-                    xrbjcbtt</strong>
+                 <div class="col-lg-8 mx-3 pt-2">
+                  <h3 class="card-title pb-0 fs-3 hidden">About UCLF.</h3>
+                  <p class="desc"><i>
+                  Prestigious lawyer fraternity group that unites 
+                  legal professionals dedicated to practicing law
+                  with Christian values.</i>
                   </p>
-                 </div-->
+                  <p class="desc pt-1 pb-0.2"><i>
+                  By joining the Uganda Christian Lawyer's Fraternity,
+                  legal professionals gain access to a supportive 
+                  community that fosters personal & professional growth.</i>
+                  </p>
+                  <h3 class="card-title pb-0.2 pt-0.2 fs-3 hidden">Practice Area.</h3>
+                  <p class="desc"><i>
+                  Various fields of law that legal professionals specialize in.</i>
+                  </p>
+                  <p class="examples ">Examples: Criminal law, Family law.</p>
+                 </div>
                 </div>
                 </div>
 
-                  <div class="card1 col-lg-8 col-md-6 d-flex flex-column pt-0 pb-1">
+                  <div class="card1 col-lg-7 col-md-6 d-flex flex-column pt-0 pb-1">
                     <div>
                         <h5 class="card-title text-center pb-0 fs-4">Setup Your Account</h5>
                         <p class="text-center small">Fill in the provided fields to get started.</p>
@@ -93,7 +109,7 @@
                     <?php if(isset($validation)):?>
                         <div class="alert alert-danger"><?= $validation->listErrors();?></div>
                     <?php endif;?> 
-                    
+
                     <p>Please choose your desired membership type:</p>
                     <div>
                     <label>
@@ -142,7 +158,7 @@
                                   <label for="floatingState">State/District:</label>
                                   </div>
                                   
-                                  <div class="col-md-3.5 pb-2 mx-2 form-floating">
+                                  <div class="col-md-3.5 pt-1 pb-1 mx-2 form-floating">
                                   <input type="text" name="city" class="form-control" id="floatingCity" placeholder="City">
                                   <label for="floatingCity">City:</label>
                                   </div>
@@ -151,17 +167,17 @@
                                 <div class="col-12 mx-3 d-flex">
                                   <h3>Address:<h3>
                                 </div>
-                                <div class="col-md-6 col-12 mx-2 pb-2 form-floating">
+                                <div class="col-md-6 col-12 mx-2 pb-1 form-floating">
                                   <input type="text" name="address" class="form-control" id="floatingResd" placeholder="Residence">
                                   <label for="floatingResd">Place of residence:</label>
                                 </div>
                                 <div class="col-12 mx-3 d-flex">
                                   <h3>Practice Area:<h3>
                                 </div>
-                                <div class=" col-12 mx-2 col-md-11 pb-2 form-floating ">
+                                <div class=" col-12 mx-2 col-md-11 pb-1 form-floating ">
                                   <!--label for="Practice_area">Practice Area:</>
                                   <label for="options">(Select all that apply)</label-->
-                                  <select class="chosen-select custom-input form-control" name="practice_area" multiple style="border: 1px solid #ccc; border-radius: 5px; padding: 8px; font-size: 14px; color: #333; background-color: #f9f9f9;">
+                                  <select class="chosen-select custom-input form-select" name="practice_area" multiple style="border: 1px solid #ccc; border-radius: 5px; padding: 8px; font-size: 14px; color: #333; background-color: #f9f9f9;">
                                     <option value="Aviation Law">Aviation Law</option>
                                     <option value="Construction Law">Construction Law</option>
                                     <option value="Corporate Law">Corporate Law</option>					
@@ -198,27 +214,27 @@
                                   <h3>Company:<h3>
                                 </div>
                                 <div class="col-12 d-flex">
-                                  <div class="col-md-5 col-12 mx-2 pb-2 form-floating">
+                                  <div class="col-md-5 col-12 mx-2 pb-1 form-floating">
                                     <input type="text" class="form-control" name="company" id="floatingnm" placeholder="Name">
                                     <label for="floatingnm">Company/Firm Name:</label>
                                   </div>
-                                  <div class="col-md-5 col-12 mx-5 pb-2 form-floating">
+                                  <div class="col-md-5 col-12 mx-5 pb-1 form-floating">
                                     <input type="text" name="position" class="form-control" id="floatingpos" placeholder="Position">
                                     <label for="floatingpod">Position:</label>
                                   </div>
                                 </div>
 
-                                <div class="col-12 d-flex pt-2">
-                                <div class="col-md-6 col-12 mx-2 pb-3">
-                                <lable for="photo">Photo/Company Logo(200px x 200px):</lable>
+                                <div class="col-12 d-flex pt-1">
+                                <div class="col-md-6 col-12 mx-2 pb-0.2">
+                                <lable for="photo">Photo/Company Logo<p class="examples">(200px x 200px):</p></lable>
                                 </div>
-                                <div class="col-md-4 col-12 pb-3 form-floating">                                  
+                                <div class="col-md-4 col-12 pb-0.2 form-floating">                                  
                                   <input type="file" name="photo" accept="image/*" required>
                                   <!--input type="submit" value="Upload"-->
                                 </div>
                                 </div>
 
-                                <div class="col-12">
+                                <div class="col-12 pb-0">
                                   <input type="submit" class="btn btn-primary w-100" value = "Continue" >
                                 </div>
 
@@ -226,19 +242,13 @@
                         </div>
                     </form>
                   </div>
-
+                <div class="copyright justify-content-center pb-1 text-center">
+                © Copyright <strong><span>UCLF-MIS 2023</span></strong>. All Rights Reserved
+                </div>
       </section>
-      <footer>   
-        <div class="footer footer-copyright">
-            <div class="container">
-              <div class="row">
-              <div class="col-md-12 justify-content-center">
-                &copy; Copyright <strong><span>UCLF-MIS 2023</span></strong>. All Rights Reserved
-              </div>
-              </div>
-            </div>
-        </div>
-    </footer>
+  </div>
+  </div>
+        
    
   </main><!-- End #main -->
   <!-- Vendor JS Files -->
@@ -257,3 +267,14 @@
 </body>
 
 </html>
+<!--footer>   
+        <div class="footer footer-copyright">
+            <div class="container">
+              <div class="row">
+              <div class="col-md-12 justify-content-center">
+                &copy; Copyright <strong><span>UCLF-MIS 2023</span></strong>. All Rights Reserved
+              </div>
+              </div>
+            </div>
+        </div>
+    </footer-->
