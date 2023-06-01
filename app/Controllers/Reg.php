@@ -4,11 +4,13 @@ namespace App\Controllers;
 
 use App\Controllers\BaseController;
 use App\Models\MemberRegModel;
+use App\Models\OnboardModel;
 use CodeIgniter\I18n\Time;
 
 class Reg extends BaseController
 {
     public $memberRegModel;
+    public $onboardModel;
     public $session;
     public $email;
     public function __construct()
@@ -273,9 +275,10 @@ class Reg extends BaseController
             ];
             if($this->validate($rules))
             {
-                $user_id = $this->memberRegModel->getUserID($id);
-                $status = $user_id['Account_status'];
-                //$membership = ;
+                $user = $this->memberRegModel->getUserID($id);
+                $user_id = $user['user_id'];
+                $status = $user['Account_status'];
+                $membership = $user['Membership_type'];
                 $userdata = [
                     'Region' => $this->request->getVar('region'),
                     'State' => $this->request->getVar('state'),
@@ -285,12 +288,21 @@ class Reg extends BaseController
                     'Position' => $this->request->getVar('position'),
                     'Practice_area' => $this->request->getVar('practice_area'),
                     'Photo' => $this->request->getVar('photo'),
-                    //'Membership_type'=> $membership,
+                    'Membership_type'=> $membership,
                     'Account_status' => $status,
                     'user_id' => $user_id,
                     'activation_date' => date("Y-m-d h:i:s")
                 ];
-                //if($this->membershipModel->createUser($userdata)){} 
+                if($this->onboardModel->createUser($userdata))
+                {
+                    $this->session->setFlashdata('success', 'Account setup successful, proceed to log in.');
+                    return redirect()->to('/');
+                } 
+                else
+                {
+                    $this->session->setFlashdata('error', 'Account setup failed, contact admin!.');
+                    return redirect()->to('onboard'); 
+                }
             }
             else
             {

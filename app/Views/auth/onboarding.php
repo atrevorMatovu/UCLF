@@ -55,10 +55,21 @@
               <div class="mb-8">
 
                 <div class="card-body">
-                <div class="col-lg-4 col-md-6 d-flex flex-column align-items-center justify-content-center py-3">
+                <div class="col-lg-5 col-md-2 d-flex flex-column justify-content-center py-3 pt-0 pb-1">
+                  <div class="card1 col-lg-9 d-flex flex-column align-items-center justify-content-center py-3 pt-0 pb-1">
                   <a href="#" class="logo d-flex align-items-center w-auto">
                     <img src="public/assets/img/logo-rmbg.png" alt="">
                  </a>
+                 <!--div class="col-lg-8 mx-3 pt-2">
+                  <h3 class="card-title pb-0 fs-3 hidden">Practice Area:</h3>
+                  <p><strong>
+                    shbcerbsnstvntzscmtkasbuttnasntvts.
+                    cutvstnctectkemteacyitbwtywbteiac
+                    atycnatkcbtcawbt
+                    xrbjcbtt</strong>
+                  </p>
+                 </div-->
+                </div>
                 </div>
 
                   <div class="card1 col-lg-8 col-md-6 d-flex flex-column pt-0 pb-1">
@@ -67,6 +78,22 @@
                         <p class="text-center small">Fill in the provided fields to get started.</p>
                     </div>
                     <div class="text-center"><h3 class=" pb-0 fs-4">Membership Form.</h3>
+
+                    <?php if(session()->getFlashdata('success')): ?>
+                    <div class='alert alert-success'><?= session()->getFlashdata('success');?></div>
+                    <?php endif; ?>
+
+                    <?php if(session()->getFlashdata('error')): ?>
+                    <div class='alert alert-danger'><?= session()->getFlashdata('error');?></div>
+                    <?php endif; ?>
+                    
+                    <?php if(session()->getTempdata('error')): ?>
+                    <div class='alert alert-danger'><?= session()->getTempdata('error');?></div>
+                    <?php endif; ?> 
+                    <?php if(isset($validation)):?>
+                        <div class="alert alert-danger"><?= $validation->listErrors();?></div>
+                    <?php endif;?> 
+                    
                     <p>Please choose your desired membership type:</p>
                     <div>
                     <label>

@@ -252,10 +252,14 @@ lable {
 
 .card-title {
   padding: 20px 0 15px 0;
-  font-size: 18px;
+  font-size: 15px;
   font-weight: 500;
   color: #012970;
   font-family: "Poppins", sans-serif;
+}
+.fs-3 {
+  font-size: 1.3rem!important;
+  font-weight: 300;
 }
 .footer {
   position: relative;
