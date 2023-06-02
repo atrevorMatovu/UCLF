@@ -1,0 +1,129 @@
+INFO - 2023-06-02 09:45:10 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+INFO - 2023-06-02 09:45:40 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+CRITICAL - 2023-06-02 09:45:40 --> Undefined variable $data
+in APPPATH\Views\dashboard\userDashboard.php on line 400.
+ 1 APPPATH\Views\dashboard\userDashboard.php(400): CodeIgniter\Debug\Exceptions->errorHandler(2, 'Undefined variable $data', 'APPPATH\\Views\\dashboard\\userDashboard.php', 400)
+ 2 SYSTEMPATH\View\View.php(213): include('APPPATH\\Views\\dashboard\\userDashboard.php')
+ 3 SYSTEMPATH\View\View.php(216): CodeIgniter\View\View->CodeIgniter\View\{closure}()
+ 4 SYSTEMPATH\Common.php(1177): CodeIgniter\View\View->render('dashboard/userDashboard', [], true)
+ 5 APPPATH\Controllers\AccDashboard.php(21): view('dashboard/userDashboard', [...])
+ 6 SYSTEMPATH\CodeIgniter.php(934): App\Controllers\AccDashboard->userdash()
+ 7 SYSTEMPATH\CodeIgniter.php(499): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\AccDashboard))
+ 8 SYSTEMPATH\CodeIgniter.php(368): CodeIgniter\CodeIgniter->handleRequest(null, Object(Config\Cache), false)
+ 9 FCPATH\index.php(67): CodeIgniter\CodeIgniter->run()
+INFO - 2023-06-02 09:46:26 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+INFO - 2023-06-02 10:08:11 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+INFO - 2023-06-02 10:08:32 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+INFO - 2023-06-02 10:32:22 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+INFO - 2023-06-02 10:32:22 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+INFO - 2023-06-02 10:32:37 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+INFO - 2023-06-02 10:33:16 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+CRITICAL - 2023-06-02 10:33:17 --> Undefined variable $data
+in APPPATH\Views\dashboard\userDashboard.php on line 400.
+ 1 APPPATH\Views\dashboard\userDashboard.php(400): CodeIgniter\Debug\Exceptions->errorHandler(2, 'Undefined variable $data', 'APPPATH\\Views\\dashboard\\userDashboard.php', 400)
+ 2 SYSTEMPATH\View\View.php(213): include('APPPATH\\Views\\dashboard\\userDashboard.php')
+ 3 SYSTEMPATH\View\View.php(216): CodeIgniter\View\View->CodeIgniter\View\{closure}()
+ 4 SYSTEMPATH\Common.php(1177): CodeIgniter\View\View->render('dashboard/userDashboard', [], true)
+ 5 APPPATH\Controllers\AccDashboard.php(25): view('dashboard/userDashboard', [...])
+ 6 SYSTEMPATH\CodeIgniter.php(934): App\Controllers\AccDashboard->userdash()
+ 7 SYSTEMPATH\CodeIgniter.php(499): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\AccDashboard))
+ 8 SYSTEMPATH\CodeIgniter.php(368): CodeIgniter\CodeIgniter->handleRequest(null, Object(Config\Cache), false)
+ 9 FCPATH\index.php(67): CodeIgniter\CodeIgniter->run()
+INFO - 2023-06-02 10:33:59 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+CRITICAL - 2023-06-02 10:33:59 --> Undefined variable $accountStatus
+in APPPATH\Views\dashboard\userDashboard.php on line 400.
+ 1 APPPATH\Views\dashboard\userDashboard.php(400): CodeIgniter\Debug\Exceptions->errorHandler(2, 'Undefined variable $accountStatus', 'APPPATH\\Views\\dashboard\\userDashboard.php', 400)
+ 2 SYSTEMPATH\View\View.php(213): include('APPPATH\\Views\\dashboard\\userDashboard.php')
+ 3 SYSTEMPATH\View\View.php(216): CodeIgniter\View\View->CodeIgniter\View\{closure}()
+ 4 SYSTEMPATH\Common.php(1177): CodeIgniter\View\View->render('dashboard/userDashboard', [], true)
+ 5 APPPATH\Controllers\AccDashboard.php(25): view('dashboard/userDashboard', [...])
+ 6 SYSTEMPATH\CodeIgniter.php(934): App\Controllers\AccDashboard->userdash()
+ 7 SYSTEMPATH\CodeIgniter.php(499): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\AccDashboard))
+ 8 SYSTEMPATH\CodeIgniter.php(368): CodeIgniter\CodeIgniter->handleRequest(null, Object(Config\Cache), false)
+ 9 FCPATH\index.php(67): CodeIgniter\CodeIgniter->run()
+INFO - 2023-06-02 10:34:21 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+CRITICAL - 2023-06-02 10:34:21 --> Undefined variable $accountStatus
+in APPPATH\Views\dashboard\userDashboard.php on line 400.
+ 1 APPPATH\Views\dashboard\userDashboard.php(400): CodeIgniter\Debug\Exceptions->errorHandler(2, 'Undefined variable $accountStatus', 'APPPATH\\Views\\dashboard\\userDashboard.php', 400)
+ 2 SYSTEMPATH\View\View.php(213): include('APPPATH\\Views\\dashboard\\userDashboard.php')
+ 3 SYSTEMPATH\View\View.php(216): CodeIgniter\View\View->CodeIgniter\View\{closure}()
+ 4 SYSTEMPATH\Common.php(1177): CodeIgniter\View\View->render('dashboard/userDashboard', [], true)
+ 5 APPPATH\Controllers\AccDashboard.php(25): view('dashboard/userDashboard', [...])
+ 6 SYSTEMPATH\CodeIgniter.php(934): App\Controllers\AccDashboard->userdash()
+ 7 SYSTEMPATH\CodeIgniter.php(499): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\AccDashboard))
+ 8 SYSTEMPATH\CodeIgniter.php(368): CodeIgniter\CodeIgniter->handleRequest(null, Object(Config\Cache), false)
+ 9 FCPATH\index.php(67): CodeIgniter\CodeIgniter->run()
+INFO - 2023-06-02 10:34:23 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+CRITICAL - 2023-06-02 10:34:23 --> Undefined variable $accountStatus
+in APPPATH\Views\dashboard\userDashboard.php on line 400.
+ 1 APPPATH\Views\dashboard\userDashboard.php(400): CodeIgniter\Debug\Exceptions->errorHandler(2, 'Undefined variable $accountStatus', 'APPPATH\\Views\\dashboard\\userDashboard.php', 400)
+ 2 SYSTEMPATH\View\View.php(213): include('APPPATH\\Views\\dashboard\\userDashboard.php')
+ 3 SYSTEMPATH\View\View.php(216): CodeIgniter\View\View->CodeIgniter\View\{closure}()
+ 4 SYSTEMPATH\Common.php(1177): CodeIgniter\View\View->render('dashboard/userDashboard', [], true)
+ 5 APPPATH\Controllers\AccDashboard.php(25): view('dashboard/userDashboard', [...])
+ 6 SYSTEMPATH\CodeIgniter.php(934): App\Controllers\AccDashboard->userdash()
+ 7 SYSTEMPATH\CodeIgniter.php(499): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\AccDashboard))
+ 8 SYSTEMPATH\CodeIgniter.php(368): CodeIgniter\CodeIgniter->handleRequest(null, Object(Config\Cache), false)
+ 9 FCPATH\index.php(67): CodeIgniter\CodeIgniter->run()
+INFO - 2023-06-02 10:34:25 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+CRITICAL - 2023-06-02 10:34:25 --> Undefined variable $accountStatus
+in APPPATH\Views\dashboard\userDashboard.php on line 400.
+ 1 APPPATH\Views\dashboard\userDashboard.php(400): CodeIgniter\Debug\Exceptions->errorHandler(2, 'Undefined variable $accountStatus', 'APPPATH\\Views\\dashboard\\userDashboard.php', 400)
+ 2 SYSTEMPATH\View\View.php(213): include('APPPATH\\Views\\dashboard\\userDashboard.php')
+ 3 SYSTEMPATH\View\View.php(216): CodeIgniter\View\View->CodeIgniter\View\{closure}()
+ 4 SYSTEMPATH\Common.php(1177): CodeIgniter\View\View->render('dashboard/userDashboard', [], true)
+ 5 APPPATH\Controllers\AccDashboard.php(25): view('dashboard/userDashboard', [...])
+ 6 SYSTEMPATH\CodeIgniter.php(934): App\Controllers\AccDashboard->userdash()
+ 7 SYSTEMPATH\CodeIgniter.php(499): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\AccDashboard))
+ 8 SYSTEMPATH\CodeIgniter.php(368): CodeIgniter\CodeIgniter->handleRequest(null, Object(Config\Cache), false)
+ 9 FCPATH\index.php(67): CodeIgniter\CodeIgniter->run()
+INFO - 2023-06-02 10:34:36 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+CRITICAL - 2023-06-02 10:34:36 --> Undefined array key "status"
+in APPPATH\Views\dashboard\userDashboard.php on line 401.
+ 1 APPPATH\Views\dashboard\userDashboard.php(401): CodeIgniter\Debug\Exceptions->errorHandler(2, 'Undefined array key "status"', 'APPPATH\\Views\\dashboard\\userDashboard.php', 401)
+ 2 SYSTEMPATH\View\View.php(213): include('APPPATH\\Views\\dashboard\\userDashboard.php')
+ 3 SYSTEMPATH\View\View.php(216): CodeIgniter\View\View->CodeIgniter\View\{closure}()
+ 4 SYSTEMPATH\Common.php(1177): CodeIgniter\View\View->render('dashboard/userDashboard', [], true)
+ 5 APPPATH\Controllers\AccDashboard.php(25): view('dashboard/userDashboard', [...])
+ 6 SYSTEMPATH\CodeIgniter.php(934): App\Controllers\AccDashboard->userdash()
+ 7 SYSTEMPATH\CodeIgniter.php(499): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\AccDashboard))
+ 8 SYSTEMPATH\CodeIgniter.php(368): CodeIgniter\CodeIgniter->handleRequest(null, Object(Config\Cache), false)
+ 9 FCPATH\index.php(67): CodeIgniter\CodeIgniter->run()
+INFO - 2023-06-02 10:34:40 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+CRITICAL - 2023-06-02 10:34:40 --> Undefined array key "status"
+in APPPATH\Views\dashboard\userDashboard.php on line 401.
+ 1 APPPATH\Views\dashboard\userDashboard.php(401): CodeIgniter\Debug\Exceptions->errorHandler(2, 'Undefined array key "status"', 'APPPATH\\Views\\dashboard\\userDashboard.php', 401)
+ 2 SYSTEMPATH\View\View.php(213): include('APPPATH\\Views\\dashboard\\userDashboard.php')
+ 3 SYSTEMPATH\View\View.php(216): CodeIgniter\View\View->CodeIgniter\View\{closure}()
+ 4 SYSTEMPATH\Common.php(1177): CodeIgniter\View\View->render('dashboard/userDashboard', [], true)
+ 5 APPPATH\Controllers\AccDashboard.php(25): view('dashboard/userDashboard', [...])
+ 6 SYSTEMPATH\CodeIgniter.php(934): App\Controllers\AccDashboard->userdash()
+ 7 SYSTEMPATH\CodeIgniter.php(499): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\AccDashboard))
+ 8 SYSTEMPATH\CodeIgniter.php(368): CodeIgniter\CodeIgniter->handleRequest(null, Object(Config\Cache), false)
+ 9 FCPATH\index.php(67): CodeIgniter\CodeIgniter->run()
+INFO - 2023-06-02 10:35:35 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+INFO - 2023-06-02 10:36:49 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+INFO - 2023-06-02 10:38:30 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+INFO - 2023-06-02 10:51:13 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+INFO - 2023-06-02 10:52:38 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+INFO - 2023-06-02 11:02:13 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+INFO - 2023-06-02 11:03:12 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+INFO - 2023-06-02 11:08:59 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+INFO - 2023-06-02 11:43:43 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+INFO - 2023-06-02 12:05:13 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+CRITICAL - 2023-06-02 12:05:14 --> Call to undefined function App\Controllers\vardump()
+in APPPATH\Controllers\AccDashboard.php on line 18.
+ 1 SYSTEMPATH\CodeIgniter.php(934): App\Controllers\AccDashboard->userdash()
+ 2 SYSTEMPATH\CodeIgniter.php(499): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\AccDashboard))
+ 3 SYSTEMPATH\CodeIgniter.php(368): CodeIgniter\CodeIgniter->handleRequest(null, Object(Config\Cache), false)
+ 4 FCPATH\index.php(67): CodeIgniter\CodeIgniter->run()
+INFO - 2023-06-02 12:06:06 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+INFO - 2023-06-02 12:06:20 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+INFO - 2023-06-02 12:17:50 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+INFO - 2023-06-02 12:18:26 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+INFO - 2023-06-02 12:18:28 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+INFO - 2023-06-02 12:18:35 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+INFO - 2023-06-02 12:19:55 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+INFO - 2023-06-02 12:19:58 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+INFO - 2023-06-02 12:19:59 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+INFO - 2023-06-02 12:20:02 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.

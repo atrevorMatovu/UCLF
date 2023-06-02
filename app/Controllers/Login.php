@@ -66,7 +66,8 @@ class Login extends BaseController
                     if(password_verify($Password, $userdata['Password']))
                     {
                         if($userdata['Account_status'] == 'Pending')
-                        {
+                        {/**while(['Account_status'] == 'Pending')
+                            redirect to onboard page */
                             $this->session->set('logged_user', $userdata['user_id']);
                             session()->setFlashdata('success', 'Welcome aboard the UCLF experience.');
                             return redirect()->to('userprofile');

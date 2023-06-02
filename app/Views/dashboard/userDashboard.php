@@ -130,34 +130,20 @@
 
           <ul class="dropdown-menu dropdown-menu-end dropdown-menu-arrow messages">
             <li class="dropdown-header">
-              You have 3 new messages
+              You have new messages
               <a href="#"><span class="badge rounded-pill bg-primary p-2 ms-2">View all</span></a>
             </li>
             <li>
               <hr class="dropdown-divider">
             </li>
 
-            <li class="message-item">
-              <a href="#">
-                <img src="public/assets/img/messages-1.jpg" alt="" class="rounded-circle">
-                <div>
-                  <h4>Maria Hudson</h4>
-                  <p>Velit asperiores et ducimus soluta repudiandae labore officia est ut...</p>
-                  <p>4 hrs. ago</p>
-                </div>
-              </a>
-            </li>
-            <li>
-              <hr class="dropdown-divider">
-            </li>
-
-            <li class="message-item">
+           <li class="message-item">
               <a href="#">
                 <img src="public/assets/img/messages-2.jpg" alt="" class="rounded-circle">
                 <div>
-                  <h4>Anna Nelson</h4>
-                  <p>Velit asperiores et ducimus soluta repudiandae labore officia est ut...</p>
-                  <p>6 hrs. ago</p>
+                  <h4>#</h4>
+                  <p></p>
+                  <p></p>
                 </div>
               </a>
             </li>
@@ -169,9 +155,8 @@
               <a href="#">
                 <img src="public/assets/img/messages-3.jpg" alt="" class="rounded-circle">
                 <div>
-                  <h4>David Muldon</h4>
-                  <p>Velit asperiores et ducimus soluta repudiandae labore officia est ut...</p>
-                  <p>8 hrs. ago</p>
+                  <h4>#</h4>
+                  <p></p>
                 </div>
               </a>
             </li>
@@ -221,7 +206,7 @@
             <li>
               <a class="dropdown-item d-flex align-items-center" href="userprofile">
                 <i class="bi bi-gear"></i>
-                <span>Account Settings</span>
+                <span>#Account Settings</span>
               </a>
             </li>
             <li>
@@ -258,30 +243,62 @@
           <i class="bi bi-grid"></i>
           <span>Dashboard</span>
         </a>
-      </li><!-- End Dashboard Nav -->
+      </li><!-- End Dashboard Nav -->     
       
+
+      <li class="nav-heading">Menus</li>
       <li class="nav-item">
-        <a class="nav-link collapsed" href="#">
-          <i class="bi bi-card-list"></i>
-          <span>Directory</span>
+        <a class="nav-link collapsed" data-bs-target="#components-nav" data-bs-toggle="collapse" href="#" aria-expanded="false">
+          <i class="bi bi-card-list"></i><span>#Membership Directory</span><i class="bi bi-chevron-down ms-auto"></i>
         </a>
+        <ul id="components-nav" class="nav-content collapse" data-bs-parent="#sidebar-nav" style="">
+          <li>
+            <a href="#" class="active">
+              <i class="bi bi-circle"></i><span>#Individual</span>
+            </a>
+          </li>
+          <li>
+            <a href="#">
+              <i class="bi bi-circle"></i><span>#Institutional</span>
+            </a>
+          </li>
+          <li>
+            <a href="#">
+              <i class="bi bi-circle"></i><span>#Law Fellowship</span>
+            </a>
+          </li>
+          <li>
+            <a href="#">
+              <i class="bi bi-circle"></i><span>#Life</span>
+            </a>
+          </li>
+          <li>
+            <a href="#">
+              <i class="bi bi-circle"></i><span>#Student</span>
+            </a>
+          </li>
+        </ul>
       </li><!-- End Directory Page Nav -->
 
-      <li class="nav-heading">Pages</li>
+      <li class="nav-item">
+        <a class="nav-link collapsed" href="#">
+          <i class="bi bi-person"></i>
+          <span>#Forum</span>
+        </a>
+      </li><!-- End Forum Page Nav -->
 
+      
       <li class="nav-item">
         <a class="nav-link collapsed" href="userprofile">
           <i class="bi bi-person"></i>
-          <span>Account Profile</span>
+          <span>#Account Profile</span>
         </a>
       </li><!-- End Profile Page Nav -->
-
-      
 
       <li class="nav-item">
         <a class="nav-link collapsed" href="#">
           <i class="bi bi-envelope"></i>
-          <span>Contact Us</span>
+          <span>#Support</span>
         </a>
       </li><!-- End Contact Page Nav -->
 
@@ -333,49 +350,17 @@
                   
                   <?php if(session()->getTempdata('error')): ?>
                   <div class='alert alert-danger'><?= session()->getTempdata('error');?></div>
-                  <?php endif; ?> 
+                  <?php endif; ?>
+
                   <?php if(isset($validation)):?>
                       <div class="alert alert-danger"><?= $validation->listErrors();?></div>
                   <?php endif;?> 
 
-            <!-- Sales Card -->
-            <div class="col-xxl-4 col-md-6">
-              <div class="card info-card sales-card">
-
-                <div class="filter">
-                  <a class="icon" href="#" data-bs-toggle="dropdown"><i class="bi bi-three-dots"></i></a>
-                  <ul class="dropdown-menu dropdown-menu-end dropdown-menu-arrow">
-                    <li class="dropdown-header text-start">
-                      <h6>Filter</h6>
-                    </li>
-
-                    <li><a class="dropdown-item" href="#">Today</a></li>
-                    <li><a class="dropdown-item" href="#">This Month</a></li>
-                    <li><a class="dropdown-item" href="#">This Year</a></li>
-                  </ul>
-                </div>
-
-                <div class="card-body">
-                  <h5 class="card-title">Subscription<span>| Due</span></h5>
-
-                  <div class="d-flex align-items-center">
-                    <div class="card-icon rounded-circle d-flex align-items-center justify-content-center">
-                      <i class="bi bi-cart"></i>
-                    </div>
-                    <div class="ps-3">
-                      <h6>N/A</h6>
-                    </div>
-                  </div>
-                </div>
-
-              </div>
-            </div><!-- End Sales Card -->
-
-            <!-- Revenue Card -->
-            <div class="col-xxl-4 col-md-6">
+           <!-- Revenue Card -->
+            <div class="col-xxl-4 col-xl-12">
               <div class="card info-card revenue-card">
 
-                <div class="filter">
+                <!--div class="filter">
                   <a class="icon" href="#" data-bs-toggle="dropdown"><i class="bi bi-three-dots"></i></a>
                   <ul class="dropdown-menu dropdown-menu-end dropdown-menu-arrow">
                     <li class="dropdown-header text-start">
@@ -386,17 +371,19 @@
                     <li><a class="dropdown-item" href="#">This Month</a></li>
                     <li><a class="dropdown-item" href="#">This Year</a></li>
                   </ul>
-                </div>
+                </div-->
 
                 <div class="card-body">
                   <h5 class="card-title">Membership <span> Status</span></h5>
 
                   <div class="d-flex align-items-center">
                     <div class="card-icon rounded-circle d-flex align-items-center justify-content-center">
-                      <i class="bi bi-currency-dollar"></i>
+                      <i class="ri-information-line"></i>
                     </div>
                     <div class="ps-3">
-                      <h6>N/A</h6>
+                    <?php foreach ($userdata as $item) : ?>
+                      <h6><?php echo $item['Account_status']; ?></h6>
+                    <?php endforeach; ?>
                     </div>
                   </div>
                 </div>

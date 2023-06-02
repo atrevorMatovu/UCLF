@@ -39,10 +39,11 @@
   <script src="https://cdnjs.cloudflare.com/ajax/libs/chosen/1.8.7/chosen.jquery.min.js"></script>
   <style>
     .banner-bg {
-    background: linear-gradient(180deg, rgb(18 64 152), rgba(255, 255, 255, 0)), url(public/assets/img/hammer2.jpg) no-repeat center center;
+    background: linear-gradient(180deg, rgb(18 64 152), rgba(255, 255, 255, 0)), url(public/assets/img/hammer2.jpg) no-repeat center center ;
     min-height: 200px;
     background-size: cover;
     background-attachment: fixed;
+    z-index: -111;
 	}
   </style>
 
@@ -60,6 +61,7 @@
               
 
               <div class="mb-8">
+                <div class="container">
 
                 <div class="card-body">
                 <div class="col-lg-5 col-md-2  flex-column justify-content-center py-3 pt-0 pb-1">
@@ -237,7 +239,8 @@
                                 <div class="col-12 pb-0">
                                   <input type="submit" class="btn btn-primary w-100" value = "Continue" >
                                 </div>
-
+                                </div>
+                               
                             </div>
                         </div>
                     </form>
@@ -245,9 +248,11 @@
                 <div class="copyright justify-content-center pb-1 text-center">
                 © Copyright <strong><span>UCLF-MIS 2023</span></strong>. All Rights Reserved
                 </div>
+                
       </section>
   </div>
   </div>
+
         
    
   </main><!-- End #main -->

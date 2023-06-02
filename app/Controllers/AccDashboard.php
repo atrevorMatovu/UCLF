@@ -13,10 +13,15 @@ class AccDashboard extends BaseController
             $loginModel = new loginModel;
             $loggedInUserid = session()->get('loggedInUser');
             $userdata = $loginModel->find($loggedInUserid);
+            $userId = session()->get('user_id');
+            $accountStatus = $loginModel->getAccountStatus($loggedInUserid);
+            var_dump($accountStatus);
+
 
             $data = [
                 'title'     => 'Dashboard',
                 'userdata'  => $userdata,
+                'status'    => $accountStatus
             ];
             return View("dashboard/userDashboard", $data);
         }   
@@ -47,5 +52,10 @@ class AccDashboard extends BaseController
                 'userdata'  => $userdata,
             ];
         return view("dashboard/profile", $data);
+    }
+
+    public function show()
+    {
+
     }
 }

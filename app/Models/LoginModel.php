@@ -18,18 +18,12 @@ class loginModel extends Model
     protected $createdField  = 'created_at';
     protected $updatedField  = 'updated_at';
     protected $deletedField  = 'deleted_at';
-    // public function authenticate($email, $password)
-    // {
-    //     $user = $this->where('Email', $email)->first();
-
-    //     if ($user && password_verify($password, $user['Password']) && $user['Account_status'] == 'active') {
-    //         // User is authenticated and active, return the user data
-    //         return $user;
-    //     } else {
-    //         // Authentication failed
-    //         return FALSE;
-    //     }
-    // }
+    public function getAccountStatus($id)
+    {
+        $builder = $this->db->table('members');
+        $query = $builder->select('Account_status')->where('user_id', $id)->get();
+        return $query->getRow('Account_status');
+    }
     public function verifyUserid($id) 
     {
         $builder = $this->db->table('members');

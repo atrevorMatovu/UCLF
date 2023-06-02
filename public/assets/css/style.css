@@ -52,6 +52,9 @@ lable {
   font-size: 0.8rem!important;
   color:rgb(9, 34, 119);
 }
+.tg {
+  background-color: #fff;
+}
 .hidden-form {
   display: none;
 }
