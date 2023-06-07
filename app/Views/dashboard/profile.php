@@ -389,7 +389,7 @@
               <ul class="nav nav-tabs nav-tabs-bordered justify-content-center">
 
                 <li class="nav-item">
-                  <button class="nav-link active" data-bs-toggle="tab" data-bs-target="#profile-overview">Profile Details</button>
+                  <button class="nav-link active" data-bs-toggle="tab" data-bs-target="profile-overview#">Profile Details</button>
                 </li>
 
                 <li class="nav-item">
@@ -424,10 +424,10 @@
                     <div class="col-lg-9 col-md-8">N/A</div>
                   </div>
 
-                  <!--div class="row mx-2">
+                  <div class="row mx-2">
                     <div class="col-lg-3 col-md-4 label">Country</div>
-                    <div class="col-lg-9 col-md-8">USA</div>
-                  </div-->
+                    <div class="col-lg-9 col-md-8">UGANDA</div>
+                  </div>
 
                   <div class="row mx-2">
                     <div class="col-lg-3 col-md-4 label">Address</div>
@@ -446,9 +446,9 @@
 
                 </div>
 
-                <div class="tab-pane fade profile-edit pt-3" id="profile-edit">
+                <div class="tab-pane fade profile-edit pt-3" id="#profile-edit">
                   <!-- Profile Edit Form -->
-                  <form>
+                  <form action="#" method="post" accept-charset="utf-8">
                     <div class="row mb-3">
                       <label for="profileImage" class="col-md-4 col-lg-3 col-form-label">Profile Image</label>
                       <div class="col-md-8 col-lg-9">
@@ -475,7 +475,7 @@
                     </div>
 
                     <div class="row mb-3">
-                      <label for="Job" class="col-md-4 col-lg-3 col-form-label">Job</label>
+                      <label for="Job" class="col-md-4 col-lg-3 col-form-label">Postion</label>
                       <div class="col-md-8 col-lg-9">
                         <input name="job" type="text" class="form-control" id="Job" value="N/A">
                       </div>

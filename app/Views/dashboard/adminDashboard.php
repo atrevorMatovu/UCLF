@@ -267,21 +267,21 @@
 
       
 
-      <li class="nav-heading">Pages</li>
+      <li class="nav-heading">Menus</li>
 
+      <li class="nav-item">
+        <a class="nav-link collapsed" href="register">
+          <i class="bi bi-card-list"></i>
+          <span>Membership Directory</span>
+        </a>
+      </li><!-- End Membership Directory Page Nav -->
+      
       <li class="nav-item">
         <a class="nav-link collapsed" href="#">
           <i class="bi bi-person"></i>
           <span>Profile</span>
         </a>
       </li><!-- End Profile Page Nav -->
-
-      <li class="nav-item">
-        <a class="nav-link collapsed" href="register">
-          <i class="bi bi-card-list"></i>
-          <span>Directory</span>
-        </a>
-      </li><!-- End Register Page Nav -->
 
       <li class="nav-item">
         <a class="nav-link collapsed" href="#">

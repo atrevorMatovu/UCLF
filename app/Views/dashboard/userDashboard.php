@@ -180,7 +180,7 @@
               <i class="bi bi-person-circle "></i> 
                 <img src=""  class="rounded-circle">
             </div>
-              <span class="d-none d-md-block dropdown-toggle ps-2"><?php echo $status['FirstName']?> <?php echo $status['LastName']?></span>
+              <span class="d-none d-md-block dropdown-toggle ps-2"><?php echo $acc['FirstName']?> <?php echo $acc['LastName']?></span>
             </div>
           </a><!-- End Profile Iamge Icon -->
 
@@ -190,7 +190,7 @@
               <i class="bi bi-person-circle "></i> 
                 <img src=""  class="rounded-circle">
             </div>
-              <span><?php echo $status['FirstName']?> <?php echo $status['LastName']?></span>
+              <span><?php echo $acc['FirstName']?> <?php echo $acc['LastName']?></span>
             </li>
             <li>
               <hr class="dropdown-divider">
@@ -371,7 +371,7 @@
                     </div>
                     <div class="ps-3">
                   
-                      <h6><?php echo $status['Account_status']?></h6>
+                      <h6><?php echo $acc['Account_status']?></h6>
                    
                     </div>
                   </div>
