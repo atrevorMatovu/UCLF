@@ -13,15 +13,15 @@ class AccDashboard extends BaseController
             $loginModel = new loginModel;
             $loggedInUserid = session()->get('loggedInUser');
             $userdata = $loginModel->find($loggedInUserid);
-            $userId = session()->get('user_id');
-            $accountStatus = $loginModel->getAccountStatus($loggedInUserid);
-            var_dump($accountStatus);
+            //$userId = session()->get('user_id');
+            $account = $loginModel->verifyEmail($loggedInUserid['Email']);
+            //var_dump($accountStatus);
 
 
             $data = [
                 'title'     => 'Dashboard',
                 'userdata'  => $userdata,
-                'status'    => $accountStatus
+                'acc'    => $account
             ];
             return View("dashboard/userDashboard", $data);
         }   
@@ -29,7 +29,7 @@ class AccDashboard extends BaseController
     {
             // Destroy session data to log out user
         $session = session();
-        $this->session->setTempdata('success', 'You have logged out successfully.',3);
+        $this->session->setTempdata('success', 'You have logged out successfully.');
         $this->session->remove('loggedInUser');
         $this->session->remove('loggedIn', true);
         $session->destroy();
@@ -46,10 +46,12 @@ class AccDashboard extends BaseController
         $loginModel = new loginModel;
             $loggedInUserid = session()->get('loggedInUser');
             $userdata = $loginModel->find($loggedInUserid);
+            $account = $loginModel->verifyEmail($loggedInUserid['Email']);
 
             $data = [
                 'title'     => 'Dashboard',
                 'userdata'  => $userdata,
+                'acc'    => $account
             ];
         return view("dashboard/profile", $data);
     }

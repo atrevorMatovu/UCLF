@@ -252,6 +252,12 @@ lable {
   border-radius: 5px;
   box-shadow:  30px 30px 30px 30px rgba(1, 41, 112, 0.1);
 }
+.card-profile {
+  margin-bottom: 30px;
+  border: none;
+  border-radius: 5px;
+  box-shadow: 0px 30px 30px rgba(1, 41, 112, 0.1);
+}
 
 .card-header,
 .card-footer {
@@ -305,6 +311,10 @@ footer {
 .card-body {
   padding: 0 20px 20px 20px;
   display: flex;
+}
+.card-body-profile {
+  padding: 0 20px 20px 20px;
+  
 }
 
 .card-img-overlay {
@@ -1135,6 +1145,7 @@ footer {
 
 .profile .profile-overview .card-title {
   color: #012970;
+  text-align: left;
 }
 label {
   display: inline-block;
@@ -1329,7 +1340,7 @@ label {
 
 .footer .copyright {
   text-align: center;
-  color: #012970;
+  color: #f4f6f7;
 }
 
 .footer .credits {

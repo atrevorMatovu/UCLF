@@ -10,7 +10,7 @@ class LoginFilter implements FilterInterface
 {
     public function before(RequestInterface $request, $params = null) 
     {
-        if(!session()->has('loggedInUser')) 
+        if(!(session()->has('loggedInUser'))) 
         {
             return redirect()->to(base_url().'/');
         }

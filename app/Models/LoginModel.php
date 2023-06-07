@@ -35,7 +35,7 @@ class loginModel extends Model
     public function verifyEmail($email)
     {
         $builder = $this->db->table('members');
-        $builder->select("user_id, Email, Password, Account_status");
+        $builder->select("user_id, Email, FirstName, LastName, Membership_type, Tel, Password, Account_status");
         $builder->where('Email', $email);
         $result = $builder->get()->getRowArray();
         return $result;        

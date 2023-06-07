@@ -195,12 +195,12 @@
     
         <li class="nav-item dropdown pe-3">
 
-          <a class="nav-link nav-profile d-flex align-items-center pe-0" href="bi bi-person-circle" data-bs-toggle="dropdown">
-          <div class="icon">
-           <i class="bi bi-person-circle"></i> 
-            <img src= alt="bi bi-person-circle" class="rounded-circle">
-            <div class="label">
-                <span class="d-none d-md-block dropdown-toggle ps-2">N/A</span>
+          <a class="nav-link nav-profile d-flex align-items-center justify-content-center pe-0" href="bi bi-person-circle" data-bs-toggle="dropdown">
+          <div class="label">
+            <div class="icon">
+              <i class="bi bi-person-circle align-items-center justify-content-center"></i> 
+                <img src=""  class="rounded-circle">
+                <span class="d-none d-md-block dropdown-toggle ps-2"><?php echo $acc['FirstName']?> <?php echo $acc['LastName']?></span>
             </div>
           </div>
           </a><!-- End Profile Iamge Icon -->
@@ -208,7 +208,7 @@
           <ul class="dropdown-menu dropdown-menu-end dropdown-menu-arrow profile">
             <li class="dropdown-header">
               <h6>N/A</h6>
-              <span>N/A</span>
+              <span><?php echo $acc['FirstName']?> <?php echo $acc['LastName']?></span>
             </li>
             <li>
               <hr class="dropdown-divider">
@@ -227,7 +227,7 @@
             <li>
               <a class="dropdown-item d-flex align-items-center" href="userprofile">
                 <i class="bi bi-gear"></i>
-                <span>Account Settings</span>
+                <span>#Account Settings</span>
               </a>
             </li>
             <li>
@@ -261,57 +261,73 @@
     <ul class="sidebar-nav" id="sidebar-nav">
 
       <li class="nav-item">
-        <a class="nav-link collapsed" href="dashboard">
+        <a class="nav-link " href="dashboard">
           <i class="bi bi-grid"></i>
           <span>Dashboard</span>
         </a>
-      </li><!-- End Dashboard Nav -->
+      </li><!-- End Dashboard Nav -->     
+      
 
-
-      <li class="nav-heading">Pages</li>
-
-      <!--li class="nav-item">
-        <a class="nav-link " href="#">
-          <i class="bi bi-person"></i>
-          <span>Profile</span>
+      <li class="nav-heading">Menus</li>
+      <li class="nav-item">
+        <a class="nav-link collapsed" data-bs-target="#components-nav" data-bs-toggle="collapse" href="#" aria-expanded="false">
+          <i class="bi bi-card-list"></i><span>#Membership Directory</span><i class="bi bi-chevron-down ms-auto"></i>
         </a>
-      </li--><!-- End Profile Page Nav -->
+        <ul id="components-nav" class="nav-content collapse" data-bs-parent="#sidebar-nav" style="">
+          <li>
+            <a href="#" class="active">
+              <i class="bi bi-circle"></i><span>#Individual</span>
+            </a>
+          </li>
+          <li>
+            <a href="#">
+              <i class="bi bi-circle"></i><span>#Institutional</span>
+            </a>
+          </li>
+          <li>
+            <a href="#">
+              <i class="bi bi-circle"></i><span>#Law Fellowship</span>
+            </a>
+          </li>
+          <li>
+            <a href="#">
+              <i class="bi bi-circle"></i><span>#Life</span>
+            </a>
+          </li>
+          <li>
+            <a href="#">
+              <i class="bi bi-circle"></i><span>#Student</span>
+            </a>
+          </li>
+        </ul>
+      </li><!-- End Directory Page Nav -->
+
+      <li class="nav-item">
+        <a class="nav-link collapsed" href="#">
+          <i class="bi bi-person"></i>
+          <span>#Forum</span>
+        </a>
+      </li><!-- End Forum Page Nav -->
 
       
+      <li class="nav-item">
+        <a class="nav-link collapsed" href="userprofile">
+          <i class="bi bi-person"></i>
+          <span>#Account Profile</span>
+        </a>
+      </li><!-- End Profile Page Nav -->
 
       <li class="nav-item">
         <a class="nav-link collapsed" href="#">
           <i class="bi bi-envelope"></i>
-          <span>Contact Us</span>
+          <span>#Support</span>
         </a>
-      </li><!-- End Contact Page Nav -->
-
-      <li class="nav-item">
-        <a class="nav-link collapsed" href="#">
-          <i class="bi bi-card-list"></i>
-          <span>Directory</span>
-        </a>
-      </li><!-- End Directory Page Nav -->
-
-      <!--li class="nav-item">
-        <a class="nav-link collapsed" href="pages-login.html">
-          <i class="bi bi-box-arrow-in-right"></i>
-          <span>Login</span>
-        </a>
-      </li--><!-- End Login Page Nav -->
-
-      
-
-      <!--li class="nav-item">
-        <a class="nav-link collapsed" href="pages-blank.html">
-          <i class="bi bi-file-earmark"></i>
-          <span>Blank</span>
-        </a>
-      </li--><!-- End Blank Page Nav -->
+      </li><!-- End Contact Page Nav --> 
 
     </ul>
 
   </aside><!-- End Sidebar-->
+
 
   <main id="main" class="main">
 
@@ -319,7 +335,7 @@
       <h1>Profile</h1>
       <nav>
         <ol class="breadcrumb">
-          <li class="breadcrumb-item"><a href="index.html">Home</a></li>
+          <li class="breadcrumb-item"><a href="dashboard">Home</a></li>
           <li class="breadcrumb-item">Users</li>
           <li class="breadcrumb-item active">Profile</li>
         </ol>
@@ -327,7 +343,7 @@
     </div><!-- End Page Title -->
 
     <section class="section profile">
-      <div class="row">
+      <div class="row mx-2">
       <?php if(session()->getTempdata('success')): ?>
                   <div class='alert alert-success'><?= session()->getTempdata('success');?></div>
                   <?php endif; ?> 
@@ -352,10 +368,10 @@
             <div class="card-body profile-card pt-4 d-flex flex-column align-items-center">
 
               <img src="assets/img/profile-img.jpg" alt="Profile" class="rounded-circle">
-              <h2>N/A</h2>
+              <h2><?php echo $acc['FirstName']?> <?php echo $acc['LastName']?></h2>
               <h3>N/A</h3>
               <div class="social-links mt-2">
-                <a href="#" class="twitter"><i class="bi bi-twitter"></i></a>
+                <!--a href="#" class="twitter"><i class="bi bi-twitter"></i></a-->
                 <a href="#" class="facebook"><i class="bi bi-facebook"></i></a>
                 <a href="#" class="instagram"><i class="bi bi-instagram"></i></a>
                 <a href="#" class="linkedin"><i class="bi bi-linkedin"></i></a>
@@ -368,21 +384,21 @@
         <div class="col-xl-8">
 
           <div class="card">
-            <div class="card-body pt-3">
+            <div class="card-body-profile pt-3">
               <!-- Bordered Tabs -->
-              <ul class="nav nav-tabs nav-tabs-bordered">
+              <ul class="nav nav-tabs nav-tabs-bordered justify-content-center">
 
                 <li class="nav-item">
-                  <button class="nav-link active" data-bs-toggle="tab" data-bs-target="#profile-overview">Overview</button>
+                  <button class="nav-link active" data-bs-toggle="tab" data-bs-target="#profile-overview">Profile Details</button>
                 </li>
 
                 <li class="nav-item">
                   <button class="nav-link" data-bs-toggle="tab" data-bs-target="#profile-edit">Edit Profile</button>
                 </li>
 
-                <li class="nav-item">
+                <!--li class="nav-item">
                   <button class="nav-link" data-bs-toggle="tab" data-bs-target="#profile-settings">Settings</button>
-                </li>
+                </li-->
 
                 <li class="nav-item">
                   <button class="nav-link" data-bs-toggle="tab" data-bs-target="#profile-change-password">Change Password</button>
@@ -393,47 +409,44 @@
 
                 <div class="tab-pane fade show active profile-overview" id="profile-overview">
                   
-                  <h5 class="card-title">Profile Details</h5>
-
-                  <div class="row">
+                  <div class="row mx-2">
                     <div class="col-lg-3 col-md-4 label ">Full Name</div>
-                    <div class="col-lg-9 col-md-8">N/A</div>
+                    <div class="col-lg-9 col-md-8"><?php echo $acc['FirstName']?> <?php echo $acc['LastName']?></div>
                   </div>
 
-                  <div class="row">
+                  <div class="row mx-2">
                     <div class="col-lg-3 col-md-4 label">Company</div>
                     <div class="col-lg-9 col-md-8">N/A</div>
                   </div>
 
-                  <div class="row">
+                  <div class="row mx-2">
                     <div class="col-lg-3 col-md-4 label">Role</div>
                     <div class="col-lg-9 col-md-8">N/A</div>
                   </div>
 
-                  <!--div class="row">
+                  <!--div class="row mx-2">
                     <div class="col-lg-3 col-md-4 label">Country</div>
                     <div class="col-lg-9 col-md-8">USA</div>
                   </div-->
 
-                  <div class="row">
+                  <div class="row mx-2">
                     <div class="col-lg-3 col-md-4 label">Address</div>
                     <div class="col-lg-9 col-md-8">N/A</div>
                   </div>
 
-                  <div class="row">
+                  <div class="row mx-2">
                     <div class="col-lg-3 col-md-4 label">Phone</div>
-                    <div class="col-lg-9 col-md-8">N/A</div>
+                    <div class="col-lg-9 col-md-8">0<?php echo $acc['Tel']?></div>
                   </div>
 
-                  <div class="row">
+                  <div class="row mx-2">
                     <div class="col-lg-3 col-md-4 label">Email</div>
-                    <div class="col-lg-9 col-md-8">N/A</div>
+                    <div class="col-lg-9 col-md-8"><?php echo $acc['Email']?></div>
                   </div>
 
                 </div>
 
                 <div class="tab-pane fade profile-edit pt-3" id="profile-edit">
-
                   <!-- Profile Edit Form -->
                   <form>
                     <div class="row mb-3">
@@ -450,49 +463,49 @@
                     <div class="row mb-3">
                       <label for="fullName" class="col-md-4 col-lg-3 col-form-label">Full Name</label>
                       <div class="col-md-8 col-lg-9">
-                        <input name="fullName" type="text" class="form-control" id="fullName" value="Kevin Anderson">
+                        <input name="fullName" type="text" class="form-control" id="fullName" value="<?php echo $acc['FirstName']?> <?php echo $acc['LastName']?>">
                       </div>
                     </div>
 
                     <div class="row mb-3">
                       <label for="company" class="col-md-4 col-lg-3 col-form-label">Company</label>
                       <div class="col-md-8 col-lg-9">
-                        <input name="company" type="text" class="form-control" id="company" value="Lueilwitz, Wisoky and Leuschke">
+                        <input name="company" type="text" class="form-control" id="company" value="N/A">
                       </div>
                     </div>
 
                     <div class="row mb-3">
                       <label for="Job" class="col-md-4 col-lg-3 col-form-label">Job</label>
                       <div class="col-md-8 col-lg-9">
-                        <input name="job" type="text" class="form-control" id="Job" value="Web Designer">
+                        <input name="job" type="text" class="form-control" id="Job" value="N/A">
                       </div>
                     </div>
 
                     <div class="row mb-3">
                       <label for="Country" class="col-md-4 col-lg-3 col-form-label">Country</label>
                       <div class="col-md-8 col-lg-9">
-                        <input name="country" type="text" class="form-control" id="Country" value="USA">
+                        <input name="country" type="text" class="form-control" id="Country" value="UGANDA">
                       </div>
                     </div>
 
                     <div class="row mb-3">
                       <label for="Address" class="col-md-4 col-lg-3 col-form-label">Address</label>
                       <div class="col-md-8 col-lg-9">
-                        <input name="address" type="text" class="form-control" id="Address" value="A108 Adam Street, New York, NY 535022">
+                        <input name="address" type="text" class="form-control" id="Address" value="N/A">
                       </div>
                     </div>
 
                     <div class="row mb-3">
                       <label for="Phone" class="col-md-4 col-lg-3 col-form-label">Phone</label>
                       <div class="col-md-8 col-lg-9">
-                        <input name="phone" type="text" class="form-control" id="Phone" value="(436) 486-3538 x29071">
+                        <input name="phone" type="text" class="form-control" id="Phone" value="0<?php echo $acc['Tel']?>">
                       </div>
                     </div>
 
                     <div class="row mb-3">
                       <label for="Email" class="col-md-4 col-lg-3 col-form-label">Email</label>
                       <div class="col-md-8 col-lg-9">
-                        <input name="email" type="email" class="form-control" id="Email" value="k.anderson@example.com">
+                        <input name="email" type="email" class="form-control" id="Email" value="<?php echo $acc['Email']?>">
                       </div>
                     </div>
 
@@ -531,10 +544,10 @@
 
                 </div>
 
-                <div class="tab-pane fade pt-3" id="profile-settings">
+                <!--div class="tab-pane fade pt-3" id="profile-settings">
 
-                  <!-- Settings Form -->
-                  <form>
+                  <! Settings Form -->
+                  <!--form>
 
                     <div class="row mb-3">
                       <label for="fullName" class="col-md-4 col-lg-3 col-form-label">Email Notifications</label>
@@ -564,9 +577,9 @@
                     <div class="text-center">
                       <button type="submit" class="btn btn-primary">Save Changes</button>
                     </div>
-                  </form><!-- End settings Form -->
+                  </form--><!-- End settings Form>
 
-                </div>
+                </div-->
 
                 <div class="tab-pane fade pt-3" id="profile-change-password">
                   <!-- Change Password Form -->
@@ -614,7 +627,7 @@
   <!-- ======= Footer ======= -->
   <footer id="footer" class="footer">
     <div class="copyright">
-      &copy; Copyright <strong><span>UCLF-MIS</span></strong>. All Rights Reserved
+      &copy; Copyright <strong><span>UCLF-MIS</span></strong>. All Rights Reserved.
     </div>
     
   </footer><!-- End Footer -->
