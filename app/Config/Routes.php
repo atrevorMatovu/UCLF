@@ -58,10 +58,12 @@ $routes->get('pwdReset/(:any)', 'Password_reset::index/$1');
 
 //ONBOARD
 $routes->get('onboard', 'Reg::onboarding');
+$routes->post('onboard', 'Reg::onboarding');
+$routes->add('onboard', 'Reg::onboarding');
 
 //DASHBOARDS
 $routes->get('dashboard', 'AccDashboard::userdash');
-$routes->get('adminDash', 'AccDashboard::adminDash');
+$routes->get('admin', 'AccDashboard::adminDash');
 $routes->get('dashboard/logout', 'AccDashboard::logout');
 $routes->get('userprofile', 'AccDashboard::profDash');
 $routes->group('', ['filter'=>'isLoggedIn'],function($routes)

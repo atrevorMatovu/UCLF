@@ -264,16 +264,39 @@
           <span>Dashboard</span>
         </a>
       </li><!-- End Dashboard Nav -->
-
       
-
       <li class="nav-heading">Menus</li>
-
       <li class="nav-item">
-        <a class="nav-link collapsed" href="register">
-          <i class="bi bi-card-list"></i>
-          <span>Membership Directory</span>
+        <a class="nav-link collapsed" data-bs-target="#components-nav" data-bs-toggle="collapse" href="#" aria-expanded="false">
+          <i class="bi bi-card-list"></i><span>#Membership Directory</span><i class="bi bi-chevron-down ms-auto"></i>
         </a>
+        <ul id="components-nav" class="nav-content collapse" data-bs-parent="#sidebar-nav" style="">
+          <li>
+            <a href="#" class="active">
+              <i class="bi bi-circle"></i><span>#Individual</span>
+            </a>
+          </li>
+          <li>
+            <a href="#">
+              <i class="bi bi-circle"></i><span>#Institutional</span>
+            </a>
+          </li>
+          <li>
+            <a href="#">
+              <i class="bi bi-circle"></i><span>#Law Fellowship</span>
+            </a>
+          </li>
+          <li>
+            <a href="#">
+              <i class="bi bi-circle"></i><span>#Life</span>
+            </a>
+          </li>
+          <li>
+            <a href="#">
+              <i class="bi bi-circle"></i><span>#Student</span>
+            </a>
+          </li>
+        </ul>
       </li><!-- End Membership Directory Page Nav -->
       
       <li class="nav-item">

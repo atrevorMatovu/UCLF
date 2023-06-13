@@ -252,6 +252,14 @@ lable {
   border-radius: 5px;
   box-shadow:  30px 30px 30px 30px rgba(1, 41, 112, 0.1);
 }
+.card2 {
+  
+  margin-bottom: 30px;
+  border: none;
+  border-radius: 5px;
+  box-shadow: 30px 30px 30px 30px rgba(1, 41, 112, 0.1);
+  background: #fff;
+}
 .card-profile {
   margin-bottom: 30px;
   border: none;
@@ -337,6 +345,10 @@ footer {
 .btn-close:focus {
   outline: 0;
   box-shadow: none;
+}
+.btn-fr {
+  margin-bottom: -79px;
+  padding-bottom: -20;
 }
 
 /* Accordion */

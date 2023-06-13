@@ -21,11 +21,11 @@ class loginModel extends Model
    
     public function createUser($data)
     {
-        $memberRegModel = new MemberRegModel();
-        $builder = $memberRegModel->builder();
+        //$onboardModel = new OnboardModel();
+        //$builder = $onboardModel->builder();
         $builder = $this->db->table('membship');
         $res = $builder->insert($data);
-       if($this->db->affectedRows()==1)
+        if($this->db->affectedRows()==1)
         {
             return true;
         }else{

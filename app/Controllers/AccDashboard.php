@@ -4,6 +4,7 @@ namespace App\Controllers;
 
 use App\Controllers\BaseController;
 use App\Models\loginModel;
+use App\Models\adminModel;
 
 class AccDashboard extends BaseController
 {
@@ -29,7 +30,7 @@ class AccDashboard extends BaseController
     {
             // Destroy session data to log out user
         $session = session();
-        $this->session->setTempdata('success', 'You have logged out successfully.');
+        $this->session->setTempdata('success', 'You have logged out successfully.',3);
         $this->session->remove('loggedInUser');
         $this->session->remove('loggedIn', true);
         $session->destroy();
@@ -38,6 +39,16 @@ class AccDashboard extends BaseController
 
     public function adminDash()
     {
+        $adminModel = new adminModel;
+            $loggedInUserid = session()->get('loggedInUser');
+            $userdata = $adminModel->find($loggedInUserid);
+            $account = $adminModel->verifyEmail($loggedInUserid['Email']);
+            
+            $data = [
+                'title'     => 'Dashboard',
+                'userdata'  => $userdata,
+                'acc'    => $account
+            ];
         return view("dashboard/adminDashboard");
     }
 

@@ -61,13 +61,13 @@ class Password_reset extends BaseController
                     {
                         if($this->loginModel->updatePassword($userdata->user_id ,$newpassword))
                         {
-                            $this->session->setFlashdata('success', 'Password successfully changed.', 3);
+                            $this->session->setFlashdata('success', 'Password successfully changed.');
                             return redirect()->to('/');
                         }
                     }
                     else
                     {
-                        $this->session->setFlashdata('error', 'Account not yet activated, please ensure to activate first.', 3);
+                        $this->session->setFlashdata('error', 'Account not yet activated, please ensure to activate first.');
                         return redirect()->to(current_url());
                     }
                 }

@@ -4,11 +4,13 @@ namespace App\Controllers;
 
 use App\Controllers\BaseController;
 use App\Models\LoginModel;
+use App\Models\AdminModel;
 use CodeIgniter\I18n\Time;
 
 class Login extends BaseController
 {
     public $loginModel;
+    public $adminModel;
     public $session;
     public $email;
     public function __construct()
@@ -19,6 +21,7 @@ class Login extends BaseController
         $db = db_connect();
         
         $this->loginModel = new LoginModel();
+        $this->adminModel = new adminModel();
         $this->session = \Config\Services::session();
         $this->email = \Config\Services::email();
        //$request = \Config\Services::request();
@@ -29,7 +32,8 @@ class Login extends BaseController
         $data['validation'] = null;
         $email = \Config\Services::email();
         $this->session = \Config\Services::session();
-        if ($this->request->getPost()) {
+        if ($this->request->getPost()) 
+        {
             $rules = [
                 'email' => [
                     'rules' => 'required|valid_email',
@@ -60,8 +64,33 @@ class Login extends BaseController
 
                 $userdata = $this->loginModel->verifyEmail($Email);
                 //var_dump($userdata);
+                $admin = $this->adminModel->verifyEmail($Email);
+                $rememberMe = $this->request->getVar('remember') === 'on';
+
+                if ($admin)
+                {
+                    $pwd = $this->adminModel->verifyPassword($Password);
+                    if ($pwd)
+                    {
+                        $this->session->set('loggedInUser', $admin);
+                        session()->setFlashdata('success', 'Welcome our esteemed UCLF Administrator, ' . $admin['username']);
+                        return redirect()->to('admin');
+
+                        if ($rememberMe) {
+                            // Generate a remember token
+                            $rememberToken = bin2hex(random_bytes(32));
+        
+                            // Set the remember token in the user's browser cookie
+                            $this->response->setCookie('rememberToken', $rememberToken, 2592000); // Expires in 30 days
+        
+                            // Save the remember token in the user's data or database
+                            // Example: $this->userModel->saveRememberToken($userdata['id'], $rememberToken);
+                        }
+                    }
+                }
+
                 if ($userdata) 
-                    //User is authenticated and active, set session data and redirect to dashboard 
+                //User is authenticated and active, set session data and redirect to dashboard 
                 {
                     if(password_verify($Password, $userdata['Password']))
                     {
@@ -69,8 +98,8 @@ class Login extends BaseController
                         {/**while(['Account_status'] == 'Pending')
                             redirect to onboard page */
                             $this->session->set('loggedInUser', $userdata);
-                            session()->setFlashdata('success', 'Welcome aboard the UCLF experience ' .$userdata['FirstName'] .$userdata['LastName']);
-                            return redirect()->to('userprofile');
+                            session()->setFlashdata('success', 'Welcome aboard the UCLF experience ' .$userdata['FirstName'].' '.$userdata['LastName']);
+                            return redirect()->to('onboard');
                         }
                         else if($userdata['Account_status'] == 'Approved')
                         {
@@ -81,6 +110,16 @@ class Login extends BaseController
                         else{
                             session()->setFlashdata('error', 'Please activate your account. Contact Admin');
                             return redirect()->to(current_url());
+                        }
+                        if ($rememberMe) {
+                            // Generate a remember token
+                            $rememberToken = bin2hex(random_bytes(32));
+        
+                            // Set the remember token in the user's browser cookie
+                            $this->response->setCookie('rememberToken', $rememberToken, 2592000); // Expires in 30 days
+        
+                            // Save the remember token in the user's data or database
+                            // Example: $this->userModel->saveRememberToken($userdata['id'], $rememberToken);
                         }
                     }
                     else

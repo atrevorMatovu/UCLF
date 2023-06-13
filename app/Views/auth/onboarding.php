@@ -52,7 +52,7 @@
 <body>
 
   <main>
-  <div class="">
+  <div class="banner-bg">
   <div class="container">
       <section class="section register  d-flex flex-column align-items-center justify-content-center py-3">
         <div class="container">
@@ -65,7 +65,7 @@
 
                 <div class="card-body">
                 <div class="col-lg-5 col-md-2  flex-column justify-content-center py-3 pt-0 pb-1">
-                  <div class="card1 col-lg-9  flex-column align-items-center justify-content-center py-3 pt-0 pb-1">
+                  <div class="card2 col-lg-9  flex-column align-items-center justify-content-center py-3 pt-0 pb-1">
                   <a href="#" class="logo d-flex align-items-center w-auto">
                     <img src="public/assets/img/logo-rmbg.png" alt="">
                  </a>
@@ -90,12 +90,12 @@
                 </div>
                 </div>
 
-                  <div class="card1 col-lg-7 col-md-6 d-flex flex-column pt-0 pb-1">
+                  <div class="card2 col-lg-7 col-md-6 d-flex flex-column pt-0 pb-1">
                     <div>
                         <h5 class="card-title text-center pb-0 fs-4">Setup Your Account</h5>
                         <p class="text-center small">Fill in the provided fields to get started.</p>
                     </div>
-                    <div class="text-center"><h3 class=" pb-0 fs-4">Membership Form.</h3>
+                    <div class="text-center"><h3 class=" pb-0 fs-4">UCLF Account Onboarding Form.</h3>
 
                     <?php if(session()->getFlashdata('success')): ?>
                     <div class='alert alert-success'><?= session()->getFlashdata('success');?></div>
@@ -112,8 +112,8 @@
                         <div class="alert alert-danger"><?= $validation->listErrors();?></div>
                     <?php endif;?> 
 
-                    <p>Please choose your desired membership type:</p>
-                    <div>
+                    <p>Please provide the necessary information as required:</p>
+                    <!--div>
                     <label>
                         <input type="radio" name="membership_type" value="individual" onchange="showForm('individual')" checked> Individual
                     </label>
@@ -129,7 +129,7 @@
                     <label>
                         <input type="radio" name="membership_type" value="law-fellowship" onchange="showForm('law-fellowship')"> Law fellowship
                     </label>
-                    </div>
+                    </div-->
                     </div>
                     
                     
@@ -160,20 +160,20 @@
                                   <label for="floatingState">State/District:</label>
                                   </div>
                                   
-                                  <div class="col-md-3.5 pt-1 pb-1 mx-2 form-floating">
+                                  <div class="col-md-3.5 pb-1 mx-2 form-floating">
                                   <input type="text" name="city" class="form-control" id="floatingCity" placeholder="City">
                                   <label for="floatingCity">City:</label>
                                   </div>
                                 </div>
 
-                                <div class="col-12 mx-3 d-flex">
+                                <div class="col-12 pt-2 mx-3 d-flex">
                                   <h3>Address:<h3>
                                 </div>
                                 <div class="col-md-6 col-12 mx-2 pb-1 form-floating">
                                   <input type="text" name="address" class="form-control" id="floatingResd" placeholder="Residence">
                                   <label for="floatingResd">Place of residence:</label>
                                 </div>
-                                <div class="col-12 mx-3 d-flex">
+                                <div class="col-12 pt-2 mx-3 d-flex">
                                   <h3>Practice Area:<h3>
                                 </div>
                                 <div class=" col-12 mx-2 col-md-11 pb-1 form-floating ">
@@ -212,7 +212,7 @@
                                 </script>
 
 
-                                <div class="col-12 mx-3 d-flex">
+                                <div class="col-12 pt-1 mx-3 d-flex">
                                   <h3>Company:<h3>
                                 </div>
                                 <div class="col-12 d-flex">
@@ -227,17 +227,17 @@
                                 </div>
 
                                 <div class="col-12 d-flex pt-1">
-                                <div class="col-md-6 col-12 mx-2 pb-0.2">
+                                <div class="col-md-6 col-12 mx-2 pt-2 pb-0.2">
                                 <lable for="photo">Photo/Company Logo<p class="examples">(200px x 200px):</p></lable>
                                 </div>
-                                <div class="col-md-4 col-12 pb-0.2 form-floating">                                  
-                                  <input type="file" name="photo" accept="image/*" required>
+                                <div class="col-md-4 col-12 pt-2 pb-0.2 form-floating">                                  
+                                  <input type="file" name="photo" accept="image/*">
                                   <!--input type="submit" value="Upload"-->
                                 </div>
                                 </div>
 
-                                <div class="col-12 pb-0">
-                                  <input type="submit" class="btn btn-primary w-100" value = "Continue" >
+                                <div class="col-12 pt-2 btn-fr">
+                                  <input type="submit" class="btn btn-primary w-100 " value = "Continue" >
                                 </div>
                                 </div>
                                

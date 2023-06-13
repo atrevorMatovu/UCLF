@@ -178,11 +178,11 @@
 										</div>
 								</span>
 								<select id="gender" name="gender" class="form-select" placeholder="Select your gender:" value='<?= set_value('gender')?>' required>
-								<option value=""></option>
+								<option value="">Select your gender:</option>
 								<option value="male">Male</option>
 								<option value="female">Female</option>
 								</select>
-								<div class="invalid-feedback">Address is required!</div>
+								<div class="invalid-feedback">Gender is required!</div>
 							</div>
 						</div>										
 						
@@ -214,7 +214,6 @@
                     </div>
 					</div>
 					</form>
-				  <!--?= form_close(); ?-->
 				  </div>
 				</div>
 
@@ -257,45 +256,7 @@
 
 
 						
-						<!--div class="form-group">
-						<label for="Practice_area">Practice Area:</label>
-						<label for="options">(Select all that apply)</label>
-						<select  type= "checkbox" class="form-control" id="Practice_area" name="Practice_area[]" multiple>
-						<option value="Aviation Law">Aviation Law</option>
-						<option value="Construction Law">Construction Law</option>
-						<option value="Corporate Law">Corporate Law</option>					
-						<option value="Criminal Law">Criminal Law</option>
-						<option value="Dispute Resolution">Dispute Resolution</option>
-						<option value="Environmental Law">Environmental Law</option>
-						<option value="Family Law">Family Law</option>
-						<option value="Human Rights Law">Human Rights Law</option>
-						<option value="Immigration Law">Immigration Law</option>
-						<option value="Insolvency Law">Insolvency Law</option>
-						<option value="Insurance Law">Insurance Law</option>
-						<option value="Intellectual Property Law">Intellectual Property Law</option>
-						<option value="Media Law">Media Law</option>
-						<option value="Public sector & Government Law">Public sector & Government Law</option>
-						<option value="Tax Law">Tax Law</option>
-						<option value="Tort Law">Tort Law</option>
-						<option value="Wills Trust & Probate Law">Wills Trust & Probate Law</option>
-						<option value="Sports Law">Sports Law</option>
-						<option value="Civil Law">Civil Law</option>
-						<option value="Energy & Infrastructure">Energy & Infrastructure</option>
-						<option value="Cyber Law">Cyber Law</option>
-						</select>
-						</div>
-						<div class="form-group">
-						<label for="membership-type">Membership Type</label>
-						<select class="form-control" id="membership-type" name="membership-type" value='<?= set_value('membership-type')?>'>
-							<option value="">Select Membership Type</option>
-							<option value="institutional">Institutional</option>
-							<option value="individual">Individual</option>
-							<option value="law-fellowship">Law Fellowship</option>
-							<option value="life">Life</option>
-							<option value="student">Student</option>
-						</select>
-						</div>
-					</div-->
+						
 					<!--div id="institutional-form" class="hidden">
 						<h4>Institutional Membership Signup Form</h4>
 						< Add institutional membership signup form fields here > 
@@ -469,6 +430,6 @@
 										<i class="bi bi-geo-alt-fill"></i>
 									</div>
 								</span>
-							<input type="text" name="address" class="form-control" id="yourAddress" placeholder="Place of residence" value='<?= set_value('address')?>' required>
+							<input type="text" name="address" class="form-control" id="yourAddress" placeholder="Place of residence" value='lue('address')?>' required>
 							<div class="invalid-feedback">Address is required!</div>
 							</div-->

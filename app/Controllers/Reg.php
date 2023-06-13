@@ -84,9 +84,10 @@ class Reg extends BaseController
                         'min_length'=>'Contact strictly of 10 digits',
                     ],
                 ],
-                'address' =>[
-                    'rules'=>'required','errors'=>[
-                        'required'=>'User address is necessary',
+                'gender' =>[
+                    'rules'=>'required',
+                    'errors'=>[
+                        'required'=>'Gender is necessary',
                     ],
                 ],  
             ]; 
@@ -116,7 +117,7 @@ class Reg extends BaseController
                     $email->setTo($userdata['Email']);
                     $email->setFrom('matovu@lwegatech.info');
                     $email->setSubject('UCLF-MIS: Account Activation Link');
-                    $email->setMessage('<img src="cid:company_logo" alt="Company Logo"><br>Hi '.$this->request->getVar('fname '). $this->request->getVar('lname')."<br><br>Thanks, Your account has been created successfully. Please click the link below to activate it<br><br>"."<a href='".base_url()."/register/activate/".$user_id."'>Activate Now</a><br><br><p>Regards!<br>UCLF-Support</br></p>");
+                    $email->setMessage('<img src="cid:company_logo" alt="Company Logo"><br>Hi '.' '.$userdata['FirstName'].' '.$userdata['LastName']."<br><br>Thanks, Your account has been created successfully. Please click the link below to activate it<br><br>"."<a href='".base_url()."/register/activate/".$user_id."'>Activate Now</a><br><br><p>Regards!<br>UCLF-Support</br></p>");
                     $filepath = 'public/assets/img/logo-rmbg.png';
                     $email->attach($logo_path, 'inline', 'company_logo', 'image/png');
                     //$email->send();
@@ -168,7 +169,7 @@ class Reg extends BaseController
                     } 
                     else 
                     {
-                        $this->session->setFlashdata('success', 'Account was already successfully activated, please proceed to login.');
+                        $this->session->setFlashdata('success', 'Account already successfully activated, please proceed to login.');
                         return redirect()->to('acti');
                     }
                 }
@@ -224,24 +225,24 @@ class Reg extends BaseController
                     ]
                 ],
                 'state' =>[
-                    'rules'=> 'required|alpha',
+                    'rules'=> 'required|alpha_space',
                     'errors'=> [
                         'required'=>'State name is required',
-                        'alpha'=>'Name can only be of alphabets'
+                        'alpha_space'=>'Name can only be of alphabets'
                     ]
                 ],
                 'city' =>[
-                    'rules'=> 'required|alpha',
+                    'rules'=> 'required|alpha_space',
                     'errors'=> [
                         'required'=>'City name is required',
-                        'alpha'=>'City name can only be of alphabets'
+                        'alpha_space'=>'City name can only be of alphabets'
                     ]
                 ],
                 'address' =>[
-                    'rules'=>'required|alpha',
+                    'rules'=>'required|alpha_numeric_space',
                     'errors'=> [
                         'required'=>'Address is required',
-                        'alpha'=>'Address name can only be of alphabets'
+                        'alpha_numeric_space'=>'Address name can only be of alphanumerics and space'
                     ],
                 ],
                 'practice_area' =>[
@@ -251,25 +252,24 @@ class Reg extends BaseController
                     ],
                 ],
                 'company' =>[
-                    'rules'=>'required|alpha',
+                    'rules'=>'required|alpha_numeric_space',
                     'errors'=> [
-                        'required'=>'Company name is required.',
-                        'alpha'   => 'Company name can only be of alphabets'
+                        'required'             => 'Company name is required.',
+                        'alpha_numeric_space'  => 'Company name can only be of alphanumerics and space'
                     ],
                 ],
                 'position' =>[
                     'rules'=>'required|alpha_space',
                     'errors'=> [
-                        'required'=>'Company name is required.',
-                        'alpha_space'   => 'Company name can only be of alphabets'
+                        'required'      => 'Company name is required.',
+                        'alpha_space'   => 'Company name can only be of alphabets and space'
                     ],
                 ],
                 'photo'   =>[
-                    'rules'=>'uploaded[photo]|max_dims[photo,500,500]|is_image[photo]',
+                    'rules'=>'uploaded[photo]|max_dims[photo,500,500]',
                     'errors'=> [
-                        'uploaded[photo]'=>'Photo/Logo is required',
+                        'uploaded[photo]' => 'Photo/Logo is required',
                         'max_dims[photo,500,500]'=>'Photo/Logo size is exceeding limit',
-                        'is_image[photo]'=>'File uploaded is not of type photo' 
                     ],
                 ]
             ];
@@ -293,15 +293,17 @@ class Reg extends BaseController
                     'user_id' => $user_id,
                     'activation_date' => date("Y-m-d h:i:s")
                 ];
-                if($this->onboardModel->createUser($userdata))
+
+                $onboard = $this->onboardModel->createUser($userdata);
+                if($onboard)
                 {
-                    $this->session->setFlashdata('success', 'Account setup successful, proceed to log in.');
-                    return redirect()->to('/');
+                    $this->session->setFlashdata('success', 'Account setup successful, please await a notification to access the dashboard.');
+                    return redirect()->to('userprofile');
                 } 
                 else
                 {
                     $this->session->setFlashdata('error', 'Account setup failed, contact admin!.');
-                    return redirect()->to('onboard'); 
+                    return redirect()->to('/'); 
                 }
             }
             else

@@ -80,12 +80,12 @@
                                 <?php endif; ?>
                                 <p>Dear our esteemed new member.</p>
                                 <p>Thank you for signing up and becoming a member of our fraternity. 
-                                    <br>Your account has been created successfully and activated via the link sent to your email address.</br> 
+                                    <br>Your account has been created successfully and we kindly ask that you follow the ongoing procedure completely.</br> 
                                     Once you have activated your account, you will be able to login and access all the features of our system.
                                     <p><br>Regards,<br>UCLF Team</br></br></p>
                                 </p>
                             <div class="justify-content-center">
-                            <input type="button"  class="btn btn-info" onclick="window.location.href='login';" value="Login" />
+                            <input type="button"  class="btn btn-info" onclick="window.location.href='login';" value="Log in" />
                             </div>
                             </div>
                         </div>
