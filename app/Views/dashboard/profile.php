@@ -5,13 +5,13 @@
   <meta charset="utf-8">
   <meta content="width=device-width, initial-scale=1.0" name="viewport">
 
-  <title>Dashboard - UCLF</title>
+  <title>UserProfile - UCLF</title>
   <meta content="" name="description">
   <meta content="" name="keywords">
 
   <!-- Favicons -->
-  <link href="public/assets/img/logo-rmbg.png" rel="icon">
-  <link href="public/assets/img/logo-rmbg.png" rel="apple-touch-icon">
+  <link href="public/assets/img/favicon.png" rel="icon">
+  <link href="public/assets/img/apple-touch-icon.png" rel="apple-touch-icon">
 
   <!-- Google Fonts -->
   <link href="https://fonts.gstatic.com" rel="preconnect">
@@ -25,10 +25,12 @@
   <link href="public/assets/vendor/quill/quill.bubble.css" rel="stylesheet">
   <link href="public/assets/vendor/remixicon/remixicon.css" rel="stylesheet">
   <link href="public/assets/vendor/simple-datatables/style.css" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css" integrity="sha384-rbsA2VBKQhggwzxH7pPCaAqO46MgnOM80zW1RWuH61DGLwZJEdK2Kadq2F9CUG65" crossorigin="anonymous">
 
   <!-- Template Main CSS File -->
   <link href="public/assets/css/style.css" rel="stylesheet">
 
+  
 </head>
 
 <body>
@@ -36,7 +38,7 @@
   <!-- ======= Header ======= -->
   <header id="header" class="header fixed-top d-flex align-items-center">
 
-    <div class="d-flex align-items-center justify-content-between">
+  <div class="d-flex align-items-center justify-content-between">
       <a href="dashboard" class="logo2 d-flex align-items-center">
         <img src="public/assets/img/logo-rmbg.png" alt="">
         <span class="d-none d-lg-block">UCLF-MiS</span>
@@ -44,16 +46,24 @@
       <i class="bi bi-list toggle-sidebar-btn"></i>
     </div><!-- End Logo -->
 
-    <!--div class="search-bar">
+    <div class="search-bar">
       <form class="search-form d-flex align-items-center" method="POST" action="#">
         <input type="text" name="query" placeholder="Search" title="Enter search keyword">
         <button type="submit" title="Search"><i class="bi bi-search"></i></button>
       </form>
-    </div--><!-- End Search Bar -->
+    </div><!-- End Search Bar -->
+
     <nav class="header-nav ms-auto">
       <ul class="d-flex align-items-center">
-          
-      <li class="nav-item dropdown">
+
+        <li class="nav-item d-block d-lg-none">
+          <a class="nav-link nav-icon search-bar-toggle " href="#">
+            <i class="bi bi-search"></i>
+          </a>
+        </li><!-- End Search Icon-->
+
+        <li class="nav-item dropdown">
+
           <a class="nav-link nav-icon" href="#" data-bs-toggle="dropdown">
             <i class="bi bi-bell"></i>
             <span class="badge bg-primary badge-number">4</span>
@@ -192,23 +202,18 @@
           </ul><!-- End Messages Dropdown Items -->
 
         </li><!-- End Messages Nav -->
-    
+
         <li class="nav-item dropdown pe-3">
 
-          <a class="nav-link nav-profile d-flex align-items-center justify-content-center pe-0" href="" data-bs-toggle="dropdown">
-          <div class="label">
-            <div class="icon">
-              <i class="bi bi-person-circle align-items-center justify-content-center"></i> 
-                <img src=""  class="rounded-circle">
-                <span class="d-none d-md-block dropdown-toggle ps-2"><?php echo $acc['FirstName']?> <?php echo $acc['LastName']?></span>
-            </div>
-          </div>
+          <a class="nav-link nav-profile d-flex align-items-center pe-0" href="#" data-bs-toggle="dropdown">
+            <img src="public/assets/img/profile-img.jpg" alt="Profile" class="rounded-circle">
+            <span class="d-none d-md-block dropdown-toggle ps-2"><?php echo $acc['FirstName']?> <?php echo $acc['LastName']?></span>
           </a><!-- End Profile Iamge Icon -->
 
           <ul class="dropdown-menu dropdown-menu-end dropdown-menu-arrow profile">
             <li class="dropdown-header">
-              <h6>N/A</h6>
-              <span><?php echo $acc['FirstName']?> <?php echo $acc['LastName']?></span>
+              <h6><?php echo $acc['FirstName']?> <?php echo $acc['LastName']?></h6>
+              <span>Web Designer</span>
             </li>
             <li>
               <hr class="dropdown-divider">
@@ -234,13 +239,18 @@
               <hr class="dropdown-divider">
             </li>
 
-            
+            <li>
+              <a class="dropdown-item d-flex align-items-center" href="#">
+                <i class="bi bi-question-circle"></i>
+                <span>#Support</span>
+              </a>
+            </li>
             <li>
               <hr class="dropdown-divider">
             </li>
 
             <li>
-              <a class="dropdown-item d-flex align-items-center" href='dashboard/logout'>
+              <a class="dropdown-item d-flex align-items-center" href="dashboard/logout">
                 <i class="bi bi-box-arrow-right"></i>
                 <span>Sign Out</span>
               </a>
@@ -251,7 +261,6 @@
 
       </ul>
     </nav><!-- End Icons Navigation -->
-<!-- End Icons Navigation -->
 
   </header><!-- End Header -->
 
@@ -261,12 +270,11 @@
     <ul class="sidebar-nav" id="sidebar-nav">
 
       <li class="nav-item">
-        <a class="nav-link " href="dashboard">
+        <a class="nav-link collapsed" href="index.html">
           <i class="bi bi-grid"></i>
           <span>Dashboard</span>
         </a>
-      </li><!-- End Dashboard Nav -->     
-      
+      </li><!-- End Dashboard Nav -->
 
       <li class="nav-heading">Menus</li>
       <li class="nav-item">
@@ -328,14 +336,13 @@
 
   </aside><!-- End Sidebar-->
 
-
   <main id="main" class="main">
 
     <div class="pagetitle">
       <h1>Profile</h1>
       <nav>
         <ol class="breadcrumb">
-          <li class="breadcrumb-item"><a href="dashboard">Home</a></li>
+          <li class="breadcrumb-item"><a href="Dashboard">Home</a></li>
           <li class="breadcrumb-item">Users</li>
           <li class="breadcrumb-item active">Profile</li>
         </ol>
@@ -343,39 +350,23 @@
     </div><!-- End Page Title -->
 
     <section class="section profile">
-      <div class="row mx-2">
-      <?php if(session()->getTempdata('success')): ?>
-                  <div class='alert alert-success'><?= session()->getTempdata('success');?></div>
-                  <?php endif; ?> 
-
-                  <?php if(session()->getFlashdata('success')): ?>
-                  <div class='alert alert-success'><?= session()->getFlashdata('success');?></div>
-                  <?php endif; ?>
-
-                  <?php if(session()->getFlashdata('error')): ?>
-                  <div class='alert alert-danger'><?= session()->getFlashdata('error');?></div>
-                  <?php endif; ?>
-                  
-                  <?php if(session()->getTempdata('error')): ?>
-                  <div class='alert alert-danger'><?= session()->getTempdata('error');?></div>
-                  <?php endif; ?> 
-                  <?php if(isset($validation)):?>
-                      <div class="alert alert-danger"><?= $validation->listErrors();?></div>
-                  <?php endif;?> 
+      <div class="row">
         <div class="col-xl-4">
 
           <div class="card">
             <div class="card-body profile-card pt-4 d-flex flex-column align-items-center">
 
-              <img src="<?php echo base_url('upload/' .$acc_board['Photo']); ?>" alt="" class="rounded-circle">
+              <img src="public/assets/img/profile-img.jpg" alt="Profile" class="rounded-circle">
               <h2><?php echo $acc['FirstName']?> <?php echo $acc['LastName']?></h2>
+              <h3><?php echo $acc['Email']?></h3>
               <h3><?php echo $acc_board['Position']?></h3>
-              <div class="social-links mt-2">
-                <!--a href="#" class="twitter"><i class="bi bi-twitter"></i></a-->
+              <h3>0<?php echo $acc['Tel']?></h3>
+              <!--div class="social-links mt-2">
                 <a href="#" class="facebook"><i class="bi bi-facebook"></i></a>
+                <a href="#" class="twitter"><i class="bi bi-twitter"></i></a>
                 <a href="#" class="instagram"><i class="bi bi-instagram"></i></a>
                 <a href="#" class="linkedin"><i class="bi bi-linkedin"></i></a>
-              </div>
+              </div-->
             </div>
           </div>
 
@@ -386,19 +377,15 @@
           <div class="card">
             <div class="card-body pt-3">
               <!-- Bordered Tabs -->
-              <ul class="nav nav-tabs nav-tabs-bordered justify-content-center">
+              <ul class="nav nav-tabs nav-tabs-bordered">
 
                 <li class="nav-item">
-                  <button class="nav-link active" data-bs-toggle="tab" data-bs-target="profile-overview#">Profile Details</button>
+                  <button class="nav-link active" data-bs-toggle="tab" data-bs-target="#profile-overview">Overview</button>
                 </li>
 
                 <li class="nav-item">
                   <button class="nav-link" data-bs-toggle="tab" data-bs-target="#profile-edit">Edit Profile</button>
                 </li>
-
-                <!--li class="nav-item">
-                  <button class="nav-link" data-bs-toggle="tab" data-bs-target="#profile-settings">Settings</button>
-                </li-->
 
                 <li class="nav-item">
                   <button class="nav-link" data-bs-toggle="tab" data-bs-target="#profile-change-password">Change Password</button>
@@ -408,38 +395,39 @@
               <div class="tab-content pt-2">
 
                 <div class="tab-pane fade show active profile-overview" id="profile-overview">
-                  
-                  <div class="row mx-2">
+                  <h5 class="card-title">Profile Details</h5>
+
+                  <div class="row">
                     <div class="col-lg-3 col-md-4 label ">Full Name</div>
                     <div class="col-lg-9 col-md-8"><?php echo $acc['FirstName']?> <?php echo $acc['LastName']?></div>
                   </div>
 
-                  <div class="row mx-2">
+                  <div class="row">
                     <div class="col-lg-3 col-md-4 label">Company</div>
                     <div class="col-lg-9 col-md-8"><?php echo $acc_board['Company']?></div>
                   </div>
 
-                  <div class="row mx-2">
-                    <div class="col-lg-3 col-md-4 label">Role</div>
+                  <div class="row">
+                    <div class="col-lg-3 col-md-4 label">Position</div>
                     <div class="col-lg-9 col-md-8"><?php echo $acc_board['Position']?></div>
                   </div>
 
-                  <div class="row mx-2">
+                  <div class="row">
                     <div class="col-lg-3 col-md-4 label">Country</div>
                     <div class="col-lg-9 col-md-8">UGANDA</div>
                   </div>
 
-                  <div class="row mx-2">
+                  <div class="row">
                     <div class="col-lg-3 col-md-4 label">Address</div>
                     <div class="col-lg-9 col-md-8"><?php echo $acc_board['Address']?></div>
                   </div>
 
-                  <div class="row mx-2">
+                  <div class="row">
                     <div class="col-lg-3 col-md-4 label">Phone</div>
                     <div class="col-lg-9 col-md-8">0<?php echo $acc['Tel']?></div>
                   </div>
 
-                  <div class="row mx-2">
+                  <div class="row">
                     <div class="col-lg-3 col-md-4 label">Email</div>
                     <div class="col-lg-9 col-md-8"><?php echo $acc['Email']?></div>
                   </div>
@@ -447,95 +435,164 @@
                 </div>
 
                 <div class="tab-pane fade profile-edit pt-3" id="profile-edit">
+
                   <!-- Profile Edit Form -->
-                  <form action="#" method="post" accept-charset="utf-8">
+                  <form>
                     <div class="row mb-3">
                       <label for="profileImage" class="col-md-4 col-lg-3 col-form-label">Profile Image</label>
                       <div class="col-md-8 col-lg-9">
-                        <img src="assets/img/profile-img.jpg" alt="Profile">
-                        <div class="pt-2">
-                          <a href="#" class="btn btn-primary btn-sm" title="Upload new profile image"><i class="bi bi-upload"></i></a>
-                          <a href="#" class="btn btn-danger btn-sm" title="Remove my profile image"><i class="bi bi-trash"></i></a>
+                        <div id="image-container">
+                          <img id="profile-image" src="" class="rounded-circle" alt="">
+                          <i id="image-placeholder" class="bi bi-person-fill"></i>
                         </div>
+
+                        <div class="pt-2">
+                          <!--Button for image upload -->
+                          <label for="upload-input" class="btn btn-primary btn-sm" title="Upload new profile image">
+                            <i class="bi bi-upload"></i>
+                          </label>
+                          <input id="upload-input" type="file" style="display: none;">
+                          <!--Button to remove image -->
+                          <button class="btn btn-danger btn-sm" title="Remove my profile image" onclick="removeImage()">
+                            <i class="bi bi-trash"></i>
+                          </button>
+                        </div>
+                        <script>
+                          function removeImage() 
+                          {
+                            // Get the file input element
+                            var fileInput = document.getElementById("upload-input");
+
+                            // Reset the value of the file input
+                            fileInput.value = "";
+
+                            // Remove the selected image preview (if any)
+                            var imagePreview = document.getElementById("image-preview");
+                            if (imagePreview) {
+                              imagePreview.parentNode.removeChild(imagePreview);
+                            }
+                          }
+                        </script>
+
+                        <script>
+                          function handleFileInputChange(event) {
+                            var fileInput = event.target;
+                            var imageContainer = document.getElementById("image-container");
+                            var profileImage = document.getElementById("profile-image");
+                            var imagePlaceholder = document.getElementById("image-placeholder");
+
+                            if (fileInput.files && fileInput.files[0]) {
+                              var reader = new FileReader();
+
+                              reader.onload = function(e) {
+                                profileImage.src = e.target.result;
+                                imagePlaceholder.style.display = "none";
+                                imageContainer.classList.add("has-image");
+                              };
+
+                              reader.readAsDataURL(fileInput.files[0]);
+                            } else {
+                              profileImage.src = "";
+                              imagePlaceholder.style.display = "block";
+                              imageContainer.classList.remove("has-image");
+                            }
+                          }
+
+                          var uploadInput = document.getElementById("upload-input");
+                          uploadInput.addEventListener("change", handleFileInputChange);
+
+                        </script>
                       </div>
                     </div>
 
-                    <div class="row mb-3">
-                      <label for="fullName" class="col-md-4 col-lg-3 col-form-label">Full Name</label>
+                    <div class="row mb-2 d-flex">
+                      <label for="fullName" class="col-md-4 col-lg-3 col-form-label">Full Name:</label>
                       <div class="col-md-8 col-lg-9">
-                        <input name="fullName" type="text" class="form-control" id="fullName" value="<?php echo $acc['FirstName']?> <?php echo $acc['LastName']?>">
+                        <div class="row">
+                        <div class="col-md-6">
+                          <div class="form-floating">
+                            <input type="text" name="fname" class="form-control" id="firstname" value=<?php echo $acc['FirstName']?>>
+                            <label for="firstname">First Name:</label>
+                          </div>
+                        </div>
+
+                          <div class="col-md-6">
+                            <div class="form-floating">
+                              <input type="text" name="lname" class="form-control" id="lastname" value=<?php echo $acc['LastName']?>>
+                              <label for="lastname">Last Name:</label>
+                            </div>
+                          </div>
+                        </div>
+                        <!--input name="fullName" type="text" class="form-control" id="fullName" value=""-->
                       </div>
                     </div>
+
+                    <!--div class="row mb-3">
+                      <label for="about" class="col-md-4 col-lg-3 col-form-label">About</label>
+                      <div class="col-md-8 col-lg-9">
+                        <textarea name="about" class="form-control" id="about" style="height: 100px">Sunt est soluta temporibus accusantium neque nam maiores cumque temporibus. Tempora libero non est unde veniam est qui dolor. Ut sunt iure rerum quae quisquam autem eveniet perspiciatis odit. Fuga sequi sed ea saepe at unde.</textarea>
+                      </div>
+                    </div-->
 
                     <div class="row mb-3">
                       <label for="company" class="col-md-4 col-lg-3 col-form-label">Company</label>
                       <div class="col-md-8 col-lg-9">
-                        <input name="company" type="text" class="form-control" id="company" value="N/A">
+                        <input name="company" type="text" class="form-control" id="company" value=<?php echo $acc_board['Company']?>>
                       </div>
                     </div>
 
                     <div class="row mb-3">
-                      <label for="Job" class="col-md-4 col-lg-3 col-form-label">Postion</label>
+                      <label for="position" class="col-md-4 col-lg-3 col-form-label">Position</label>
                       <div class="col-md-8 col-lg-9">
-                        <input name="job" type="text" class="form-control" id="Job" value="N/A">
-                      </div>
-                    </div>
-
-                    <div class="row mb-3">
-                      <label for="Country" class="col-md-4 col-lg-3 col-form-label">Country</label>
-                      <div class="col-md-8 col-lg-9">
-                        <input name="country" type="text" class="form-control" id="Country" value="UGANDA">
+                        <input name="position" type="text" class="form-control" id="position" value=<?php echo $acc_board['Position']?>>
                       </div>
                     </div>
 
                     <div class="row mb-3">
                       <label for="Address" class="col-md-4 col-lg-3 col-form-label">Address</label>
                       <div class="col-md-8 col-lg-9">
-                        <input name="address" type="text" class="form-control" id="Address" value="N/A">
+                        <input name="address" type="text" class="form-control" id="Address" value=<?php echo $acc_board['Address']?>>
                       </div>
                     </div>
 
                     <div class="row mb-3">
                       <label for="Phone" class="col-md-4 col-lg-3 col-form-label">Phone</label>
                       <div class="col-md-8 col-lg-9">
-                        <input name="phone" type="text" class="form-control" id="Phone" value="0<?php echo $acc['Tel']?>">
+                        <input name="phone" type="text" class="form-control" id="Phone" value=<?php echo $acc['Tel']?>>
                       </div>
                     </div>
 
                     <div class="row mb-3">
                       <label for="Email" class="col-md-4 col-lg-3 col-form-label">Email</label>
                       <div class="col-md-8 col-lg-9">
-                        <input name="email" type="email" class="form-control" id="Email" value="<?php echo $acc['Email']?>">
+                        <input name="email" type="email" class="form-control" id="Email" value=<?php echo $acc['Email']?>>
                       </div>
                     </div>
 
-                    <div class="row mb-3">
-                      <label for="Twitter" class="col-md-4 col-lg-3 col-form-label">Twitter Profile</label>
-                      <div class="col-md-8 col-lg-9">
-                        <input name="twitter" type="text" class="form-control" id="Twitter" value="https://twitter.com/#">
+                    <!--div class="row mb-3 d-flex">
+                      <div class="col-md-6">
+                      <label for="Socials" class="socials col-md-4 col-lg-3 col-form-label">Socials:</label>
+                      <p class="Socials">(Please provide the necessary social network links)</p>
                       </div>
-                    </div>
-
-                    <div class="row mb-3">
-                      <label for="Facebook" class="col-md-4 col-lg-3 col-form-label">Facebook Profile</label>
-                      <div class="col-md-8 col-lg-9">
-                        <input name="facebook" type="text" class="form-control" id="Facebook" value="https://facebook.com/#">
+                      <div class="row d-flex mb-3">
+                        <div class="col-md-6">
+                          <div class="form-floating">
+                            <input name="twitter" type="text" class="form-control" id="Twitter" placeholder="">
+                            <label for="Twitter">Twitter:</label>
+                          </div>
+                        </div>
+                        <div class="col-md-6">
+                          <input name="facebook" type="text" class="form-control" id="Facebook" placeholder="https://facebook.com/#">
+                        </div>
                       </div>
-                    </div>
 
-                    <div class="row mb-3">
-                      <label for="Instagram" class="col-md-4 col-lg-3 col-form-label">Instagram Profile</label>
-                      <div class="col-md-8 col-lg-9">
+                      <div class="col-md-6">
                         <input name="instagram" type="text" class="form-control" id="Instagram" value="https://instagram.com/#">
                       </div>
-                    </div>
-
-                    <div class="row mb-3">
-                      <label for="Linkedin" class="col-md-4 col-lg-3 col-form-label">Linkedin Profile</label>
-                      <div class="col-md-8 col-lg-9">
-                        <input name="linkedin" type="text" class="form-control" id="Linkedin" value="https://linkedin.com/#">
+                      <div class="col-md-6">
+                        <input name="linkedln" type="text" class="form-control" id="Linkedln" value="https://linkedln.com/#">
                       </div>
-                    </div>
+                    </div-->
 
                     <div class="text-center">
                       <button type="submit" class="btn btn-primary">Save Changes</button>
@@ -544,12 +601,14 @@
 
                 </div>
 
+                
+
                 <div class="tab-pane fade pt-3" id="profile-change-password">
                   <!-- Change Password Form -->
                   <form>
 
                     <div class="row mb-3">
-                      <label for="currentPassword" class="col-md-4 col-lg-3 col-form-label">Current Password</label>
+                      <label for="currentPassword" class="col-md-4 col-lg-3 col-form-label">Old Password</label>
                       <div class="col-md-8 col-lg-9">
                         <input name="password" type="password" class="form-control" id="currentPassword">
                       </div>
@@ -573,6 +632,27 @@
                       <button type="submit" class="btn btn-primary">Change Password</button>
                     </div>
                   </form><!-- End Change Password Form -->
+                  <script>
+                  var passwordForm = document.getElementById("passwordForm");
+
+                  passwordForm.addEventListener("submit", function(event) {
+                    event.preventDefault();
+
+                    var currentPassword = document.getElementById("currentPassword").value;
+                    var newPassword = document.getElementById("newPassword").value;
+                    var renewPassword = document.getElementById("renewPassword").value;
+
+                    if (newPassword !== renewPassword) {
+                      alert("New password and re-entered password do not match.");
+                    } else if (newPassword === currentPassword) {
+                      alert("New password must be different from the old password.");
+                    } else {
+                      // Perform password change logic here
+                      alert("Password changed successfully.");
+                      passwordForm.reset();
+                    }
+                  });
+                </script>
 
                 </div>
 
@@ -584,6 +664,7 @@
         </div>
       </div>
     </section>
+
   </main><!-- End #main -->
 
   <!-- ======= Footer ======= -->
@@ -597,25 +678,18 @@
   <a href="#" class="back-to-top d-flex align-items-center justify-content-center"><i class="bi bi-arrow-up-short"></i></a>
 
   <!-- Vendor JS Files -->
-  <script src="assets/vendor/apexcharts/apexcharts.min.js"></script>
-  <script src="assets/vendor/bootstrap/js/bootstrap.bundle.js"></script>
-  <script src="assets/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
-  <script src="assets/vendor/chart.js/chart.umd.js"></script>
-  <script src="assets/vendor/echarts/echarts.min.js"></script>
-  <script src="assets/vendor/quill/quill.min.js"></script>
-  <script src="assets/vendor/simple-datatables/simple-datatables.js"></script>
-  <script src="assets/vendor/tinymce/tinymce.min.js"></script>
-  <script src="assets/vendor/php-email-form/validate.js"></script>
-
-  <!-- Bootstrap JS Files -->
-  <script src="assets/vendor/bootstrap/js/bootstrap.bundle.js"></script>
-  <script src="assets/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
-  <script src="assets/vendor/bootstrap/js/bootstrap.js"></script>
-  <script src="assets/vendor/bootstrap/js/bootstrap.min.js"></script>
+  <script src="public/assets/vendor/apexcharts/apexcharts.min.js"></script>
+  <script src="public/assets/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+  <script src="public/assets/vendor/chart.js/chart.umd.js"></script>
+  <script src="public/assets/vendor/echarts/echarts.min.js"></script>
+  <script src="public/assets/vendor/quill/quill.min.js"></script>
+  <script src="public/assets/vendor/simple-datatables/simple-datatables.js"></script>
+  <script src="public/assets/vendor/tinymce/tinymce.min.js"></script>
+  <script src="public/assets/vendor/php-email-form/validate.js"></script>
 
   <!-- Template Main JS File -->
-  <script src="assets/js/main.js"></script>
-  
+  <script src="public/assets/js/main.js"></script>
+
 </body>
 
 </html>

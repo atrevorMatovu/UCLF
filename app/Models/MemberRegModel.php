@@ -2,6 +2,7 @@
 namespace App\Models;
 
 use CodeIgniter\Model;
+use PharIo\Manifest\Email;
 
 class MemberRegModel extends Model
 
@@ -29,6 +30,44 @@ class MemberRegModel extends Model
         $builder = $this->db->table('members');
         $res = $builder->insert($data);
        if($this->db->affectedRows()==1)
+        {
+            return true;
+        }else{
+            return false;
+        }
+    }
+
+    public function updatePassword($id, $data)
+    {
+      $memberRegModel = new MemberRegModel();
+        $builder = $memberRegModel->builder();
+        $builder = $this->db->table('members');
+        $builder->set('Password', $data);
+        $builder->where('user_id', $id);
+        $builder->update();
+        if($this->db->affectedRows()==1)
+        {
+            return true;
+        }else{
+            return false;
+        }
+    }
+
+    public function updateUser($id, $data)
+    {
+      $memberRegModel = new MemberRegModel();
+        $builder = $memberRegModel->builder();
+        $builder = $this->db->table('members');
+        $builder->set([
+          'FirstName' => $data['FirstName'],
+          'LastName'  => $data['LastName'],
+          'Email'     => $data['Email'],
+          'Tel'       => $data['Tel'],
+          'Photo'     => $data['Photo']
+        ]);
+        $builder->where('user_id', $id);
+        $builder->update();
+        if($this->db->affectedRows()==1)
         {
             return true;
         }else{

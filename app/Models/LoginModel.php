@@ -41,6 +41,15 @@ class loginModel extends Model
         return $result;        
     }
 
+    public function verifyUser($id)
+    {
+        $builder = $this->db->table('members');
+        $builder->select("user_id, Email, FirstName, LastName, Membership_type, Tel, Account_status");
+        $builder->where('user_id', $id);
+        $result = $builder->get()->getRowArray();
+        return $result;           
+    }
+
     public function verifyEmailAndPassword($email, $password)
     {
     $builder = $this->db->table('members');

@@ -177,7 +177,7 @@
 											<i class="bi bi-people-fill"></i>
 										</div>
 								</span>
-								<select id="gender" name="gender" class="form-select" placeholder="Select your gender:" value='<?= set_value('gender')?>' required>
+								<select id="gender" name="gender" class="form-select pt-2" placeholder="Select your gender:" value='<?= set_value('gender')?>' required>
 								<option value="">Select your gender:</option>
 								<option value="male">Male</option>
 								<option value="female">Female</option>

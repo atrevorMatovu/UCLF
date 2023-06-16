@@ -322,11 +322,11 @@ footer {
 
 .card-body {
   padding: 0 20px 20px 20px;
-  display: flex;
+  display: block;
 }
 .card-body-profile {
   padding: 0 20px 20px 20px;
-  
+
 }
 
 .card-img-overlay {
@@ -973,6 +973,12 @@ footer {
   position: absolute;
   right: 0px;
   top: 15px;
+}
+.socials{
+  text-align: center;
+  color:#041175;
+  align-content: center;
+  justify-content: center;
 }
 
 .dashboard .filter .icon {

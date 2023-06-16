@@ -60,13 +60,13 @@ $routes->get('pwdReset/(:any)', 'Password_reset::index/$1');
 $routes->get('onboard', 'AccDashboard::onboarding');
 $routes->post('onboard', 'AccDashboard::onboarding');
 $routes->add('onboard', 'AccDashboard::onboarding');
-$routes->get('dummy', 'Login::dummy');
 
 //DASHBOARDS
 $routes->get('dashboard', 'AccDashboard::userdash');
 $routes->get('admin', 'AccDashboard::adminDash');
 $routes->get('dashboard/logout', 'AccDashboard::logout');
 $routes->get('userprofile', 'AccDashboard::profDash');
+$routes->post('userprofile', 'AccDashboard::profDash');
 $routes->get('forum', 'AccDashboard::forum');
 $routes->group('', ['filter'=>'isLoggedIn'],function($routes)
 {

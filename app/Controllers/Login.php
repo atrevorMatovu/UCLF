@@ -101,7 +101,7 @@ class Login extends BaseController
                         if($userdata['Account_status'] == 'Pending')
                         {/**while Account_status is 'Pending'
                             redirect to onboard page */
-                            $this->session->set('loggedInUser', $userdata);
+                            $this->session->set('loggedInUser', $userdata['user_id']);
 
                             /**Matching the user_id(onboarding) with the signup(user_id)*/
                             $has_onboarded = $this->onboardModel->getUsers($userdata['user_id']);
@@ -109,7 +109,7 @@ class Login extends BaseController
                             if($has_onboarded['user_id'] || $notOnboard)
                             {
                                 session()->setFlashdata('success', 'Welcome aboard the UCLF experience ' .$userdata['FirstName'].' '.$userdata['LastName']);
-                                return redirect()->to('userprofile');
+                                return redirect()->to('dashboard');
                             }
                             else
                             {

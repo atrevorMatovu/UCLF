@@ -33,12 +33,32 @@ class onboardModel extends Model
         }
     }
 
+    public function updateUser($id, $data)
+    {
+      $onboardModel = new OnboardModel();
+        $builder = $onboardModel->builder();
+        $builder = $this->db->table('membship');
+        $builder->set([
+          'Company' => $data['Company'],
+          'Position'  => $data['Position'],
+          'Address'     => $data['Address']
+        ]);
+        $builder->where('user_id', $id);
+        $builder->update();
+        if($this->db->affectedRows()==1)
+        {
+            return true;
+        }else{
+            return false;
+        }
+    }
+
     public function getUsers($id)
     {
         $onboardModel = new OnboardModel();
         $builder = $onboardModel->builder();
         $builder = $this->db->table('membship');
-        $builder->select('*');
+        $builder->select('Region, State, City, Address, Company, Position, Practice_area, user_id, Photo');
         $builder->where('user_id', $id);
         $res = $builder->get()->getRowArray();
         return $res;
