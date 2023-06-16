@@ -195,7 +195,7 @@
     
         <li class="nav-item dropdown pe-3">
 
-          <a class="nav-link nav-profile d-flex align-items-center justify-content-center pe-0" href="bi bi-person-circle" data-bs-toggle="dropdown">
+          <a class="nav-link nav-profile d-flex align-items-center justify-content-center pe-0" href="" data-bs-toggle="dropdown">
           <div class="label">
             <div class="icon">
               <i class="bi bi-person-circle align-items-center justify-content-center"></i> 
@@ -225,9 +225,9 @@
             </li>
 
             <li>
-              <a class="dropdown-item d-flex align-items-center" href="userprofile">
+              <a class="dropdown-item d-flex align-items-center" href="#">
                 <i class="bi bi-gear"></i>
-                <span>#Account Settings</span>
+                <span>#Forum</span>
               </a>
             </li>
             <li>
@@ -367,9 +367,9 @@
           <div class="card">
             <div class="card-body profile-card pt-4 d-flex flex-column align-items-center">
 
-              <img src="assets/img/profile-img.jpg" alt="Profile" class="rounded-circle">
+              <img src="<?php echo base_url('upload/' .$acc_board['Photo']); ?>" alt="" class="rounded-circle">
               <h2><?php echo $acc['FirstName']?> <?php echo $acc['LastName']?></h2>
-              <h3>N/A</h3>
+              <h3><?php echo $acc_board['Position']?></h3>
               <div class="social-links mt-2">
                 <!--a href="#" class="twitter"><i class="bi bi-twitter"></i></a-->
                 <a href="#" class="facebook"><i class="bi bi-facebook"></i></a>
@@ -384,7 +384,7 @@
         <div class="col-xl-8">
 
           <div class="card">
-            <div class="card-body-profile pt-3">
+            <div class="card-body pt-3">
               <!-- Bordered Tabs -->
               <ul class="nav nav-tabs nav-tabs-bordered justify-content-center">
 
@@ -416,12 +416,12 @@
 
                   <div class="row mx-2">
                     <div class="col-lg-3 col-md-4 label">Company</div>
-                    <div class="col-lg-9 col-md-8">N/A</div>
+                    <div class="col-lg-9 col-md-8"><?php echo $acc_board['Company']?></div>
                   </div>
 
                   <div class="row mx-2">
                     <div class="col-lg-3 col-md-4 label">Role</div>
-                    <div class="col-lg-9 col-md-8">N/A</div>
+                    <div class="col-lg-9 col-md-8"><?php echo $acc_board['Position']?></div>
                   </div>
 
                   <div class="row mx-2">
@@ -431,7 +431,7 @@
 
                   <div class="row mx-2">
                     <div class="col-lg-3 col-md-4 label">Address</div>
-                    <div class="col-lg-9 col-md-8">N/A</div>
+                    <div class="col-lg-9 col-md-8"><?php echo $acc_board['Address']?></div>
                   </div>
 
                   <div class="row mx-2">
@@ -446,7 +446,7 @@
 
                 </div>
 
-                <div class="tab-pane fade profile-edit pt-3" id="#profile-edit">
+                <div class="tab-pane fade profile-edit pt-3" id="profile-edit">
                   <!-- Profile Edit Form -->
                   <form action="#" method="post" accept-charset="utf-8">
                     <div class="row mb-3">
@@ -544,43 +544,6 @@
 
                 </div>
 
-                <!--div class="tab-pane fade pt-3" id="profile-settings">
-
-                  <! Settings Form -->
-                  <!--form>
-
-                    <div class="row mb-3">
-                      <label for="fullName" class="col-md-4 col-lg-3 col-form-label">Email Notifications</label>
-                      <div class="col-md-8 col-lg-9">
-                        <div class="form-check">
-                          <input class="form-check-input" type="checkbox" id="changesMade" checked>
-                          <label class="form-check-label" for="changesMade">
-                            Changes made to your account
-                          </label>
-                        </div>
-                        <div class="form-check">
-                          <input class="form-check-input" type="checkbox" id="newProducts" checked>
-                          <label class="form-check-label" for="newProducts">
-                            Updates
-                          </label>
-                        </div>
-                        
-                        <div class="form-check">
-                          <input class="form-check-input" type="checkbox" id="securityNotify" checked disabled>
-                          <label class="form-check-label" for="securityNotify">
-                            Security alerts
-                          </label>
-                        </div>
-                      </div>
-                    </div>
-
-                    <div class="text-center">
-                      <button type="submit" class="btn btn-primary">Save Changes</button>
-                    </div>
-                  </form--><!-- End settings Form>
-
-                </div-->
-
                 <div class="tab-pane fade pt-3" id="profile-change-password">
                   <!-- Change Password Form -->
                   <form>
@@ -621,7 +584,6 @@
         </div>
       </div>
     </section>
-
   </main><!-- End #main -->
 
   <!-- ======= Footer ======= -->

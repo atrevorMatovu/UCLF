@@ -91,11 +91,14 @@
                 </div>
 
                   <div class="card2 col-lg-7 col-md-6 d-flex flex-column pt-0 pb-1">
-                    <div>
+                    <!--div>
                         <h5 class="card-title text-center pb-0 fs-4">Setup Your Account</h5>
                         <p class="text-center small">Fill in the provided fields to get started.</p>
+                    </div-->
+                    <div>
+                    <div class="text-center card-title"><h3 class="pt-2 pb-0 fs-4">UCLF Account Onboarding Form.</h3>
+                    <div class="small"><p>Please provide the necessary information as required:</p></div>
                     </div>
-                    <div class="text-center"><h3 class=" pb-0 fs-4">UCLF Account Onboarding Form.</h3>
 
                     <?php if(session()->getFlashdata('success')): ?>
                     <div class='alert alert-success'><?= session()->getFlashdata('success');?></div>
@@ -112,7 +115,7 @@
                         <div class="alert alert-danger"><?= $validation->listErrors();?></div>
                     <?php endif;?> 
 
-                    <p>Please provide the necessary information as required:</p>
+                    
                     <!--div>
                     <label>
                         <input type="radio" name="membership_type" value="individual" onchange="showForm('individual')" checked> Individual
@@ -135,7 +138,8 @@
                     
                     <!--FORMS-->
                     <form action="http://localhost/UCLF/onboard" method="post" accept-charset="utf-8">
-                            <div class="pull-right">
+                      <div vlass="row g-3">
+                              <div class="pull-right">
                             
                                 <div class="col-12 mx-3">
                                     <h3>Location:<h3>
@@ -228,10 +232,10 @@
 
                                 <div class="col-12 d-flex pt-1">
                                 <div class="col-md-6 col-12 mx-2 pt-2 pb-0.2">
-                                <lable for="photo">Photo/Company Logo<p class="examples">(200px x 200px):</p></lable>
+                                <lable for="photo">Photo/Company Logo<p class="examples">(500px by 500px):</p></lable>
                                 </div>
                                 <div class="col-md-4 col-12 pt-2 pb-0.2 form-floating">                                  
-                                  <input type="file" name="photo" accept="image/*">
+                                  <input type="file" name="photo" >
                                   <!--input type="submit" value="Upload"-->
                                 </div>
                                 </div>
@@ -243,6 +247,7 @@
                                
                             </div>
                         </div>
+                      </div>
                     </form>
                   </div>
                 <div class="copyright justify-content-center pb-1 text-center">

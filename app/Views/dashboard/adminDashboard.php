@@ -194,15 +194,15 @@
           <!-- <i class="bi bi-person-circle"></i> -->
             <img src= alt="bi bi-person-circle" class="rounded-circle">
             <div class="label">
-                <span class="d-none d-md-block dropdown-toggle ps-2">K. Anderson</span>
+                <span class="d-none d-md-block dropdown-toggle ps-2"><?php echo $acc['username']?></span>
             </div>
           </div>
           </a><!-- End Profile Iamge Icon -->
 
           <ul class="dropdown-menu dropdown-menu-end dropdown-menu-arrow profile">
             <li class="dropdown-header">
-              <h6>Kevin Anderson</h6>
-              <span>Web Designer</span>
+              <h6><?php echo $acc['username']?></h6>
+              <span>Admin</span>
             </li>
             <li>
               <hr class="dropdown-divider">
@@ -219,9 +219,9 @@
             </li>
 
             <li>
-              <a class="dropdown-item d-flex align-items-center" href="users-profile.html">
+              <a class="dropdown-item d-flex align-items-center" href="forum">
                 <i class="bi bi-gear"></i>
-                <span>Account Settings</span>
+                <span>Forum</span>
               </a>
             </li>
             <li>
@@ -302,16 +302,16 @@
       <li class="nav-item">
         <a class="nav-link collapsed" href="#">
           <i class="bi bi-person"></i>
-          <span>Profile</span>
+          <span>#Profile</span>
         </a>
       </li><!-- End Profile Page Nav -->
 
       <li class="nav-item">
-        <a class="nav-link collapsed" href="#">
+        <a class="nav-link collapsed" href="forum">
           <i class="bi bi-gear"></i>
-          <span>Settings</span>
+          <span>#Forum</span>
         </a>
-      </li><!-- End Settings Nav -->
+      </li><!-- End Forum Nav -->
 
       
       <li class="nav-item">

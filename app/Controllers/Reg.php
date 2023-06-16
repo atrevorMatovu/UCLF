@@ -4,13 +4,14 @@ namespace App\Controllers;
 
 use App\Controllers\BaseController;
 use App\Models\MemberRegModel;
-use App\Models\OnboardModel;
+use App\Models\LoginModel;
 use CodeIgniter\I18n\Time;
 
 class Reg extends BaseController
 {
     public $memberRegModel;
     public $onboardModel;
+    public $loginModel;
     public $session;
     public $email;
     public function __construct()
@@ -18,6 +19,7 @@ class Reg extends BaseController
         helper(['form', 'html', 'date', 'time']);
         $db = db_connect(); 
         $this->memberRegModel = new MemberRegModel();
+        $this->loginModel = new LoginModel();
         $this->session = \Config\Services::session();
         $this->email = \Config\Services::email();
     }
@@ -208,110 +210,5 @@ class Reg extends BaseController
 
       }
 
-      public function onboarding($id = null)
-      {
-        $data = [];
-        $data['validation'] = null;
-        $email = \Config\Services::email();
-        $this->session = \Config\Services::session();
-        
-        if($this->request->getPost())
-        {
-            $rules = [
-                'region' =>[
-                    'rules'=> 'required',
-                    'errors'=> [
-                        'required'=>'Region is required',
-                    ]
-                ],
-                'state' =>[
-                    'rules'=> 'required|alpha_space',
-                    'errors'=> [
-                        'required'=>'State name is required',
-                        'alpha_space'=>'Name can only be of alphabets'
-                    ]
-                ],
-                'city' =>[
-                    'rules'=> 'required|alpha_space',
-                    'errors'=> [
-                        'required'=>'City name is required',
-                        'alpha_space'=>'City name can only be of alphabets'
-                    ]
-                ],
-                'address' =>[
-                    'rules'=>'required|alpha_numeric_space',
-                    'errors'=> [
-                        'required'=>'Address is required',
-                        'alpha_numeric_space'=>'Address name can only be of alphanumerics and space'
-                    ],
-                ],
-                'practice_area' =>[
-                    'rules'=>'required',
-                    'errors'=> [
-                        'required'=>'Choose your practice areas.',
-                    ],
-                ],
-                'company' =>[
-                    'rules'=>'required|alpha_numeric_space',
-                    'errors'=> [
-                        'required'             => 'Company name is required.',
-                        'alpha_numeric_space'  => 'Company name can only be of alphanumerics and space'
-                    ],
-                ],
-                'position' =>[
-                    'rules'=>'required|alpha_space',
-                    'errors'=> [
-                        'required'      => 'Company name is required.',
-                        'alpha_space'   => 'Company name can only be of alphabets and space'
-                    ],
-                ],
-                'photo'   =>[
-                    'rules'=>'uploaded[photo]|max_dims[photo,500,500]',
-                    'errors'=> [
-                        'uploaded[photo]' => 'Photo/Logo is required',
-                        'max_dims[photo,500,500]'=>'Photo/Logo size is exceeding limit',
-                    ],
-                ]
-            ];
-            if($this->validate($rules))
-            {
-                $user = $this->memberRegModel->getUserID($id);
-                $user_id = $user['user_id'];
-                $status = $user['Account_status'];
-                $membership = $user['Membership_type'];
-                $userdata = [
-                    'Region' => $this->request->getVar('region'),
-                    'State' => $this->request->getVar('state'),
-                    'City' => $this->request->getVar('city'),
-                    'Address' => $this->request->getVar('address'),
-                    'Company' => $this->request->getVar('company'),
-                    'Position' => $this->request->getVar('position'),
-                    'Practice_area' => $this->request->getVar('practice_area'),
-                    'Photo' => $this->request->getVar('photo'),
-                    'Membership_type'=> $membership,
-                    'Account_status' => $status,
-                    'user_id' => $user_id,
-                    'activation_date' => date("Y-m-d h:i:s")
-                ];
-
-                $onboard = $this->onboardModel->createUser($userdata);
-                if($onboard)
-                {
-                    $this->session->setFlashdata('success', 'Account setup successful, please await a notification to access the dashboard.');
-                    return redirect()->to('userprofile');
-                } 
-                else
-                {
-                    $this->session->setFlashdata('error', 'Account setup failed, contact admin!.');
-                    return redirect()->to('/'); 
-                }
-            }
-            else
-            {
-                $data['validation'] = $this->validator;
-            }
-        }
-
-        return view('auth/onboarding', $data);
-      }
+      
 }

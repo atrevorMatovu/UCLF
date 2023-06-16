@@ -6,12 +6,12 @@ namespace App\Models;
 
 use CodeIgniter\Model;
 
-class loginModel extends Model
+class onboardModel extends Model
 {
     protected $table      = 'membship';
     protected $primaryKey = 'id';
 
-    protected $allowedFields = ['Region', 'State', 'City', 'Address', 'Membership_type', 'Company', 'Position', 'Practice_area', 'user_id', 'Photo', 'Account_status','user_id','activation_date'];
+    protected $allowedFields = ['Region', 'State', 'City', 'Address', 'Company', 'Position', 'Practice_area', 'user_id', 'Photo', 'user_id', 'activation_date'];
 
     protected $useTimestamps = false;
     protected $dateFormat    = 'datetime';
@@ -21,8 +21,8 @@ class loginModel extends Model
    
     public function createUser($data)
     {
-        //$onboardModel = new OnboardModel();
-        //$builder = $onboardModel->builder();
+        $onboardModel = new OnboardModel();
+        $builder = $onboardModel->builder();
         $builder = $this->db->table('membship');
         $res = $builder->insert($data);
         if($this->db->affectedRows()==1)
@@ -31,6 +31,17 @@ class loginModel extends Model
         }else{
             return false;
         }
+    }
+
+    public function getUsers($id)
+    {
+        $onboardModel = new OnboardModel();
+        $builder = $onboardModel->builder();
+        $builder = $this->db->table('membship');
+        $builder->select('*');
+        $builder->where('user_id', $id);
+        $res = $builder->get()->getRowArray();
+        return $res;
     }
     
     public function verifyUserid($id) 

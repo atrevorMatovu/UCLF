@@ -30,6 +30,14 @@ class AdminModel extends Model
         $result = $builder->get()->getRowArray();
         return $result;        
     }
+    public function getEmail($email)
+    {
+        $builder = $this->db->table('admins');
+        $builder->select("email, password, username");
+        $builder->where('email', $email);
+        $res = $builder->get()->getRow();
+        return $res;   
+    }
 
     public function verifyPassword($pwd)
     {

@@ -25,6 +25,7 @@
   <link href="public/assets/vendor/quill/quill.bubble.css" rel="stylesheet">
   <link href="public/assets/vendor/remixicon/remixicon.css" rel="stylesheet">
   <link href="public/assets/vendor/simple-datatables/style.css" rel="stylesheet">
+  
 
   <!-- Template Main CSS File -->
   <link href="public/assets/css/style.css" rel="stylesheet">
@@ -469,90 +470,59 @@
 
         <!-- Right side columns -->
         <div class="col-lg-4">
-
-          <!-- Recent Activity -->
-          <div class="card">
-            <div class="filter">
-              <a class="icon" href="#" data-bs-toggle="dropdown"><i class="bi bi-three-dots"></i></a>
-              <ul class="dropdown-menu dropdown-menu-end dropdown-menu-arrow">
-                <li class="dropdown-header text-start">
-                  <h6>Filter</h6>
-                </li>
-
-                <li><a class="dropdown-item" href="#">Today</a></li>
-                <li><a class="dropdown-item" href="#">This Month</a></li>
-                <li><a class="dropdown-item" href="#">This Year</a></li>
-              </ul>
-            </div>
-
-            <!--div class="card-body">
-              <h5 class="card-title">Recent Activity <span>| Today</span></h5>
-
-              <div class="activity">
-
-                <div class="activity-item d-flex">
-                  <div class="activite-label">32 min</div>
-                  <i class='bi bi-circle-fill activity-badge text-success align-self-start'></i>
-                  <div class="activity-content">
-                    Quia quae rerum <a href="#" class="fw-bold text-dark">explicabo officiis</a> beatae
+          <!-- User Info -->
+          <div class="card-dash">
+                <h5 class="card-title fs-4 text-center">Calendar </h5>
+                  <div class="calendar-bar">
+                    <button class="prev soft-btn"><i class="fas fa-chevron-left"></i></button>
+                    <div class="current-month"></div>
+                    <button class="next soft-btn"><i class="fas fa-chevron-right"></i></button>
                   </div>
-                </div><!-- End activity item-->
-
-                <!--div class="activity-item d-flex">
-                  <div class="activite-label">56 min</div>
-                  <i class='bi bi-circle-fill activity-badge text-danger align-self-start'></i>
-                  <div class="activity-content">
-                    Voluptatem blanditiis blanditiis eveniet
+                  <div class="calendar">
+                    <div class="weekdays-name">
+                      <div class="days-name">Sa</div>
+                      <div class="days-name">Su</div>
+                      <div class="days-name">Mo</div>
+                      <div class="days-name">Tu</div>
+                      <div class="days-name">We</div>
+                      <div class="days-name">Th</div>
+                      <div class="days-name">Fr</div>
+                    </div>
+                    <div class="calendar-days"></div>
                   </div>
-                </div--><!-- End activity item-->
-
-                <!--div class="activity-item d-flex">
-                  <div class="activite-label">2 hrs</div>
-                  <i class='bi bi-circle-fill activity-badge text-primary align-self-start'></i>
-                  <div class="activity-content">
-                    Voluptates corrupti molestias voluptatem
                   </div>
-                </div--><!-- End activity item-->
-              <!--/div>
+            <!-- End User Info -->
 
-            </div>
-          </div--><!-- End Recent Activity -->
+          <!-- Calendar -->
+            <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.13.0/css/all.min.css" rel="stylesheet" >
+              <div class="softcard">
+                <h5 class="card-title fs-4 text-center">Calendar </h5>
+                  <div class="calendar-bar">
+                    <button class="prev soft-btn"><i class="fas fa-chevron-left"></i></button>
+                    <div class="current-month"></div>
+                    <button class="next soft-btn"><i class="fas fa-chevron-right"></i></button>
+                  </div>
+                  <div class="calendar">
+                    <div class="weekdays-name">
+                      <div class="days-name">Sa</div>
+                      <div class="days-name">Su</div>
+                      <div class="days-name">Mo</div>
+                      <div class="days-name">Tu</div>
+                      <div class="days-name">We</div>
+                      <div class="days-name">Th</div>
+                      <div class="days-name">Fr</div>
+                    </div>
+                    <div class="calendar-days"></div>
+                  </div>
+                  <!--div class="goto-buttons">
+                    <button type="button" class="btn1 prev-year">Prev Year</button>
+                    <button type="button" class="btn1 today">Today</button>
+                    <button type="button" class="btn1 next-year">Next Year</button>
+                  </div-->
+              </div>
+            <!-- End Calendar -->           
 
-          <!-- Budget Report -->
-          <div class="card">
-            <div class="filter">
-              <a class="icon" href="#" data-bs-toggle="dropdown"><i class="bi bi-three-dots"></i></a>
-              <ul class="dropdown-menu dropdown-menu-end dropdown-menu-arrow">
-                <li class="dropdown-header text-start">
-                  <h6>Filter</h6>
-                </li>
-
-                <li><a class="dropdown-item" href="#">Today</a></li>
-                <li><a class="dropdown-item" href="#">This Month</a></li>
-                <li><a class="dropdown-item" href="#">This Year</a></li>
-              </ul>
-            </div>
-
-            
-
-          <!-- Website Traffic -->
-          <div class="card">
-            <div class="filter">
-              <a class="icon" href="#" data-bs-toggle="dropdown"><i class="bi bi-three-dots"></i></a>
-              <ul class="dropdown-menu dropdown-menu-end dropdown-menu-arrow">
-                <li class="dropdown-header text-start">
-                  <h6>Filter</h6>
-                </li>
-
-                <li><a class="dropdown-item" href="#">Today</a></li>
-                <li><a class="dropdown-item" href="#">This Month</a></li>
-                <li><a class="dropdown-item" href="#">This Year</a></li>
-              </ul>
-            </div>
-
-            
-
-         </div><!-- End Right side columns -->
+          </div><!-- End Right side columns -->
 
       </div>
     </section>

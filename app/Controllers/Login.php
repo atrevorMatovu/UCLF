@@ -4,12 +4,15 @@ namespace App\Controllers;
 
 use App\Controllers\BaseController;
 use App\Models\LoginModel;
+use App\Models\OnboardModel;
 use App\Models\AdminModel;
+use CodeIgniter\Session\Session;
 use CodeIgniter\I18n\Time;
 
 class Login extends BaseController
 {
     public $loginModel;
+    public $onboardModel;
     public $adminModel;
     public $session;
     public $email;
@@ -21,7 +24,8 @@ class Login extends BaseController
         $db = db_connect();
         
         $this->loginModel = new LoginModel();
-        $this->adminModel = new adminModel();
+        $this->adminModel = new AdminModel();
+        $this->onboardModel = new OnboardModel();
         $this->session = \Config\Services::session();
         $this->email = \Config\Services::email();
        //$request = \Config\Services::request();
@@ -95,11 +99,24 @@ class Login extends BaseController
                     if(password_verify($Password, $userdata['Password']))
                     {
                         if($userdata['Account_status'] == 'Pending')
-                        {/**while(['Account_status'] == 'Pending')
+                        {/**while Account_status is 'Pending'
                             redirect to onboard page */
                             $this->session->set('loggedInUser', $userdata);
-                            session()->setFlashdata('success', 'Welcome aboard the UCLF experience ' .$userdata['FirstName'].' '.$userdata['LastName']);
-                            return redirect()->to('onboard');
+
+                            /**Matching the user_id(onboarding) with the signup(user_id)*/
+                            $has_onboarded = $this->onboardModel->getUsers($userdata['user_id']);
+                            $notOnboard    = $this->session->get('onboarding_completed');
+                            if($has_onboarded['user_id'] || $notOnboard)
+                            {
+                                session()->setFlashdata('success', 'Welcome aboard the UCLF experience ' .$userdata['FirstName'].' '.$userdata['LastName']);
+                                return redirect()->to('userprofile');
+                            }
+                            else
+                            {
+                                session()->setFlashdata('success', 'Welcome '.$userdata['FirstName'].', kindly proceed to setup your account.');
+                                return redirect()->to('onboard');
+                            }
+                            
                         }
                         else if($userdata['Account_status'] == 'Approved')
                         {
@@ -210,5 +227,9 @@ class Login extends BaseController
 
         }
         return View("auth/forgotpwdView", $data);
+    }
+
+    public function dummy(){
+        return view("dashboard/dummy");
     }
 }
