@@ -109,12 +109,22 @@ class Login extends BaseController
                             if($has_onboarded['user_id'] || $notOnboard)
                             {
                                 session()->setFlashdata('success', 'Welcome aboard the UCLF experience ' .$userdata['FirstName'].' '.$userdata['LastName']);
-                                return redirect()->to('dashboard');
+                                return redirect()->to('userprofile');
                             }
                             else
                             {
                                 session()->setFlashdata('success', 'Welcome '.$userdata['FirstName'].', kindly proceed to setup your account.');
                                 return redirect()->to('onboard');
+                            }
+                            if ($rememberMe) {
+                                // Generate a remember token
+                                $rememberToken = bin2hex(random_bytes(32));
+            
+                                // Set the remember token in the user's browser cookie
+                                $this->response->setCookie('rememberToken', $rememberToken, 2592000); // Expires in 30 days
+            
+                                // Save the remember token in the user's data or database
+                                // Example: $this->userModel->saveRememberToken($userdata['id'], $rememberToken);
                             }
                             
                         }
@@ -123,20 +133,21 @@ class Login extends BaseController
                             $this->session->set('loggedInUser', $userdata);
                             session()->setFlashdata('success', 'Welcome aboard the UCLF experience '.$userdata['FirstName']);
                             return redirect()->to('dashboard');
+
+                            if ($rememberMe) {
+                                // Generate a remember token
+                                $rememberToken = bin2hex(random_bytes(32));
+            
+                                // Set the remember token in the user's browser cookie
+                                $this->response->setCookie('rememberToken', $rememberToken, 2592000); // Expires in 30 days
+            
+                                // Save the remember token in the user's data or database
+                                // Example: $this->userModel->saveRememberToken($userdata['id'], $rememberToken);
+                            }
                         }
                         else{
                             session()->setFlashdata('error', 'Please activate your account. Contact Admin');
                             return redirect()->to(current_url());
-                        }
-                        if ($rememberMe) {
-                            // Generate a remember token
-                            $rememberToken = bin2hex(random_bytes(32));
-        
-                            // Set the remember token in the user's browser cookie
-                            $this->response->setCookie('rememberToken', $rememberToken, 2592000); // Expires in 30 days
-        
-                            // Save the remember token in the user's data or database
-                            // Example: $this->userModel->saveRememberToken($userdata['id'], $rememberToken);
                         }
                     }
                     else
@@ -186,13 +197,13 @@ class Login extends BaseController
                 //var_dump($Email);
                 if($userdata)
                 {
-                    if($this->loginModel->updateAt($userdata->user_id))
+                    if($this->loginModel->updateAt($userdata['user_id']))
                     {
-                        $token = $userdata->user_id;
-                        $message = 'Hi '.$userdata['fname, lname'].'<br><br>'
+                        $token = $userdata['user_id'];
+                        $message = 'Hi '.$userdata['FirstName'].'<br><br>'
                                     . 'Your change password request has been received. Please click'
                                     . 'the link below to reset your password.<br><br>'
-                                    . '<a href= "'.base_url().'pwdReset/'.$token.'">Click here to reset password</a><br><br>'
+                                    . '<a href= "'.base_url().'/pwdReset/'.$token.'">Click here to reset password</a><br><br>'
                                     . 'Regards,<br>UCLF-Team.';
                         
                         
@@ -207,7 +218,7 @@ class Login extends BaseController
                         if($email->send())
                         {
                             $this->session->setTempdata('success', 'Reset password link sent to your email address', 3);
-                            return redirect()->to(current_url());
+                            return redirect()->to('/');
                         }
                     }
                     else
@@ -227,9 +238,5 @@ class Login extends BaseController
 
         }
         return View("auth/forgotpwdView", $data);
-    }
-
-    public function dummy(){
-        return view("dashboard/dummy");
     }
 }

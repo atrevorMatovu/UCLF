@@ -10,7 +10,7 @@
   <meta content="" name="keywords">
 
   <!-- Favicons -->
-  <link href="public/assets/img/favicon.png" rel="icon">
+  <link href="public/assets/img/logo-ico.png" rel="icon">
   <link href="public/assets/img/apple-touch-icon.png" rel="apple-touch-icon">
 
   <!-- Google Fonts -->
@@ -46,12 +46,12 @@
       <i class="bi bi-list toggle-sidebar-btn"></i>
     </div><!-- End Logo -->
 
-    <div class="search-bar">
+    <!--div class="search-bar">
       <form class="search-form d-flex align-items-center" method="POST" action="#">
         <input type="text" name="query" placeholder="Search" title="Enter search keyword">
         <button type="submit" title="Search"><i class="bi bi-search"></i></button>
       </form>
-    </div><!-- End Search Bar -->
+    </div><! End Search Bar -->
 
     <nav class="header-nav ms-auto">
       <ul class="d-flex align-items-center">
@@ -206,14 +206,14 @@
         <li class="nav-item dropdown pe-3">
 
           <a class="nav-link nav-profile d-flex align-items-center pe-0" href="#" data-bs-toggle="dropdown">
-            <img src="public/assets/img/profile-img.jpg" alt="Profile" class="rounded-circle">
-            <span class="d-none d-md-block dropdown-toggle ps-2"><?php echo $acc['FirstName']?> <?php echo $acc['LastName']?></span>
+            <img src="public/assets/img/alanTrevor.png" alt="Profile" class="rounded-circle">
+            <span class="d-none d-md-block dropdown-toggle ps-2"><?php echo $userdata['FirstName']?> <?php echo $userdata['LastName']?></span>
           </a><!-- End Profile Iamge Icon -->
 
           <ul class="dropdown-menu dropdown-menu-end dropdown-menu-arrow profile">
             <li class="dropdown-header">
-              <h6><?php echo $acc['FirstName']?> <?php echo $acc['LastName']?></h6>
-              <span>Web Designer</span>
+              <h6><?php echo $userdata['FirstName']?> <?php echo $userdata['LastName']?></h6>
+              <span><?php echo $acc_board['Position']?></span>
             </li>
             <li>
               <hr class="dropdown-divider">
@@ -270,7 +270,7 @@
     <ul class="sidebar-nav" id="sidebar-nav">
 
       <li class="nav-item">
-        <a class="nav-link collapsed" href="index.html">
+        <a class="nav-link collapsed" href="dashboard">
           <i class="bi bi-grid"></i>
           <span>Dashboard</span>
         </a>
@@ -351,16 +351,36 @@
 
     <section class="section profile">
       <div class="row">
+                  <?php if(session()->getTempdata('success')): ?>
+                  <div class='alert alert-success'><?= session()->getTempdata('success');?></div>
+                  <?php endif; ?> 
+
+                  <?php if(session()->getFlashdata('success')): ?>
+                  <div class='alert alert-success'><?= session()->getFlashdata('success');?></div>
+                  <?php endif; ?>
+
+                  <?php if(session()->getFlashdata('error')): ?>
+                  <div class='alert alert-danger'><?= session()->getFlashdata('error');?></div>
+                  <?php endif; ?>
+                  
+                  <?php if(session()->getTempdata('error')): ?>
+                  <div class='alert alert-danger'><?= session()->getTempdata('error');?></div>
+                  <?php endif; ?>
+
+                  <?php if(isset($validation)):?>
+                      <div class="alert alert-danger"><?= $validation->listErrors();?></div>
+                  <?php endif;?> 
+
         <div class="col-xl-4">
 
           <div class="card">
             <div class="card-body profile-card pt-4 d-flex flex-column align-items-center">
 
-              <img src="public/assets/img/profile-img.jpg" alt="Profile" class="rounded-circle">
-              <h2><?php echo $acc['FirstName']?> <?php echo $acc['LastName']?></h2>
-              <h3><?php echo $acc['Email']?></h3>
+              <img src="public/assets/img/alanTrevor.png" alt="Profile" class="rounded-circle">
+              <h2><?php echo $userdata['FirstName']?> <?php echo $userdata['LastName']?></h2>
+              <h3><?php echo $userdata['Email']?></h3>
               <h3><?php echo $acc_board['Position']?></h3>
-              <h3>0<?php echo $acc['Tel']?></h3>
+              <h3>0<?php echo $userdata['Tel']?></h3>
               <!--div class="social-links mt-2">
                 <a href="#" class="facebook"><i class="bi bi-facebook"></i></a>
                 <a href="#" class="twitter"><i class="bi bi-twitter"></i></a>
@@ -399,7 +419,7 @@
 
                   <div class="row">
                     <div class="col-lg-3 col-md-4 label ">Full Name</div>
-                    <div class="col-lg-9 col-md-8"><?php echo $acc['FirstName']?> <?php echo $acc['LastName']?></div>
+                    <div class="col-lg-9 col-md-8"><?php echo $userdata['FirstName']?> <?php echo $userdata['LastName']?></div>
                   </div>
 
                   <div class="row">
@@ -424,12 +444,12 @@
 
                   <div class="row">
                     <div class="col-lg-3 col-md-4 label">Phone</div>
-                    <div class="col-lg-9 col-md-8">0<?php echo $acc['Tel']?></div>
+                    <div class="col-lg-9 col-md-8">0<?php echo $userdata['Tel']?></div>
                   </div>
 
                   <div class="row">
                     <div class="col-lg-3 col-md-4 label">Email</div>
-                    <div class="col-lg-9 col-md-8"><?php echo $acc['Email']?></div>
+                    <div class="col-lg-9 col-md-8"><?php echo $userdata['Email']?></div>
                   </div>
 
                 </div>
@@ -437,13 +457,13 @@
                 <div class="tab-pane fade profile-edit pt-3" id="profile-edit">
 
                   <!-- Profile Edit Form -->
-                  <form>
+                  <form action="http://localhost/UCLF/updateprofile" method="post" enctype="multipart/form-data" accept-charset="utf-8">
                     <div class="row mb-3">
                       <label for="profileImage" class="col-md-4 col-lg-3 col-form-label">Profile Image</label>
                       <div class="col-md-8 col-lg-9">
                         <div id="image-container">
-                          <img id="profile-image" src="" class="rounded-circle" alt="">
-                          <i id="image-placeholder" class="bi bi-person-fill"></i>
+                          <img id="profile-image" name="photo" src="<?php echo $acc_board['Photo']?>" class="rounded-circle" alt="">
+                          <i id="image-placeholder" class="bi bi-person-fill" height='60'></i>
                         </div>
 
                         <div class="pt-2">
@@ -511,14 +531,14 @@
                         <div class="row">
                         <div class="col-md-6">
                           <div class="form-floating">
-                            <input type="text" name="fname" class="form-control" id="firstname" value=<?php echo $acc['FirstName']?>>
+                            <input type="text" name="fname" class="form-control" id="firstname" value=<?php echo $userdata['FirstName']?>>
                             <label for="firstname">First Name:</label>
                           </div>
                         </div>
 
                           <div class="col-md-6">
                             <div class="form-floating">
-                              <input type="text" name="lname" class="form-control" id="lastname" value=<?php echo $acc['LastName']?>>
+                              <input type="text" name="lname" class="form-control" id="lastname" value=<?php echo $userdata['LastName']?>>
                               <label for="lastname">Last Name:</label>
                             </div>
                           </div>
@@ -558,42 +578,18 @@
                     <div class="row mb-3">
                       <label for="Phone" class="col-md-4 col-lg-3 col-form-label">Phone</label>
                       <div class="col-md-8 col-lg-9">
-                        <input name="phone" type="text" class="form-control" id="Phone" value=<?php echo $acc['Tel']?>>
+                        <input name="phone" type="text" class="form-control" id="Phone" value=<?php echo $userdata['Tel']?>>
                       </div>
                     </div>
 
                     <div class="row mb-3">
                       <label for="Email" class="col-md-4 col-lg-3 col-form-label">Email</label>
                       <div class="col-md-8 col-lg-9">
-                        <input name="email" type="email" class="form-control" id="Email" value=<?php echo $acc['Email']?>>
+                        <input name="email" type="email" class="form-control" id="Email" value=<?php echo $userdata['Email']?>>
                       </div>
                     </div>
 
-                    <!--div class="row mb-3 d-flex">
-                      <div class="col-md-6">
-                      <label for="Socials" class="socials col-md-4 col-lg-3 col-form-label">Socials:</label>
-                      <p class="Socials">(Please provide the necessary social network links)</p>
-                      </div>
-                      <div class="row d-flex mb-3">
-                        <div class="col-md-6">
-                          <div class="form-floating">
-                            <input name="twitter" type="text" class="form-control" id="Twitter" placeholder="">
-                            <label for="Twitter">Twitter:</label>
-                          </div>
-                        </div>
-                        <div class="col-md-6">
-                          <input name="facebook" type="text" class="form-control" id="Facebook" placeholder="https://facebook.com/#">
-                        </div>
-                      </div>
-
-                      <div class="col-md-6">
-                        <input name="instagram" type="text" class="form-control" id="Instagram" value="https://instagram.com/#">
-                      </div>
-                      <div class="col-md-6">
-                        <input name="linkedln" type="text" class="form-control" id="Linkedln" value="https://linkedln.com/#">
-                      </div>
-                    </div-->
-
+                    
                     <div class="text-center">
                       <button type="submit" class="btn btn-primary">Save Changes</button>
                     </div>
@@ -605,7 +601,7 @@
 
                 <div class="tab-pane fade pt-3" id="profile-change-password">
                   <!-- Change Password Form -->
-                  <form>
+                  <form action="http://localhost/UCLF/updatePwd" method="post" accept-charset="utf-8">
 
                     <div class="row mb-3">
                       <label for="currentPassword" class="col-md-4 col-lg-3 col-form-label">Old Password</label>

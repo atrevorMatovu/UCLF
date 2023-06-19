@@ -12,7 +12,7 @@ class LoginFilter implements FilterInterface
     {
         if(!(session()->has('loggedInUser'))) 
         {
-            return redirect()->to(base_url().'/');
+            return redirect()->to('/');
         }
     }
 

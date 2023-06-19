@@ -137,7 +137,7 @@
                     
                     
                     <!--FORMS-->
-                    <form action="http://localhost/UCLF/onboard" method="post" accept-charset="utf-8">
+                    <form action="http://localhost/UCLF/onboard" method="post" enctype="multipart/form-data" accept-charset="utf-8">
                       <div vlass="row g-3">
                               <div class="pull-right">
                             
@@ -183,7 +183,7 @@
                                 <div class=" col-12 mx-2 col-md-11 pb-1 form-floating ">
                                   <!--label for="Practice_area">Practice Area:</>
                                   <label for="options">(Select all that apply)</label-->
-                                  <select class="chosen-select custom-input form-select" name="practice_area" multiple style="border: 1px solid #ccc; border-radius: 5px; padding: 8px; font-size: 14px; color: #333; background-color: #f9f9f9;">
+                                  <select class="chosen-select custom-input form-select" name="practice_area[]" multiple style="border: 1px solid #ccc; border-radius: 5px; padding: 8px; font-size: 14px; color: #333; background-color: #f9f9f9;">
                                     <option value="Aviation Law">Aviation Law</option>
                                     <option value="Construction Law">Construction Law</option>
                                     <option value="Corporate Law">Corporate Law</option>					
@@ -235,7 +235,7 @@
                                 <lable for="photo">Photo/Company Logo<p class="examples">(500px by 500px):</p></lable>
                                 </div>
                                 <div class="col-md-4 col-12 pt-2 pb-0.2 form-floating">                                  
-                                  <input type="file" name="photo" >
+                                  <input type="file" name="avatar" >
                                   <!--input type="submit" value="Upload"-->
                                 </div>
                                 </div>

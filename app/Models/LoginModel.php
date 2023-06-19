@@ -46,7 +46,7 @@ class loginModel extends Model
         $builder = $this->db->table('members');
         $builder->select("user_id, Email, FirstName, LastName, Membership_type, Tel, Account_status");
         $builder->where('user_id', $id);
-        $result = $builder->get()->getRowArray();
+        $result = $builder->get()->getRow();
         return $result;           
     }
 

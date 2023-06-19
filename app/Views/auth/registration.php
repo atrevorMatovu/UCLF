@@ -77,7 +77,7 @@
                     <?php endif;?>
 				
 					
-					<form action="http://localhost/UCLF/signup" method="post" accept-charset="utf-8">
+					<form action="http://localhost/UCLF/signup" method="post" enctype="multipart/form-data" accept-charset="utf-8">
 					<div class="row g-3">
                     <div class="col-md-6">
                       <label for="fName" class="form-label">First Name:</label>

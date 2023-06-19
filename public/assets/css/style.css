@@ -314,9 +314,9 @@ footer {
   font-weight: 400;
 }
 .card-dash {
-  width: 316px;
+  width: 320px;
   height: fit-content;
-  background: #f4f5f7;
+  background: #fff;
   /* border-radius: 20px; */
 }
 
@@ -356,7 +356,7 @@ footer {
 }
 /*CALENDAR*/
 .softcard {
-  width: 316px;
+  width: 320px;
   height: fit-content;
   background: #124098;
   /* border-radius: 20px; */

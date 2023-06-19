@@ -90,19 +90,6 @@
             </li>
 
             <li class="notification-item">
-              <i class="bi bi-check-circle text-success"></i>
-              <div>
-                <h4>Sit rerum fuga</h4>
-                <p>Quae dolorem earum veritatis oditseno</p>
-                <p>2 hrs. ago</p>
-              </div>
-            </li>
-
-            <li>
-              <hr class="dropdown-divider">
-            </li>
-
-            <li class="notification-item">
               <i class="bi bi-info-circle text-primary"></i>
               <div>
                 <h4>Dicta reprehenderit</h4>
@@ -181,7 +168,7 @@
               <i class="bi bi-person-circle "></i> 
                 <img src=""  class="rounded-circle">
             </div>
-              <span class="d-none d-md-block dropdown-toggle ps-2"><?php echo $acc['FirstName']?> <?php echo $acc['LastName']?></span>
+              <span class="d-none d-md-block dropdown-toggle ps-2"><?php echo $userdata['FirstName']?> <?php echo $userdata['LastName']?></span>
             </div>
           </a><!-- End Profile Iamge Icon -->
 
@@ -191,7 +178,7 @@
               <i class="bi bi-person-circle "></i> 
                 <img src=""  class="rounded-circle">
             </div>
-              <span><?php echo $acc['FirstName']?> <?php echo $acc['LastName']?></span>
+              <span><?php echo $userdata['FirstName']?> <?php echo $userdata['LastName']?></span>
             </li>
             <li>
               <hr class="dropdown-divider">
@@ -372,7 +359,7 @@
                     </div>
                     <div class="ps-3">
                   
-                      <h6><?php echo $acc['Account_status']?></h6>
+                      <h6><?php echo $userdata['Account_status']?></h6>
                    
                     </div>
                   </div>
@@ -471,26 +458,33 @@
         <!-- Right side columns -->
         <div class="col-lg-4">
           <!-- User Info -->
-          <div class="card-dash">
-                <h5 class="card-title fs-4 text-center">Calendar </h5>
-                  <div class="calendar-bar">
-                    <button class="prev soft-btn"><i class="fas fa-chevron-left"></i></button>
-                    <div class="current-month"></div>
-                    <button class="next soft-btn"><i class="fas fa-chevron-right"></i></button>
+          <div class="row">
+          <div class="card-dash pb-2 mb-2">
+                <h5 class="card-title text-center border-bottom">User Details</h5>
+                
+                  <div class="row d-flex">
+                    <div class="col-lg-5 col-md-4  ">Full Name:</div>
+                    <div class="col-lg-6 col-md-10"><?php echo $userdata['FirstName']?> <?php echo $userdata['LastName']?></div>
                   </div>
-                  <div class="calendar">
-                    <div class="weekdays-name">
-                      <div class="days-name">Sa</div>
-                      <div class="days-name">Su</div>
-                      <div class="days-name">Mo</div>
-                      <div class="days-name">Tu</div>
-                      <div class="days-name">We</div>
-                      <div class="days-name">Th</div>
-                      <div class="days-name">Fr</div>
-                    </div>
-                    <div class="calendar-days"></div>
+
+                  <div class="row d-flex">
+                    <div class="col-lg-5 col-md-4 ">Membership:</div>
+                    <div class="col-lg-6 col-md-8 "><?php echo ucfirst($userdata['Membership_type'])?></div>
                   </div>
+
+                  <div class="row d-flex">
+                    <div class="col-lg-5 col-md-4 ">Company:</div>
+                    <div class="col-lg-6 col-md-8"><?php echo $acc_board['Company']?></div>
                   </div>
+
+                  <div class="row d-flex">
+                    <div class="col-lg-5 col-md-4 ">Position:</div>
+                    <div class="col-lg-6 col-md-8"><?php echo $acc_board['Position']?></div>
+                  </div>
+                
+                  
+          </div>
+          
             <!-- End User Info -->
 
           <!-- Calendar -->

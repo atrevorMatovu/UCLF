@@ -51,7 +51,7 @@ class Password_reset extends BaseController
             if ($this->validate($rules)) 
             {
                 $newpassword    = $this->request->getVar('newpassword');
-                $renewpassword  = $this->request->getVar('renewpassword');
+                //$renewpassword  = $this->request->getVar('renewpassword');
                
                 if (!empty($user_id)) 
                 {

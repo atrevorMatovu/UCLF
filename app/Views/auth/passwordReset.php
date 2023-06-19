@@ -67,7 +67,7 @@
                   <div class='alert alert-danger'><?= session()->getFlashdata('error');?></div>
                   <?php endif; ?>
                   <!-- Change Password Form -->
-                  <form method="post">
+                  <form action="http://localhost/UCLF/pwdReset" method="post" enctype="multipart/form-data" accept-charset="utf-8">
                     <div class="row g-3 needs-validation" novalidate>
                   
                       <div class="col-12">

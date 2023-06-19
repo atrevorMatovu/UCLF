@@ -62,8 +62,7 @@ class MemberRegModel extends Model
           'FirstName' => $data['FirstName'],
           'LastName'  => $data['LastName'],
           'Email'     => $data['Email'],
-          'Tel'       => $data['Tel'],
-          'Photo'     => $data['Photo']
+          'Tel'       => $data['Tel']
         ]);
         $builder->where('user_id', $id);
         $builder->update();

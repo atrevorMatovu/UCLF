@@ -39,9 +39,10 @@ class onboardModel extends Model
         $builder = $onboardModel->builder();
         $builder = $this->db->table('membship');
         $builder->set([
-          'Company' => $data['Company'],
+          'Company'   => $data['Company'],
           'Position'  => $data['Position'],
-          'Address'     => $data['Address']
+          'Address'   => $data['Address'],
+          'Photo'     => $data['Photo']      
         ]);
         $builder->where('user_id', $id);
         $builder->update();

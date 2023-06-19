@@ -79,7 +79,8 @@
                       <div class="alert alert-danger"><?= $validation->listErrors();?></div>
                   <?php endif;?> 
 
-                  <form class="row g-3 needs-validation" novalidate>
+                  <form action="http://localhost/UCLF/forgotpwd" method="post" accept-charset="utf-8">
+                    <div class="row g-3 needs-validation" novalidate>
                     <div class="col-12">
                       <label for="yourEmail" class="form-label">Email</label>
                       <div class="input-group has-validation">
@@ -99,6 +100,7 @@
 
                     <div class="col-12">
                       <button class="btn btn-primary w-100" type="submit">Proceed</button>
+                    </div>
                     </div>
                   </form>
                   </div>

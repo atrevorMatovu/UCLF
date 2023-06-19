@@ -55,6 +55,7 @@ $routes->get('register/activate/(:any)', 'Reg::activate/$1');
 $routes->add('forgotpwd', 'Login::forgotPwd');
 $routes->post('forgotpwd', 'Login::forgotPwd');
 $routes->get('pwdReset/(:any)', 'Password_reset::index/$1');
+$routes->post('pwdReset/(:any)', 'Password_reset::index/$1');
 
 //ONBOARD
 $routes->get('onboard', 'AccDashboard::onboarding');
@@ -62,16 +63,18 @@ $routes->post('onboard', 'AccDashboard::onboarding');
 $routes->add('onboard', 'AccDashboard::onboarding');
 
 //DASHBOARDS
-$routes->get('dashboard', 'AccDashboard::userdash');
-$routes->get('admin', 'AccDashboard::adminDash');
-$routes->get('dashboard/logout', 'AccDashboard::logout');
-$routes->get('userprofile', 'AccDashboard::profDash');
-$routes->post('userprofile', 'AccDashboard::profDash');
-$routes->get('forum', 'AccDashboard::forum');
+
 $routes->group('', ['filter'=>'isLoggedIn'],function($routes)
 {
     $routes->get('dashboard', 'AccDashboard::userdash');
-    $routes->get('dashboard/logout', 'AccDashboard::logout');
+$routes->get('admin', 'AccDashboard::adminDash');
+$routes->get('dashboard/logout', 'AccDashboard::logout');
+$routes->get('userprofile', 'AccDashboard::updateUser');
+//$routes->get('updateprofile', 'AccDashboard::updateUser');
+$routes->post('updateprofile', 'AccDashboard::updateUser');
+//$routes->get('updatePwd', 'AccDashboard::updatePwd');
+$routes->post('updatePwd', 'AccDashboard::updatePwd');
+$routes->get('forum', 'AccDashboard::forum');
 });
 /*
  * --------------------------------------------------------------------
