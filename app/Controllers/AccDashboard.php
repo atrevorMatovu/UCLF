@@ -41,21 +41,47 @@ class AccDashboard extends BaseController
         //$this->session->remove('loggedIn', true);
         $session->destroy();
         return view("auth/login");
-    }
-
+    }    
     public function adminDash()
     {
         $adminModel = new adminModel;
+        $loginModel = new loginModel;
             $loggedInUserid = session()->get('loggedInUser');
-            $userdata = $adminModel->find($loggedInUserid);
+            $users = $loginModel->findAll();
             $account = $adminModel->verifyEmail($loggedInUserid['email']);
-            
+            $memberCounts = $loginModel->getMemberCountsByMembershipType();
+            //$members = $loginModel->getTotalMembers();
+            //var_dump($members);
+
+        
+
             $data = [
                 'title'     => 'Dashboard',
-                //'userdata'  => $userdata,
+                'users'  => $users,
+                'userdata'    => $account,
+                'memberCounts'=> $memberCounts,
+                //'members ' . $members
+            ];
+        return view("adminDashboards/adminDashboard", $data);
+    }
+    public function adminProf()
+    {
+        $adminModel = new adminModel;
+        $loginModel = new loginModel;
+            $loggedInUserid = session()->get('loggedInUser');
+            //$users = $loginModel->findAll();
+            $account = $adminModel->verifyEmail($loggedInUserid['email']);
+            //$memberCounts = $loginModel->getMemberCountsByMembershipType();
+            //$members = $loginModel->getTotalMembers();
+            //var_dump($members);
+
+        
+
+            $data = [
+                'title'     => 'Dashboard',
                 'userdata'    => $account
             ];
-        return view("dashboard/adminDashboard", $data);
+        return view('adminDashboards/adminProf', $data);
     }
 
     public function profDash()
@@ -68,10 +94,10 @@ class AccDashboard extends BaseController
             $account = $loginModel->verifyUser($loggedInUserid);
             //var_dump($account);
             
-            $onboarding_completed = session()->get('onboarding_completed');
-            $userOn_board = $onboardModel->find($onboarding_completed);
+             $onboarding_completed = session()->get('onboarding_completed');
+             $userOn_board = $onboardModel->find($onboarding_completed);
             $acc_board = $onboardModel->getUsers($loggedInUserid);
-            //var_dump($acc_board);
+             //var_dump($acc_board);
 
             $data = [
                 'title'     => 'UserProfile',
@@ -79,38 +105,13 @@ class AccDashboard extends BaseController
                 'usob'      => $userOn_board,
                 'userdata'  => $userdata,
                 'acc_board' => $acc_board
-            ];
-
-        
+            ];     
 
         return view("dashboard/profile", $data);
     }
 
     public function updateUser()
     {
-        $loginModel = new loginModel;
-        $onboardModel = new onboardModel;
-        $memberRegModel = new MemberRegModel;
-            $loggedInUserid = session()->get('loggedInUser');
-            //$userdata = $loginModel->find($loggedInUserid);
-            $userdata = $loginModel->where('user_id',$loggedInUserid)->first();
-
-            //$account = $loginModel->verifyUser($loggedInUserid);
-            var_dump($userdata);
-            
-            $onboarding_completed = session()->get('onboarding_completed');
-            $userOn_board = $onboardModel->find($onboarding_completed);
-            $acc_board = $onboardModel->getUsers($loggedInUserid);
-            //var_dump($acc_board);
-
-            $data = [
-                'title'     => 'Dashboard',
-                //'userdata'  => $userdata,
-                'usob'      => $userOn_board,
-                'userdata'       => $userdata,
-                'acc_board' => $acc_board
-            ];
-
         $vdata = [];
         $vdata['validation'] = null;
         $email = \Config\Services::email();
@@ -159,7 +160,8 @@ class AccDashboard extends BaseController
             ];
             if($this->validate($rules))
             {
-                $user_id = $loggedInUserid;
+                $user_id = $this->session->get('loggedInUser');
+                var_dump($user_id);
                 $userdata = [
                     'Address' => $this->request->getVar('address'),
                     'Company' => $this->request->getVar('company'),
@@ -186,14 +188,14 @@ class AccDashboard extends BaseController
                 $updateMEMB = $onboardModel->updateUser($user_id, $userdata);
                 if($update && $updateMEMB)// Update user's information in the database
                 {
-                    //$this->session->set('loggedInUser', $user_id);
+                    //$this->session->set('Updated', true);
                     $this->session->setFlashdata('success', 'User Profile details updated successfully.');
-                        return redirect()->to('updateprofile');
+                    return redirect()->to('userprofile');
                 } 
                 else
                 {
-                        $this->session->setFlashdata('error', 'Updating user details failed, try again with all required information provided.');
-                        return redirect()->to(current_url()); 
+                    $this->session->setFlashdata('error', 'Updating user details failed, try again with all required information provided.');
+                    return redirect()->to(current_url()); 
                 }               
                 
             }
@@ -202,32 +204,11 @@ class AccDashboard extends BaseController
                 $vdata['validation'] = $this->validator;
             }
         }
-        return view("dashboard/profile", [$data, $vdata]);
+        return view("dashboard/profile",  $vdata);
     }
 
     public function updatePwd()
     {
-        $loginModel = new loginModel;
-        $onboardModel = new onboardModel;
-        $memberRegModel = new MemberRegModel;
-            $loggedInUserid = session()->get('loggedInUser');
-            $userdata = $loginModel->find($loggedInUserid);
-            $account = $loginModel->verifyUser($loggedInUserid);
-            //var_dump($account);
-            
-            $onboarding_completed = session()->get('onboarding_completed');
-            $userOn_board = $onboardModel->find($onboarding_completed);
-            $acc_board = $onboardModel->getUsers($loggedInUserid);
-            //var_dump($acc_board);
-
-            $data = [
-                'title'     => 'Dashboard',
-                //'userdata'  => $userdata,
-                'usob'      => $userOn_board,
-                'userdata'       => $account,
-                'acc_board' => $acc_board
-            ];
-
         $vdata = [];
         $vdata['validation'] = null;
         $email = \Config\Services::email();
@@ -275,28 +256,28 @@ class AccDashboard extends BaseController
 
 
         }
-        return view("dashboard/profile", [$data, $vdata]);
+        return view("dashboard/profile", $vdata);
     }
-
+    
     public function onboarding()
     {
         $loginModel   = new loginModel;
-            $loggedInUserid = session()->get('loggedInUser');            
-            $userdata = $loginModel->find($loggedInUserid);            
-            $account = $loginModel->verifyUser($loggedInUserid);            
+            $loggedInUserid = session()->get('loggedInUser');
+            $userdata = $loginModel->where('user_id',$loggedInUserid)->first();
+            $account = $loginModel->verifyUser($loggedInUserid);
+                        
 
         $onboardModel = new onboardModel;
             $onboarding_completed = session()->get('onboarding_completed');
             $userOn_board = $onboardModel->find($onboarding_completed);
             $acc_board = $onboardModel->getUsers($loggedInUserid);
-            //var_dump($acc_board);
 
             $data = [
-                'title'     => 'After-Onboarding',
-                //'userdata'  => $userdata,
+                'title'     => 'Onboarding',
+                'acc'  => $account,
                 'userOn_board'=> $userOn_board,
-                'userdata'    => $account,
-                'acc_board' => $acc_board
+                'acc_board' => $acc_board,
+                'userdata'    => $userdata,
             ];
 
         $vdata = [];
@@ -365,7 +346,7 @@ class AccDashboard extends BaseController
             ];
             if($this->validate($rules))
             {
-                $user_id = $account['user_id'];
+                $user_id = $userdata['user_id'];
                 $practice = implode(',', $_POST['practice_area']);
                 $userdata = [
                     'Region' => $this->request->getVar('region'),
@@ -390,7 +371,7 @@ class AccDashboard extends BaseController
                 $onBoard = $onboardModel->createUser($userdata);
                 if($onBoard)// Update user's onboarding information in the database
                 {
-                    $this->session->set('onboarding_completed', $userdata['user_id']);
+                    $this->session->set('onboarding_completed', $user_id);
                     if($this->session->get('loggedInUser'))
                     {
                     $this->session->setFlashdata('success', 'Account setup successful, please await a notification to access the dashboard.');
@@ -412,18 +393,198 @@ class AccDashboard extends BaseController
         return view("auth/onboarding", [$data, $vdata]);
     }
 
-    public function forum()
+    public function userMgt()
     {
         $adminModel = new adminModel;
+        $loginModel = new loginModel;
         $loggedInUserid = session()->get('loggedInUser');
-        $userdata = $adminModel->find($loggedInUserid);
+        //$userdata = $adminModel->find($loggedInUserid);
         $account = $adminModel->getEmail($loggedInUserid['email']);
+        $users  = $loginModel->findAll();
+        //var_dump($users);
         
         $data = [
             'title'     => 'Dashboard',
-            //'userdata'  => $userdata,
+            'users'  => $users,
             'userdata'    => $account
         ];
-        return view("dashboard/adminForum", $data);
+        return view("adminDashboards/adminUserMgt", $data);
     }
+    public function student()
+    {
+        $loginModel = new loginModel;
+        $onboardModel = new onboardModel;
+            $loggedInUserid = session()->get('loggedInUser');
+            $userdata = $loginModel->where('user_id',$loggedInUserid)->first();
+            $account = $loginModel->verifyUser($loggedInUserid);
+            
+            $onboarding_completed = session()->get('onboarding_completed');
+            $userOn_board = $onboardModel->find($onboarding_completed);
+            $acc_board = $onboardModel->getUsers($loggedInUserid);
+        
+        $membership = 'student';
+        $userdata1 = $loginModel->where('Membership_type',$membership)->findAll();
+        //var_dump($userdata1);
+        //$otherdata = $onboardModel->where('user_id',$onboarding_completed)->find('Position');
+        
+        
+        $data = [
+            'title'     => 'Dashboard',
+            //'otherdata'  => $otherdata,
+            'acc_board' => $acc_board,
+            'userdata'  => $userdata,
+            'userdata1' => $userdata1,
+        ];
+        return view("category/student", $data);
+    }
+   
+    public function individual()
+    {
+        $loginModel = new loginModel;
+        $onboardModel = new onboardModel;
+            $loggedInUserid = session()->get('loggedInUser');
+            $userdata = $loginModel->where('user_id',$loggedInUserid)->first();
+            $account = $loginModel->verifyUser($loggedInUserid);
+            
+            $onboarding_completed = session()->get('onboarding_completed');
+            $userOn_board = $onboardModel->find($onboarding_completed);
+            $acc_board = $onboardModel->getUsers($loggedInUserid);
+        
+        $membership = 'individual';
+        $userdata1 = $loginModel->where('Membership_type',$membership)->findAll();
+       
+        
+        $data = [
+            'title'     => 'Dashboard',
+            //'otherdata'  => $otherdata,
+            'acc_board' => $acc_board,
+            'userdata'  => $userdata,
+            'userdata1' => $userdata1,
+        ];
+        return view("category/individual", $data);
+    }
+
+    public function life()
+    {
+        $loginModel = new loginModel;
+        $onboardModel = new onboardModel;
+            $loggedInUserid = session()->get('loggedInUser');
+            $userdata = $loginModel->where('user_id',$loggedInUserid)->first();
+            $account = $loginModel->verifyUser($loggedInUserid);
+            
+            $onboarding_completed = session()->get('onboarding_completed');
+            $userOn_board = $onboardModel->find($onboarding_completed);
+            $acc_board = $onboardModel->getUsers($loggedInUserid);
+        
+        $membership = 'life';
+        $userdata1 = $loginModel->where('Membership_type',$membership)->findAll();
+        //var_dump($userdata1);
+        //$otherdata = $onboardModel->where('user_id',$onboarding_completed)->find('Position');
+        
+        
+        $data = [
+            'title'     => 'Dashboard',
+            //'otherdata'  => $otherdata,
+            'acc_board' => $acc_board,
+            'userdata'  => $userdata,
+            'userdata1' => $userdata1,
+        ];
+        return view("category/life", $data);
+    }
+
+    public function fship()
+    {
+        $loginModel = new loginModel;
+        $onboardModel = new onboardModel;
+            $loggedInUserid = session()->get('loggedInUser');
+            $userdata = $loginModel->where('user_id',$loggedInUserid)->first();
+            $account = $loginModel->verifyUser($loggedInUserid);
+            
+            $onboarding_completed = session()->get('onboarding_completed');
+            $userOn_board = $onboardModel->find($onboarding_completed);
+            $acc_board = $onboardModel->getUsers($loggedInUserid);
+        
+        $membership = 'fship';
+        $userdata1 = $loginModel->where('Membership_type',$membership)->findAll();
+        //var_dump($userdata1);
+        //$otherdata = $onboardModel->where('user_id',$onboarding_completed)->find('Position');
+        
+        
+        $data = [
+            'title'     => 'Dashboard',
+            //'otherdata'  => $otherdata,
+            'acc_board' => $acc_board,
+            'userdata'  => $userdata,
+            'userdata1' => $userdata1,
+        ];
+        return view("category/fship", $data);
+    }
+
+    public function institutional()
+    {
+        $loginModel = new loginModel;
+        $onboardModel = new onboardModel;
+            $loggedInUserid = session()->get('loggedInUser');
+            $userdata = $loginModel->where('user_id',$loggedInUserid)->first();
+            $account = $loginModel->verifyUser($loggedInUserid);
+            
+            $onboarding_completed = session()->get('onboarding_completed');
+            $userOn_board = $onboardModel->find($onboarding_completed);
+            $acc_board = $onboardModel->getUsers($loggedInUserid);
+        
+        $membership = 'institutional';
+        $userdata1 = $loginModel->where('Membership_type',$membership)->findAll();
+        //var_dump($userdata1);
+        //$otherdata = $onboardModel->where('user_id',$onboarding_completed)->find('Position');
+        
+        
+        $data = [
+            'title'     => 'Dashboard',
+            //'otherdata'  => $otherdata,
+            'acc_board' => $acc_board,
+            'userdata'  => $userdata,
+            'userdata1' => $userdata1,
+        ];
+        return view("category/institutional", $data);
+    }
+
+    /**
+     * ADMIN
+     */
+    public function addMember()
+    {
+        $adminModel = new adminModel;
+        $loginModel = new loginModel;
+        $loggedInUserid = session()->get('loggedInUser');
+        //$userdata = $adminModel->find($loggedInUserid);
+        $account = $adminModel->getEmail($loggedInUserid['email']);
+        $users  = $loginModel->findAll();
+        
+        $data = [
+            'title'     => 'Dashboard',
+            'users'  => $users,
+            'userdata'    => $account
+        ];
+        return view("adminDashboards/adminAddUser", $data);
+    }
+
+    //User Account Status Update by Admin
+    public function statusToggle()
+    {
+        $loginModel = new loginModel();
+        $userId = $this->request->getPost('user_id');
+        $status = $this->request->getPost('status');
+
+        // Perform necessary validation and authentication checks
+
+        // Update the account status in the database
+        $Status_update = $loginModel->updateAccountStatus($userId, $status);
+        if($Status_update)
+        {
+            $this->session->setFlashdata('success', 'User Account status updated successfully.');
+            return redirect()->to('users');
+        }
+    }
+
+
 }

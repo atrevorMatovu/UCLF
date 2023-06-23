@@ -168,7 +168,7 @@
               <i class="bi bi-person-circle "></i> 
                 <img src=""  class="rounded-circle">
             </div>
-              <span class="d-none d-md-block dropdown-toggle ps-2"><?php echo $userdata['FirstName']?> <?php echo $userdata['LastName']?></span>
+              <span class="d-none d-md-block dropdown-toggle ps-2"><?= $userdata['FirstName']?> <?php echo $userdata['LastName']?></span>
             </div>
           </a><!-- End Profile Iamge Icon -->
 
@@ -240,32 +240,32 @@
       <li class="nav-heading">Menus</li>
       <li class="nav-item">
         <a class="nav-link collapsed" data-bs-target="#components-nav" data-bs-toggle="collapse" href="#" aria-expanded="false">
-          <i class="bi bi-card-list"></i><span>#Membership Directory</span><i class="bi bi-chevron-down ms-auto"></i>
+          <i class="bi bi-person-vcard"></i><span>#Membership Directory</span><i class="bi bi-chevron-down ms-auto"></i>
         </a>
         <ul id="components-nav" class="nav-content collapse" data-bs-parent="#sidebar-nav" style="">
           <li>
-            <a href="#" class="active">
-              <i class="bi bi-circle"></i><span>#Individual</span>
+            <a href="Indirectory" class="">
+              <i class="bi bi-person-lock" style="font-size: 16px;"></i><span>Individual</span>
             </a>
           </li>
           <li>
-            <a href="#">
-              <i class="bi bi-circle"></i><span>#Institutional</span>
+            <a href="Instidirectory">
+              <i class="ri ri-building-line" style="font-size: 16px;"></i><span>Institutional</span>
             </a>
           </li>
           <li>
-            <a href="#">
-              <i class="bi bi-circle"></i><span>#Law Fellowship</span>
+            <a href="Fship">
+              <i class="bi bi-people" style="font-size: 16px;"></i><span>Law Fellowship</span>
             </a>
           </li>
           <li>
-            <a href="#">
-              <i class="bi bi-circle"></i><span>#Life</span>
+            <a href="Life">
+              <i class="ri ri-user-heart-line" style="font-size: 16px;"></i><span>Life</span>
             </a>
           </li>
           <li>
-            <a href="#">
-              <i class="bi bi-circle"></i><span>#Student</span>
+            <a href="Studirectory">
+              <i class="bi bi-mortarboard" style="font-size: 16px;"></i><span>Student</span>
             </a>
           </li>
         </ul>
@@ -273,7 +273,7 @@
 
       <li class="nav-item">
         <a class="nav-link collapsed" href="#">
-          <i class="bi bi-person"></i>
+          <i class="bi bi-stickies"></i>
           <span>#Forum</span>
         </a>
       </li><!-- End Forum Page Nav -->
@@ -281,29 +281,17 @@
       
       <li class="nav-item">
         <a class="nav-link collapsed" href="userprofile">
-          <i class="bi bi-person"></i>
+          <i class="bi bi-person-circle"></i>
           <span>#Account Profile</span>
         </a>
       </li><!-- End Profile Page Nav -->
 
       <li class="nav-item">
         <a class="nav-link collapsed" href="#">
-          <i class="bi bi-envelope"></i>
+          <i class="bi bi-chat-square"></i>
           <span>#Support</span>
         </a>
       </li><!-- End Contact Page Nav -->
-
-      
-
-      <!--li class="nav-item">
-        <a class="nav-link collapsed" href="dashboard/logout">
-          <i class="bi bi-box-arrow-in-left"></i>
-          <span>Logout</span>
-        </a>
-      </li--><!-- End Logout Page Nav -->
-
-      
-
 
     </ul>
 
@@ -459,7 +447,7 @@
         <div class="col-lg-4">
           <!-- User Info -->
           <div class="row">
-          <div class="card-dash pb-2 mb-2">
+          <div class="card-dash pb-4 mb-2">
                 <h5 class="card-title text-center border-bottom">User Details</h5>
                 
                   <div class="row d-flex">
@@ -490,7 +478,7 @@
           <!-- Calendar -->
             <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.13.0/css/all.min.css" rel="stylesheet" >
               <div class="softcard">
-                <h5 class="card-title fs-4 text-center">Calendar </h5>
+                <h5 class="calendar-title fs-4 text-center pt-1">Calendar </h5>
                   <div class="calendar-bar">
                     <button class="prev soft-btn"><i class="fas fa-chevron-left"></i></button>
                     <div class="current-month"></div>
@@ -498,13 +486,13 @@
                   </div>
                   <div class="calendar">
                     <div class="weekdays-name">
-                      <div class="days-name">Sa</div>
-                      <div class="days-name">Su</div>
                       <div class="days-name">Mo</div>
                       <div class="days-name">Tu</div>
                       <div class="days-name">We</div>
                       <div class="days-name">Th</div>
                       <div class="days-name">Fr</div>
+                      <div class="days-name">Sa</div>
+                      <div class="days-name">Su</div>
                     </div>
                     <div class="calendar-days"></div>
                   </div>
@@ -551,6 +539,8 @@
 
   <!-- Template Main JS File -->
   <script src="public/assets/js/main.js"></script>
+
+  
 
 </body>
 

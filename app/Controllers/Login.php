@@ -67,7 +67,7 @@ class Login extends BaseController
                 
 
                 $userdata = $this->loginModel->verifyEmail($Email);
-                //var_dump($userdata);
+                var_dump($userdata);
                 $admin = $this->adminModel->verifyEmail($Email);
                 $rememberMe = $this->request->getVar('remember') === 'on';
 
@@ -105,13 +105,14 @@ class Login extends BaseController
 
                             /**Matching the user_id(onboarding) with the signup(user_id)*/
                             $has_onboarded = $this->onboardModel->getUsers($userdata['user_id']);
-                            $notOnboard    = $this->session->get('onboarding_completed');
-                            if($has_onboarded['user_id'] || $notOnboard)
+                            $Onboard    = $this->session->get('onboarding_completed');
+                            
+                            if(!empty($has_onboarded))
                             {
-                                session()->setFlashdata('success', 'Welcome aboard the UCLF experience ' .$userdata['FirstName'].' '.$userdata['LastName']);
+                                session()->setFlashdata('success', 'Welcome aboard the UCLF experience ' .$userdata['FirstName'].' '.$userdata['LastName'].'<br><strong>Proceed to review the user details you shared and make necessary corrections.</strong>');
                                 return redirect()->to('userprofile');
                             }
-                            else
+                            else 
                             {
                                 session()->setFlashdata('success', 'Welcome '.$userdata['FirstName'].', kindly proceed to setup your account.');
                                 return redirect()->to('onboard');
@@ -131,7 +132,7 @@ class Login extends BaseController
                         else if($userdata['Account_status'] == 'Approved')
                         {
                             $this->session->set('loggedInUser', $userdata);
-                            session()->setFlashdata('success', 'Welcome aboard the UCLF experience '.$userdata['FirstName']);
+                            session()->setFlashdata('success', 'Welcome aboard the UCLF experience '.$userdata['FirstName']. '<br>Enjoy the UCLF features at will.');
                             return redirect()->to('dashboard');
 
                             if ($rememberMe) {
@@ -200,15 +201,32 @@ class Login extends BaseController
                     if($this->loginModel->updateAt($userdata['user_id']))
                     {
                         $token = $userdata['user_id'];
-                        $message = 'Hi '.$userdata['FirstName'].'<br><br>'
-                                    . 'Your change password request has been received. Please click'
-                                    . 'the link below to reset your password.<br><br>'
-                                    . '<a href= "'.base_url().'/pwdReset/'.$token.'">Click here to reset password</a><br><br>'
-                                    . 'Regards,<br>UCLF-Team.';
+                        $message = '<div class="container">
+                        <section class="section register min-vh-100 d-flex flex-column align-items-center justify-content-center py-8">
+                            <div class="container">
+                                <div class="row justify-content-center">
+                                    <div class="col-lg-7 col-md-7 d-flex flex-column align-items-center justify-content-center">
+                                        <div class="card mb-3">
+                                            <div class="card-body">
+                                                <div class="d-flex justify-content-center py-2">
+                                                    Hi '.$userdata['FirstName'].' '.$userdata['LastName'].'<br><br>
+                                                    Your change password request has been received. Please click the link below to reset your password.<br><br>
+                                                    <a  href="'.base_url().'/pwdReset/'.$token.'">Create password</a><br><br>
+                                                    Regards,<br>
+                                                    UCLF-Team.
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>    
+                            </div>
+                        </section>
+                        </div>';
+
                         
                         
                         $email->setTo($Email);
-                        $email->setFrom('matovu@lwegatech.info');
+                        $email->setFrom('matovu@lwegatech.info', 'UCLF - Org.');
                         $email->setSubject('Change Password Link');
                         $email->setMessage($message);
                         $filepath = 'public/assets/img/logo-rmbg.png';
@@ -231,11 +249,11 @@ class Login extends BaseController
                     return redirect()->to(current_url());
                 }
 
-            }else{
-                $data['validation']=$this->validator;
-
             }
-
+            else
+            {
+                $data['validation']=$this->validator;
+            }
         }
         return View("auth/forgotpwdView", $data);
     }

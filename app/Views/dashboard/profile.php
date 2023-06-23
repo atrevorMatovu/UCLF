@@ -207,7 +207,7 @@
 
           <a class="nav-link nav-profile d-flex align-items-center pe-0" href="#" data-bs-toggle="dropdown">
             <img src="public/assets/img/alanTrevor.png" alt="Profile" class="rounded-circle">
-            <span class="d-none d-md-block dropdown-toggle ps-2"><?php echo $userdata['FirstName']?> <?php echo $userdata['LastName']?></span>
+            <span class="d-none d-md-block dropdown-toggle ps-2"><?= $userdata['FirstName']?> <?= $userdata['LastName']?></span>
           </a><!-- End Profile Iamge Icon -->
 
           <ul class="dropdown-menu dropdown-menu-end dropdown-menu-arrow profile">
@@ -221,7 +221,7 @@
 
             <li>
               <a class="dropdown-item d-flex align-items-center" href="userprofile">
-                <i class="bi bi-person"></i>
+                <i class="bi bi-person-circle"></i>
                 <span>My Profile</span>
               </a>
             </li>
@@ -231,7 +231,7 @@
 
             <li>
               <a class="dropdown-item d-flex align-items-center" href="#">
-                <i class="bi bi-gear"></i>
+                <i class="bi bi-stickies"></i>
                 <span>#Forum</span>
               </a>
             </li>
@@ -241,7 +241,7 @@
 
             <li>
               <a class="dropdown-item d-flex align-items-center" href="#">
-                <i class="bi bi-question-circle"></i>
+                <i class="bi bi-chat-square"></i>
                 <span>#Support</span>
               </a>
             </li>
@@ -270,41 +270,42 @@
     <ul class="sidebar-nav" id="sidebar-nav">
 
       <li class="nav-item">
-        <a class="nav-link collapsed" href="dashboard">
+        <a class="nav-link " href="dashboard">
           <i class="bi bi-grid"></i>
           <span>Dashboard</span>
         </a>
-      </li><!-- End Dashboard Nav -->
+      </li><!-- End Dashboard Nav -->     
+      
 
       <li class="nav-heading">Menus</li>
       <li class="nav-item">
         <a class="nav-link collapsed" data-bs-target="#components-nav" data-bs-toggle="collapse" href="#" aria-expanded="false">
-          <i class="bi bi-card-list"></i><span>#Membership Directory</span><i class="bi bi-chevron-down ms-auto"></i>
+          <i class="bi bi-person-vcard"></i><span>#Membership Directory</span><i class="bi bi-chevron-down ms-auto"></i>
         </a>
         <ul id="components-nav" class="nav-content collapse" data-bs-parent="#sidebar-nav" style="">
           <li>
-            <a href="#" class="active">
-              <i class="bi bi-circle"></i><span>#Individual</span>
+            <a href="Indirectory" class="">
+              <i class="bi bi-person-lock" style="font-size: 16px;"></i><span>Individual</span>
             </a>
           </li>
           <li>
-            <a href="#">
-              <i class="bi bi-circle"></i><span>#Institutional</span>
+            <a href="Instidirectory">
+              <i class="ri ri-building-line" style="font-size: 16px;"></i><span>Institutional</span>
             </a>
           </li>
           <li>
-            <a href="#">
-              <i class="bi bi-circle"></i><span>#Law Fellowship</span>
+            <a href="Fship">
+              <i class="bi bi-people" style="font-size: 16px;"></i><span>Law Fellowship</span>
             </a>
           </li>
           <li>
-            <a href="#">
-              <i class="bi bi-circle"></i><span>#Life</span>
+            <a href="Life">
+              <i class="ri ri-user-heart-line" style="font-size: 16px;"></i><span>Life</span>
             </a>
           </li>
           <li>
-            <a href="#">
-              <i class="bi bi-circle"></i><span>#Student</span>
+            <a href="Studirectory">
+              <i class="bi bi-mortarboard" style="font-size: 16px;"></i><span>Student</span>
             </a>
           </li>
         </ul>
@@ -312,7 +313,7 @@
 
       <li class="nav-item">
         <a class="nav-link collapsed" href="#">
-          <i class="bi bi-person"></i>
+          <i class="bi bi-stickies"></i>
           <span>#Forum</span>
         </a>
       </li><!-- End Forum Page Nav -->
@@ -320,17 +321,17 @@
       
       <li class="nav-item">
         <a class="nav-link collapsed" href="userprofile">
-          <i class="bi bi-person"></i>
+          <i class="bi bi-person-circle"></i>
           <span>#Account Profile</span>
         </a>
       </li><!-- End Profile Page Nav -->
 
       <li class="nav-item">
         <a class="nav-link collapsed" href="#">
-          <i class="bi bi-envelope"></i>
+          <i class="bi bi-chat-square"></i>
           <span>#Support</span>
         </a>
-      </li><!-- End Contact Page Nav --> 
+      </li><!-- End Contact Page Nav -->   
 
     </ul>
 
@@ -381,13 +382,7 @@
               <h3><?php echo $userdata['Email']?></h3>
               <h3><?php echo $acc_board['Position']?></h3>
               <h3>0<?php echo $userdata['Tel']?></h3>
-              <!--div class="social-links mt-2">
-                <a href="#" class="facebook"><i class="bi bi-facebook"></i></a>
-                <a href="#" class="twitter"><i class="bi bi-twitter"></i></a>
-                <a href="#" class="instagram"><i class="bi bi-instagram"></i></a>
-                <a href="#" class="linkedin"><i class="bi bi-linkedin"></i></a>
-              </div-->
-            </div>
+              </div>
           </div>
 
         </div>
@@ -457,7 +452,7 @@
                 <div class="tab-pane fade profile-edit pt-3" id="profile-edit">
 
                   <!-- Profile Edit Form -->
-                  <form action="http://localhost/UCLF/updateprofile" method="post" enctype="multipart/form-data" accept-charset="utf-8">
+                  <form action="http://localhost/UCLF/userprofile" method="post" enctype="multipart/form-data" accept-charset="utf-8">
                     <div class="row mb-3">
                       <label for="profileImage" class="col-md-4 col-lg-3 col-form-label">Profile Image</label>
                       <div class="col-md-8 col-lg-9">

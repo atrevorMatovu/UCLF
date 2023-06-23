@@ -24,6 +24,32 @@ class loginModel extends Model
         $query = $builder->select('Account_status')->where('user_id', $id)->get();
         return $query->getRow('Account_status');
     }
+
+    public function getMemberCountsByMembershipType()
+    {
+        $builder = $this->db->table('members');
+
+        $builder->select('Membership_type, COUNT(*) as total_members');
+        $builder->groupBy('Membership_type');
+        $builder->whereIn('Membership_type', ['individual', 'student', 'life', 'institutional', 'law-fellowship']);
+
+        $query = $builder->get();
+
+        return $query->getResult();
+    }
+
+    public function getTotalMembers()
+    {
+        $builder = $this->db->table('members');
+
+        $builder->selectCount('* as total_members');
+
+        $query = $builder->get();
+
+        $result = $query->getRow();
+
+        return $result->total_members;
+    }
     public function verifyUserid($id) 
     {
         $builder = $this->db->table('members');
@@ -46,7 +72,7 @@ class loginModel extends Model
         $builder = $this->db->table('members');
         $builder->select("user_id, Email, FirstName, LastName, Membership_type, Tel, Account_status");
         $builder->where('user_id', $id);
-        $result = $builder->get()->getRow();
+        $result = $builder->get()->getRowArray();
         return $result;           
     }
 
@@ -104,6 +130,20 @@ class loginModel extends Model
             return false;
         }
     }
+    public function updateAccountStatus($userId, $status)
+    {
+        $data = [
+            'Account_status' => $status,
+            'updated_at' => date('Y-m-d H:i:s')
+        ];
+    
+        $builder = $this->db->table('members');
+        $builder->where('user_id', $userId);
+        $builder->update($data);
+        $result = $builder->get()->getRowArray();
+        return $result;        
+    }
+    
     // Validation
     protected $validationRules      = [];
     protected $validationMessages   = [];

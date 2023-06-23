@@ -63,7 +63,7 @@
                     <img src="public/assets/img/logo-rmbg.png" alt="">
                  </a>
                   <div class="pt-0 pb-1">
-                    <h5 class="card-title text-center pb-0 fs-4">Login to Your Account</h5>
+                    <h5 class="card-title text-center pb-0 fs-4">Log into Your Account</h5>
                     <p class="text-center small">Enter your email address & password to login</p>
                   
                   

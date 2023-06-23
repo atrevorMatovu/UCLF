@@ -63,7 +63,7 @@
               <div class="mb-8">
                 <div class="container">
 
-                <div class="card-body">
+                <div class="card-body d-flex">
                 <div class="col-lg-5 col-md-2  flex-column justify-content-center py-3 pt-0 pb-1">
                   <div class="card2 col-lg-9  flex-column align-items-center justify-content-center py-3 pt-0 pb-1">
                   <a href="#" class="logo d-flex align-items-center w-auto">
@@ -96,7 +96,7 @@
                         <p class="text-center small">Fill in the provided fields to get started.</p>
                     </div-->
                     <div>
-                    <div class="text-center card-title"><h3 class="pt-2 pb-0 fs-4">UCLF Account Onboarding Form.</h3>
+                    <div class="text-center card-title"><h3 class="pt-2 pb-0 fs-4">UCLF Account Onboarding.</h3>
                     <div class="small"><p>Please provide the necessary information as required:</p></div>
                     </div>
 
@@ -116,24 +116,7 @@
                     <?php endif;?> 
 
                     
-                    <!--div>
-                    <label>
-                        <input type="radio" name="membership_type" value="individual" onchange="showForm('individual')" checked> Individual
-                    </label>
-                    <label>
-                        <input type="radio" name="membership_type" value="student" onchange="showForm('student')"> Student
-                    </label>
-                    <label>
-                        <input type="radio" name="membership_type" value="institutional" onchange="showForm('institutional')"> Institutional
-                    </label>
-                    <label>
-                        <input type="radio" name="membership_type" value="life" onchange="showForm('life')"> Life
-                    </label>
-                    <label>
-                        <input type="radio" name="membership_type" value="law-fellowship" onchange="showForm('law-fellowship')"> Law fellowship
-                    </label>
-                    </div-->
-                    </div>
+                      </div>
                     
                     
                     <!--FORMS-->

@@ -39,7 +39,6 @@ $routes->post('login', 'Login::login');
 
 
 //SIGNUP/REGISTER ROUTES
-$routes->add('signup', 'Reg::register');
 $routes->get('signup', 'Reg::register');
 $routes->post('signup','Reg::register');
 $routes->add('dashboard/signup', 'Reg::register');
@@ -53,6 +52,7 @@ $routes->get('register/activate/(:any)', 'Reg::activate/$1');
 
 //PASSWORD RESET
 $routes->add('forgotpwd', 'Login::forgotPwd');
+$routes->get('pood', 'Login::pood');
 $routes->post('forgotpwd', 'Login::forgotPwd');
 $routes->get('pwdReset/(:any)', 'Password_reset::index/$1');
 $routes->post('pwdReset/(:any)', 'Password_reset::index/$1');
@@ -60,21 +60,30 @@ $routes->post('pwdReset/(:any)', 'Password_reset::index/$1');
 //ONBOARD
 $routes->get('onboard', 'AccDashboard::onboarding');
 $routes->post('onboard', 'AccDashboard::onboarding');
-$routes->add('onboard', 'AccDashboard::onboarding');
 
 //DASHBOARDS
 
 $routes->group('', ['filter'=>'isLoggedIn'],function($routes)
 {
     $routes->get('dashboard', 'AccDashboard::userdash');
-$routes->get('admin', 'AccDashboard::adminDash');
-$routes->get('dashboard/logout', 'AccDashboard::logout');
-$routes->get('userprofile', 'AccDashboard::updateUser');
-//$routes->get('updateprofile', 'AccDashboard::updateUser');
-$routes->post('updateprofile', 'AccDashboard::updateUser');
-//$routes->get('updatePwd', 'AccDashboard::updatePwd');
-$routes->post('updatePwd', 'AccDashboard::updatePwd');
-$routes->get('forum', 'AccDashboard::forum');
+    $routes->get('dashboard/logout', 'AccDashboard::logout');
+    $routes->get('userprofile', 'AccDashboard::profDash');
+    $routes->post('userprofile', 'AccDashboard::updateUser');
+    $routes->post('updatePwd', 'AccDashboard::updatePwd');
+    $routes->get('Studirectory', 'AccDashboard::student');
+    $routes->get('Indirectory', 'AccDashboard::individual');
+    $routes->get('Instidirectory', 'AccDashboard::institutional');
+    $routes->get('Fship', 'AccDashboard::fship');
+    $routes->get('Life', 'AccDashboard::life');
+});
+
+$routes->group('', ['filter'=>'isAdmin'],function($routes)
+{
+    $routes->get('admin', 'AccDashboard::adminDash');
+    $routes->post('users/status_update', 'AccDashboard::statusToggle');    
+    $routes->get('users', 'AccDashboard::userMgt');
+    $routes->get('newMember', 'AccDashboard::addMember'); 
+    $routes->get('adminProfile', 'AccDashboard::adminProf');   
 });
 /*
  * --------------------------------------------------------------------
