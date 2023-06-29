@@ -271,13 +271,12 @@
     </a>
   </li><!-- End Dashboard Nav -->
   
-  <li class="nav-heading">Menus</li>
   <li class="nav-heading">Accounts</li>
     <li class="nav-item">
       <a class="nav-link collapsed" data-bs-target="#components-nav" data-bs-toggle="collapse" href="#" aria-expanded="false">
         <i class="bi bi-card-list"></i><span>#Account Management</span><i class="bi bi-chevron-down ms-auto"></i>
       </a>
-      <ul id="components-nav" class="nav-content collapse" data-bs-parent="#sidebar-nav" style="">
+      <ul id="components-nav" class="nav-content collapse" data-bs-parent="#sidebar-nav">
         
         <li class="nav-item">
           <a class="nav-link collapsed" href="adminProfile">
@@ -295,6 +294,28 @@
       </ul>
     </li>             
           
+       <li class="nav-item">
+        <a class="nav-link collapsed" data-bs-target="#components-nav" data-bs-toggle="collapse" href="#">
+          <i class="bi bi-people"></i><span>Staff Management</span><i class="bi bi-chevron-down ms-auto"></i>
+        </a>
+          <ul id="components-nav" class="nav-content collapse " data-bs-parent="#sidebar-nav">
+            
+            <li class="nav-item">
+              <a class="nav-link collapsed" href="newStaff">
+                <i class="bi bi-people-fill" style="font-size: 16px;"></i>
+                <span>Staff Personnel</span>
+              </a>
+            </li><!-- End Staff Page Nav -->
+
+            <li class="nav-item">
+              <a class="nav-link collapsed" href="#">
+                <i class="bi bi-building" style="font-size: 16px;"></i>
+                <span>Personnel Roles</span>
+              </a>
+            </li><!-- End Roles Page Nav -->
+         
+          </ul>
+        </li><!-- End Components Nav -->
 
     <li class="nav-item">
       <a class="nav-link collapsed" href="#">

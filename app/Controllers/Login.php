@@ -67,7 +67,7 @@ class Login extends BaseController
                 
 
                 $userdata = $this->loginModel->verifyEmail($Email);
-                var_dump($userdata);
+                //var_dump($userdata);
                 $admin = $this->adminModel->verifyEmail($Email);
                 $rememberMe = $this->request->getVar('remember') === 'on';
 
@@ -98,44 +98,14 @@ class Login extends BaseController
                 {
                     if(password_verify($Password, $userdata['Password']))
                     {
-                        if($userdata['Account_status'] == 'Pending')
-                        {/**while Account_status is 'Pending'
-                            redirect to onboard page */
-                            $this->session->set('loggedInUser', $userdata['user_id']);
-
-                            /**Matching the user_id(onboarding) with the signup(user_id)*/
-                            $has_onboarded = $this->onboardModel->getUsers($userdata['user_id']);
-                            $Onboard    = $this->session->get('onboarding_completed');
-                            
-                            if(!empty($has_onboarded))
-                            {
-                                session()->setFlashdata('success', 'Welcome aboard the UCLF experience ' .$userdata['FirstName'].' '.$userdata['LastName'].'<br><strong>Proceed to review the user details you shared and make necessary corrections.</strong>');
-                                return redirect()->to('userprofile');
-                            }
-                            else 
-                            {
-                                session()->setFlashdata('success', 'Welcome '.$userdata['FirstName'].', kindly proceed to setup your account.');
-                                return redirect()->to('onboard');
-                            }
-                            if ($rememberMe) {
-                                // Generate a remember token
-                                $rememberToken = bin2hex(random_bytes(32));
-            
-                                // Set the remember token in the user's browser cookie
-                                $this->response->setCookie('rememberToken', $rememberToken, 2592000); // Expires in 30 days
-            
-                                // Save the remember token in the user's data or database
-                                // Example: $this->userModel->saveRememberToken($userdata['id'], $rememberToken);
-                            }
-                            
-                        }
-                        else if($userdata['Account_status'] == 'Approved')
+                        if($userdata['Account_status'] == 'Approved')
                         {
-                            $this->session->set('loggedInUser', $userdata);
-                            session()->setFlashdata('success', 'Welcome aboard the UCLF experience '.$userdata['FirstName']. '<br>Enjoy the UCLF features at will.');
+                            $this->session->set('loggedInUser', $userdata['user_id']);
+                            session()->setFlashdata('success', 'Hi '.$userdata['FirstName']. '<br>Welcome aboard the UCLF experience, you can enjoy the UCLF features at will.');
                             return redirect()->to('dashboard');
 
-                            if ($rememberMe) {
+                            if ($rememberMe) 
+                            {
                                 // Generate a remember token
                                 $rememberToken = bin2hex(random_bytes(32));
             

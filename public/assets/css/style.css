@@ -238,6 +238,13 @@ lable {
   border-color: #d3d3d4;
 }
 
+.user-req{
+  border-radius: 20%;
+}
+.user-req-profile{
+  max-width: 120px;
+}
+
 /* Card */
 .card {
  margin-bottom: 30px;
@@ -1142,7 +1149,7 @@ footer {
 }
 
 .dashboard .recent-sales .table thead {
-  background: #f6f6fe;
+  background: #a6a6ef;
 }
 
 .dashboard .recent-sales .table thead th {

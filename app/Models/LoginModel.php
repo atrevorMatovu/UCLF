@@ -11,7 +11,7 @@ class loginModel extends Model
     protected $table      = 'members';
     protected $primaryKey = 'id';
 
-    protected $allowedFields = ['FirstName', 'LastName', 'Email', 'Password', 'Membership_type', 'Tel', 'Address','Account_status','user_id','activation_date'];
+    protected $allowedFields = ['FirstName', 'LastName', 'Email', 'Password', 'Membership_type', 'Tel', 'Address','Account_status','user_id','Region', 'State', 'City', 'Address', 'Company', 'Position', 'Practice_area', 'user_id', 'Photo','activation_date'];
 
     protected $useTimestamps = false;
     protected $dateFormat    = 'datetime';
@@ -70,7 +70,7 @@ class loginModel extends Model
     public function verifyUser($id)
     {
         $builder = $this->db->table('members');
-        $builder->select("user_id, Email, FirstName, LastName, Membership_type, Tel, Account_status");
+        $builder->select("user_id, Email, FirstName, LastName, Membership_type, Tel, Account_status, Region, State, City, Address, Company, Position, Practice_area, Photo");
         $builder->where('user_id', $id);
         $result = $builder->get()->getRowArray();
         return $result;           

@@ -85,7 +85,7 @@
                                     <p><br>Regards,<br>UCLF Team</br></br></p>
                                 </p>
                             <div class="justify-content-center">
-                            <input type="button"  class="btn btn-info" onclick="window.location.href='login';" value="Log in" />
+                            <input type="button"  class="btn btn-info" onclick="window.location.href='onboard';" value="Proceed" />
                             </div>
                             </div>
                         </div>

@@ -46,146 +46,38 @@
 
     <nav class="header-nav ms-auto">
       <ul class="d-flex align-items-center">
-          
       <li class="nav-item dropdown">
           <a class="nav-link nav-icon" href="#" data-bs-toggle="dropdown">
             <i class="bi bi-bell"></i>
-            <span class="badge bg-primary badge-number">4</span>
+            <span class="badge bg-primary badge-number">1</span>
           </a><!-- End Notification Icon -->
 
           <ul class="dropdown-menu dropdown-menu-end dropdown-menu-arrow notifications">
             <li class="dropdown-header">
-              You have 4 new notifications
-              <a href="#"><span class="badge rounded-pill bg-primary p-2 ms-2">View all</span></a>
+              You have new notifications
+              <!--a href="#"><span class="badge rounded-pill bg-primary p-2 ms-2">View all</span></a-->
             </li>
             <li>
               <hr class="dropdown-divider">
             </li>
 
+            <?php if (session()->getFlashdata('notification')) : ?> 
             <li class="notification-item">
               <i class="bi bi-exclamation-circle text-warning"></i>
-              <div>
-                <h4>Lorem Ipsum</h4>
-                <p>Quae dolorem earum veritatis oditseno</p>
-                <p>30 min. ago</p>
+              <div class='alert alert-success'>
+              <?= session()->getFlashdata('notification');?>
               </div>
             </li>
+            <?php endif; ?>          
 
             <li>
               <hr class="dropdown-divider">
-            </li>
-
-            <li class="notification-item">
-              <i class="bi bi-x-circle text-danger"></i>
-              <div>
-                <h4>Atque rerum nesciunt</h4>
-                <p>Quae dolorem earum veritatis oditseno</p>
-                <p>1 hr. ago</p>
-              </div>
-            </li>
-
-            <li>
-              <hr class="dropdown-divider">
-            </li>
-
-            <li class="notification-item">
-              <i class="bi bi-check-circle text-success"></i>
-              <div>
-                <h4>Sit rerum fuga</h4>
-                <p>Quae dolorem earum veritatis oditseno</p>
-                <p>2 hrs. ago</p>
-              </div>
-            </li>
-
-            <li>
-              <hr class="dropdown-divider">
-            </li>
-
-            <li class="notification-item">
-              <i class="bi bi-info-circle text-primary"></i>
-              <div>
-                <h4>Dicta reprehenderit</h4>
-                <p>Quae dolorem earum veritatis oditseno</p>
-                <p>4 hrs. ago</p>
-              </div>
-            </li>
-
-            <li>
-              <hr class="dropdown-divider">
-            </li>
-            <li class="dropdown-footer">
-              <a href="#">Show all notifications</a>
             </li>
 
           </ul><!-- End Notification Dropdown Items -->
 
         </li><!-- End Notification Nav -->
 
-        <li class="nav-item dropdown">
-
-          <a class="nav-link nav-icon" href="#" data-bs-toggle="dropdown">
-            <i class="bi bi-chat-left-text"></i>
-            <span class="badge bg-success badge-number">3</span>
-          </a><!-- End Messages Icon -->
-
-          <ul class="dropdown-menu dropdown-menu-end dropdown-menu-arrow messages">
-            <li class="dropdown-header">
-              You have 3 new messages
-              <a href="#"><span class="badge rounded-pill bg-primary p-2 ms-2">View all</span></a>
-            </li>
-            <li>
-              <hr class="dropdown-divider">
-            </li>
-
-            <li class="message-item">
-              <a href="#">
-                <img src="public/assets/img/messages-1.jpg" alt="" class="rounded-circle">
-                <div>
-                  <h4>Maria Hudson</h4>
-                  <p>Velit asperiores et ducimus soluta repudiandae labore officia est ut...</p>
-                  <p>4 hrs. ago</p>
-                </div>
-              </a>
-            </li>
-            <li>
-              <hr class="dropdown-divider">
-            </li>
-
-            <li class="message-item">
-              <a href="#">
-                <img src="public/assets/img/messages-2.jpg" alt="" class="rounded-circle">
-                <div>
-                  <h4>Anna Nelson</h4>
-                  <p>Velit asperiores et ducimus soluta repudiandae labore officia est ut...</p>
-                  <p>6 hrs. ago</p>
-                </div>
-              </a>
-            </li>
-            <li>
-              <hr class="dropdown-divider">
-            </li>
-
-            <li class="message-item">
-              <a href="#">
-                <img src="public/assets/img/messages-3.jpg" alt="" class="rounded-circle">
-                <div>
-                  <h4>David Muldon</h4>
-                  <p>Velit asperiores et ducimus soluta repudiandae labore officia est ut...</p>
-                  <p>8 hrs. ago</p>
-                </div>
-              </a>
-            </li>
-            <li>
-              <hr class="dropdown-divider">
-            </li>
-
-            <li class="dropdown-footer">
-              <a href="#">Show all messages</a>
-            </li>
-
-          </ul><!-- End Messages Dropdown Items -->
-
-        </li><!-- End Messages Nav -->
     
         <li class="nav-item dropdown pe-3">
 
@@ -266,30 +158,51 @@
       </li><!-- End Dashboard Nav --> 
   
 
-        <li class="nav-heading">Menus</li>
         <li class="nav-heading">Account Management</li>
         <li class="nav-item">
           <a class="nav-link collapsed" data-bs-target="#components-nav" data-bs-toggle="collapse" href="#" aria-expanded="false">
-            <i class="bi bi-person-vcard"></i><span>#Members Management</span><i class="bi bi-chevron-down ms-auto"></i>
+            <i class="bi bi-person-vcard"></i><span>Account Management</span><i class="bi bi-chevron-down ms-auto"></i>
           </a>
-          <ul id="components-nav" class="nav-content collapse" data-bs-parent="#sidebar-nav" style="">
+          <ul id="components-nav" class="nav-content collapse" data-bs-parent="#sidebar-nav" >
             
             <li class="nav-item">
               <a class="nav-link collapsed" href="adminProfile">
                 <i class="bi bi-person-circle" style="font-size: 16px"></i>
-                <span>#Account Profile</span>
+                <span>Account Profile</span>
               </a>
             </li><!-- End Profile Page Nav --> 
 
             <li class="nav-item">
               <a class="nav-link collapsed" href="users">
                 <i class="bi bi-people" style="font-size: 16px"></i>
-                <span>#User Accounts</span>
+                <span>#Member Accounts</span>
               </a>
             </li><!-- End Forum Nav -->
           </ul>
         </li>            
               
+        <li class="nav-item">
+        <a class="nav-link collapsed" data-bs-target="#components-nav" data-bs-toggle="collapse" href="#">
+          <i class="bi bi-people"></i><span>Staff Management</span><i class="bi bi-chevron-down ms-auto"></i>
+        </a>
+          <ul id="components-nav" class="nav-content collapse " data-bs-parent="#sidebar-nav">
+            
+            <li class="nav-item">
+              <a class="nav-link collapsed" href="newStaff">
+                <i class="bi bi-people-fill" style="font-size: 16px;"></i>
+                <span>Staff Personnel</span>
+              </a>
+            </li><!-- End Staff Page Nav -->
+
+            <li class="nav-item">
+              <a class="nav-link collapsed" href="#">
+                <i class="bi bi-building" style="font-size: 16px;"></i>
+                <span>Personnel Roles</span>
+              </a>
+            </li><!-- End Roles Page Nav -->
+         
+          </ul>
+        </li><!-- End Components Nav -->
 
         <li class="nav-item"><!-- Upcoming Events page -->
           <a class="nav-link collapsed" href="#">
@@ -349,8 +262,8 @@
             <div class="col-12">
               <div class="card recent-sales overflow-auto">
                 <div class="card-body">
-                  <p class="card-title">
-                    <h5><strong>Members</strong></h5><a href="#" class="btn btn-primary float-end" style="width: 15%;">ADD Member</a>                                    
+                  <p class="card-title pt-1 pb-2">
+                    <h5><strong>Members</strong><a href="#" class="btn btn-primary float-end" style="width: 15%;">ADD Member</a></h5>                            
                   </p>
                     
 
@@ -360,12 +273,12 @@
                       <tr>
                         <th scope="col">#</th>
                         <th scope="col">Fullname</th>
+                        <th scope="col">Photo</th>                       
                         <th scope="col">Email</th>  
                         <th scope="col">Membership</th>
                         <th scope="col">Contact</th>
                         <th scope="col">Gender</th>                      
                         <th scope="col">AccountStatus</th> 
-                        <th scope="col">AccountActivation</th>                       
                       </tr>
                     </thead>
                     <tbody>
@@ -373,16 +286,18 @@
                       <tr>
                         <th scope="row"><a href="#"><?php echo $user['id'];?></a></th>
                         <td><?php echo $user['FirstName'];?> <?php echo $user['LastName'];?></td>
+                        <td ><img src="<?= base_url('public/uploads/' . $user['Photo']) ?>" class="rounded-circle align-items-center" style="max-width:20%"</td>
                         <td><a href="#" class="text-primary"><?php echo $user['Email'];?></a></td>
+                        <!--td></td-->
                         <td><?php echo ucfirst($user['Membership_type']);?></td>
                         <td><span class="badge bg-success">0<?php echo $user['Tel'];?></span></td>
                         <td><?php echo $user['Gender'];?></td>
                         <td><?php echo $user['Account_status'];?></td>
-                        <td>
+                        <!--td>
                           <form method="POST" action="http://localhost/UCLF/users/status_update">
-                            <input type="hidden" name="user_id" value="<?php echo $user['user_id']; ?>">
+                            <input type="hidden" name="user_id" value="<//?php echo $user['user_id']; ?>">
                             <label class="switch">
-                                <input type="checkbox" name="status" <?php echo ($user['Account_status'] === 'Approved') ? 'checked' : ''; ?>>
+                                <input type="checkbox" name="status" <//?php echo ($user['Account_status'] === 'Approved') ? 'checked' : ''; ?>>
                                 <span class="slider round"></span>
                             </label>
                           </form> 
@@ -403,7 +318,7 @@
                               });
                             });
                           </script>
-                        </td>                 
+                        </td-->                 
                         <?php endforeach; ?>
                       </tr>
                      </tbody>

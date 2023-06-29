@@ -60,9 +60,9 @@ $routes->post('pwdReset/(:any)', 'Password_reset::index/$1');
 //ONBOARD
 $routes->get('onboard', 'AccDashboard::onboarding');
 $routes->post('onboard', 'AccDashboard::onboarding');
+$routes->add('onboard', 'AccDashboard::onboarding');
 
 //DASHBOARDS
-
 $routes->group('', ['filter'=>'isLoggedIn'],function($routes)
 {
     $routes->get('dashboard', 'AccDashboard::userdash');
@@ -83,7 +83,8 @@ $routes->group('', ['filter'=>'isAdmin'],function($routes)
     $routes->post('users/status_update', 'AccDashboard::statusToggle');    
     $routes->get('users', 'AccDashboard::userMgt');
     $routes->get('newMember', 'AccDashboard::addMember'); 
-    $routes->get('adminProfile', 'AccDashboard::adminProf');   
+    $routes->get('adminProfile', 'AccDashboard::adminProf'); 
+    $routes->get('newStaff', 'AccDashboard::addStaff');  
 });
 /*
  * --------------------------------------------------------------------

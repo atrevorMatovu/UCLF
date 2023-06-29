@@ -6,29 +6,26 @@ use App\Controllers\BaseController;
 use App\Models\loginModel;
 use App\Models\adminModel;
 use App\Models\MemberRegModel;
-use App\Models\onboardModel;
+use App\Models\OnboardModel;
+use CodeIgniter\HTTP\RequestInterface;
+use CodeIgniter\HTTP\IncomingRequest;
+use CodeIgniter\HTTP\CLIRequest;
 
 class AccDashboard extends BaseController
 {
     public $session;
+    public $onboardModel;
     public function userdash()
         {
             $loginModel = new loginModel;
             $onboardModel = new onboardModel;
             $loggedInUserid = session()->get('loggedInUser');
+            //var_dump( $loggedInUserid);
             $userdata = $loginModel->where('user_id',$loggedInUserid)->first();
-            //$account = $loginModel->verifyUser($loggedInUserid);
-            //$onboard = $onboardModel->getUsers($loggedInUserid['user_id']);
-
-            $onboarding_completed = session()->get('onboarding_completed');
-            $userOn_board = $onboardModel->find($onboarding_completed);
-            $acc_board = $onboardModel->getUsers($loggedInUserid);
-
+            
             $data = [
                 'title'     => 'UserDashboard',
-                //'userdata'  => $userdata,
                 'userdata'  => $userdata,
-                'acc_board' => $acc_board
             ];
             return View("dashboard/userDashboard", $data);
         }   
@@ -38,7 +35,6 @@ class AccDashboard extends BaseController
         $session = session();
         $session->setFlashdata('success', 'You have logged out successfully.');
         $session->remove('loggedInUser');
-        //$this->session->remove('loggedIn', true);
         $session->destroy();
         return view("auth/login");
     }    
@@ -46,20 +42,19 @@ class AccDashboard extends BaseController
     {
         $adminModel = new adminModel;
         $loginModel = new loginModel;
+        $onboardModel = new OnboardModel;
             $loggedInUserid = session()->get('loggedInUser');
             $users = $loginModel->findAll();
             $account = $adminModel->verifyEmail($loggedInUserid['email']);
-            $memberCounts = $loginModel->getMemberCountsByMembershipType();
+            //$memberCounts = $loginModel->getMemberCountsByMembershipType();
             //$members = $loginModel->getTotalMembers();
-            //var_dump($members);
-
-        
+            //var_dump($members);     
 
             $data = [
                 'title'     => 'Dashboard',
                 'users'  => $users,
                 'userdata'    => $account,
-                'memberCounts'=> $memberCounts,
+                //'memberCounts'=> $memberCounts,
                 //'members ' . $members
             ];
         return view("adminDashboards/adminDashboard", $data);
@@ -73,9 +68,7 @@ class AccDashboard extends BaseController
             $account = $adminModel->verifyEmail($loggedInUserid['email']);
             //$memberCounts = $loginModel->getMemberCountsByMembershipType();
             //$members = $loginModel->getTotalMembers();
-            //var_dump($members);
-
-        
+            //var_dump($members);        
 
             $data = [
                 'title'     => 'Dashboard',
@@ -87,24 +80,14 @@ class AccDashboard extends BaseController
     public function profDash()
     {
         $loginModel = new loginModel;
-        $onboardModel = new onboardModel;
         $memberRegModel = new MemberRegModel;
             $loggedInUserid = session()->get('loggedInUser');
             $userdata = $loginModel->where('user_id',$loggedInUserid)->first();
-            $account = $loginModel->verifyUser($loggedInUserid);
-            //var_dump($account);
-            
-             $onboarding_completed = session()->get('onboarding_completed');
-             $userOn_board = $onboardModel->find($onboarding_completed);
-            $acc_board = $onboardModel->getUsers($loggedInUserid);
-             //var_dump($acc_board);
-
+            //var_dump($userdata);
+                    
             $data = [
                 'title'     => 'UserProfile',
-                //'userdata'  => $userdata,
-                'usob'      => $userOn_board,
                 'userdata'  => $userdata,
-                'acc_board' => $acc_board
             ];     
 
         return view("dashboard/profile", $data);
@@ -161,21 +144,22 @@ class AccDashboard extends BaseController
             if($this->validate($rules))
             {
                 $user_id = $this->session->get('loggedInUser');
-                var_dump($user_id);
-                $userdata = [
-                    'Address' => $this->request->getVar('address'),
-                    'Company' => $this->request->getVar('company'),
-                    'Position' => $this->request->getVar('position'),
-                    //'Photo' => $this->request->getFile('avatar'),
-                ];
-
-                if ($avatar = $this->request->getFile('avatar')) {
+                $avatar = $this->request->getFile('avatar');
+                //var_dump($user_id);
+                if ($avatar) {
                     if ($avatar->isValid() && !$avatar->hasMoved()) {
                         $newName = $avatar->getRandomName();
                         $avatar->move(ROOTPATH . 'public/uploads', $newName);
                         $userdata['Photo'] = $newName;
                     }
                 }
+                $userdata = [
+                    'Address' => $this->request->getVar('address'),
+                    'Company' => $this->request->getVar('company'),
+                    'Position' => $this->request->getVar('position'),
+                    'Photo' => $avatar,
+                ];
+                
                 $udata = [
                     'FirstName' => $this->request->getVar('fname'),
                     'LastName' => $this->request->getVar('lname'),
@@ -188,7 +172,7 @@ class AccDashboard extends BaseController
                 $updateMEMB = $onboardModel->updateUser($user_id, $userdata);
                 if($update && $updateMEMB)// Update user's information in the database
                 {
-                    //$this->session->set('Updated', true);
+                    //$this->session->regenerate();
                     $this->session->setFlashdata('success', 'User Profile details updated successfully.');
                     return redirect()->to('userprofile');
                 } 
@@ -261,28 +245,10 @@ class AccDashboard extends BaseController
     
     public function onboarding()
     {
-        $loginModel   = new loginModel;
-            $loggedInUserid = session()->get('loggedInUser');
-            $userdata = $loginModel->where('user_id',$loggedInUserid)->first();
-            $account = $loginModel->verifyUser($loggedInUserid);
-                        
-
-        $onboardModel = new onboardModel;
-            $onboarding_completed = session()->get('onboarding_completed');
-            $userOn_board = $onboardModel->find($onboarding_completed);
-            $acc_board = $onboardModel->getUsers($loggedInUserid);
-
-            $data = [
-                'title'     => 'Onboarding',
-                'acc'  => $account,
-                'userOn_board'=> $userOn_board,
-                'acc_board' => $acc_board,
-                'userdata'    => $userdata,
-            ];
-
-        $vdata = [];
-        $vdata['validation'] = null;
+        $data = [];
+        $data['validation'] = null;
         $email = \Config\Services::email();
+        $this->onboardModel = new OnboardModel();
         $this->session = \Config\Services::session();
         
         if($this->request->getPost())
@@ -315,12 +281,12 @@ class AccDashboard extends BaseController
                         'alpha_numeric_space'=>'Address name can only be of alphanumerics and space'
                     ],
                 ],
-                'practice_area[]' =>[
-                    'rules'=>'required',
-                    'errors'=> [
-                        'required'=>'Choose your practice areas.',
-                    ],
-                ],
+                //'practice_area[]' =>[
+                //    'rules'=>'required',
+                //    'errors'=> [
+                //        'required'=>'Choose your practice areas.',
+                //    ],
+                //],
                 'company' =>[
                     'rules'=>'required|alpha_numeric_space',
                     'errors'=> [
@@ -346,9 +312,20 @@ class AccDashboard extends BaseController
             ];
             if($this->validate($rules))
             {
-                $user_id = $userdata['user_id'];
+                $user_id = $this->session->get('pending');
                 $practice = implode(',', $_POST['practice_area']);
-                $userdata = [
+                $avatar = $this->request->getFile('avatar');                
+                if ($avatar) 
+                {
+                    if ($avatar->isValid() && !$avatar->hasMoved()) 
+                    {
+                        $newName = $avatar->getRandomName();
+                        $avatar->move(ROOTPATH . 'public/uploads', $newName);
+                        //$userdata['Photo'] = $newName;
+                        var_dump($newName);
+                    }
+                }
+                $user = [
                     'Region' => $this->request->getVar('region'),
                     'State' => $this->request->getVar('state'),
                     'City' => $this->request->getVar('city'),
@@ -356,26 +333,26 @@ class AccDashboard extends BaseController
                     'Company' => $this->request->getVar('company'),
                     'Position' => $this->request->getVar('position'),
                     'Practice_area' => $practice,
-                    //'Photo' => $this->request->getFile('avatar'),
-                    'user_id' => $user_id,
-                    'activation_date' => date("Y-m-d h:i:s")
+                    'Photo' => $newName,
+                    //'user_id' => $user_id,
+                    //'activation_date' => date("Y-m-d h:i:s")
                 ];
-                if ($avatar = $this->request->getFile('avatar')) {
-                    if ($avatar->isValid() && !$avatar->hasMoved()) {
-                        $newName = $avatar->getRandomName();
-                        $avatar->move(ROOTPATH . 'public/uploads', $newName);
-                        $userdata['Photo'] = $newName;
-                    }
-                }
-
-                $onBoard = $onboardModel->createUser($userdata);
-                if($onBoard)// Update user's onboarding information in the database
+                //var_dump($user);                
+                // Save user's onboarding information in the database
+                if($this->onboardModel->updateUserInfo($user_id, $user))
                 {
                     $this->session->set('onboarding_completed', $user_id);
-                    if($this->session->get('loggedInUser'))
+                    if($this->session->get('pending'))
                     {
-                    $this->session->setFlashdata('success', 'Account setup successful, please await a notification to access the dashboard.');
-                    return redirect()->to('userprofile');
+                    $this->session->setFlashdata('success', 'Account setup successful, please await an approval email to log into the system.');
+                    return redirect()->to('/');
+                    }
+                    if ($this->request->isAJAX()) {
+                        // Trigger a notification to the admin dashboard
+                        $notificationMessage = "New user account awaiting your approval!";
+                
+                        // using CodeIgniter's session flashdata to store the notification message
+                        $this->session->setFlashdata('notification', $notificationMessage);
                     }
                 } 
                 else
@@ -386,11 +363,11 @@ class AccDashboard extends BaseController
             }
             else
             {
-                $vdata['validation'] = $this->validator;
+                $data['validation'] = $this->validator;
             }
         }
 
-        return view("auth/onboarding", [$data, $vdata]);
+        return view("auth/onboarding", $data);
     }
 
     public function userMgt()
@@ -566,6 +543,22 @@ class AccDashboard extends BaseController
             'userdata'    => $account
         ];
         return view("adminDashboards/adminAddUser", $data);
+    }
+    public function addStaff()
+    {
+        $adminModel = new adminModel;
+        $loggedInUserid = session()->get('loggedInUser');
+        var_dump($loggedInUserid);
+        //$userdata = $adminModel->find($loggedInUserid);
+        $account = $adminModel->verifyEmail($loggedInUserid['email']);
+        //var_dump($account);
+        
+        $data = [
+            'title'     => 'Dashboard',
+            'admin'    => $loggedInUserid,
+            'userdata' => $account
+        ];
+        return view("adminDashboards/adminStaff");  
     }
 
     //User Account Status Update by Admin

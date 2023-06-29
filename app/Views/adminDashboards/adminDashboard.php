@@ -29,6 +29,15 @@
   <!-- Template Main CSS File -->
   <link href="public/assets/css/style.css" rel="stylesheet">
 
+  <link rel="manifest" href="/manifest.json">
+  <script src="https://cdn.onesignal.com/sdks/OneSignalSDK.js" async></script>
+  <script>
+    var OneSignal = window.OneSignal || [];
+    OneSignal.push(["init", {
+      appId: "YOUR_APP_ID"
+    }]);
+  </script>
+
 </head>
 
 <body>
@@ -46,89 +55,46 @@
 
     <nav class="header-nav ms-auto">
       <ul class="d-flex align-items-center">
-          
       <li class="nav-item dropdown">
           <a class="nav-link nav-icon" href="#" data-bs-toggle="dropdown">
             <i class="bi bi-bell"></i>
-            <span class="badge bg-primary badge-number">4</span>
+            <span class="badge bg-primary badge-number">1</span>
           </a><!-- End Notification Icon -->
 
           <ul class="dropdown-menu dropdown-menu-end dropdown-menu-arrow notifications">
             <li class="dropdown-header">
-              You have 4 new notifications
-              <a href="#"><span class="badge rounded-pill bg-primary p-2 ms-2">View all</span></a>
+              You have new notifications
+              <!--a href="#"><span class="badge rounded-pill bg-primary p-2 ms-2">View all</span></a-->
             </li>
             <li>
               <hr class="dropdown-divider">
             </li>
 
+            <?php if (session()->getFlashdata('notification')) : ?> 
             <li class="notification-item">
               <i class="bi bi-exclamation-circle text-warning"></i>
-              <div>
-                <h4>Lorem Ipsum</h4>
-                <p>Quae dolorem earum veritatis oditseno</p>
-                <p>30 min. ago</p>
+              <div class='alert alert-success'>
+              <?= session()->getFlashdata('notification');?>
               </div>
             </li>
+            <?php endif; ?>          
 
             <li>
               <hr class="dropdown-divider">
-            </li>
-
-            <li class="notification-item">
-              <i class="bi bi-x-circle text-danger"></i>
-              <div>
-                <h4>Atque rerum nesciunt</h4>
-                <p>Quae dolorem earum veritatis oditseno</p>
-                <p>1 hr. ago</p>
-              </div>
-            </li>
-
-            <li>
-              <hr class="dropdown-divider">
-            </li>
-
-            <li class="notification-item">
-              <i class="bi bi-check-circle text-success"></i>
-              <div>
-                <h4>Sit rerum fuga</h4>
-                <p>Quae dolorem earum veritatis oditseno</p>
-                <p>2 hrs. ago</p>
-              </div>
-            </li>
-
-            <li>
-              <hr class="dropdown-divider">
-            </li>
-
-            <li class="notification-item">
-              <i class="bi bi-info-circle text-primary"></i>
-              <div>
-                <h4>Dicta reprehenderit</h4>
-                <p>Quae dolorem earum veritatis oditseno</p>
-                <p>4 hrs. ago</p>
-              </div>
-            </li>
-
-            <li>
-              <hr class="dropdown-divider">
-            </li>
-            <li class="dropdown-footer">
-              <a href="#">Show all notifications</a>
             </li>
 
           </ul><!-- End Notification Dropdown Items -->
 
         </li><!-- End Notification Nav -->
 
-        <li class="nav-item dropdown">
+        <!--li class="nav-item dropdown">
 
           <a class="nav-link nav-icon" href="#" data-bs-toggle="dropdown">
             <i class="bi bi-chat-left-text"></i>
             <span class="badge bg-success badge-number">3</span>
-          </a><!-- End Messages Icon -->
+          </a><! End Messages Icon -->
 
-          <ul class="dropdown-menu dropdown-menu-end dropdown-menu-arrow messages">
+          <!--ul class="dropdown-menu dropdown-menu-end dropdown-menu-arrow messages">
             <li class="dropdown-header">
               You have 3 new messages
               <a href="#"><span class="badge rounded-pill bg-primary p-2 ms-2">View all</span></a>
@@ -183,9 +149,9 @@
               <a href="#">Show all messages</a>
             </li>
 
-          </ul><!-- End Messages Dropdown Items -->
+          </ul><! End Messages Dropdown Items -->
 
-        </li><!-- End Messages Nav -->
+        <!--/li--><!-- End Messages Nav -->
     
         <li class="nav-item dropdown pe-3">
 
@@ -277,30 +243,59 @@
         </a>
       </li><!-- End Dashboard Nav -->
       
-      <li class="nav-heading">Menus</li>
       <li class="nav-heading">Accounts</li>
         <li class="nav-item">
           <a class="nav-link collapsed" data-bs-target="#components-nav" data-bs-toggle="collapse" href="#" aria-expanded="false">
-            <i class="bi bi-card-list"></i><span>#Account Management</span><i class="bi bi-chevron-down ms-auto"></i>
+            <i class="bi bi-card-list"></i><span>Account Management</span><i class="bi bi-chevron-down ms-auto"></i>
           </a>
           <ul id="components-nav" class="nav-content collapse" data-bs-parent="#sidebar-nav" style="">
             
             <li class="nav-item">
               <a class="nav-link collapsed" href="adminProfile">
                 <i class="bi bi-person-circle" style="font-size: 16px;"></i>
-                <span>#Account Profile</span>
+                <span>Account Profile</span>
               </a>
             </li><!-- End Profile Page Nav --> 
 
             <li class="nav-item">
               <a class="nav-link collapsed" href="users">
                 <i class="bi bi-people" style="font-size: 16px;"></i>
-                <span>#User Accounts</span>
+                <span>User Accounts</span>
               </a>
             </li><!-- End User Accounts Nav -->
           </ul>
         </li>             
-              
+        
+        <li class="nav-item">
+        <a class="nav-link collapsed" data-bs-target="#components-nav" data-bs-toggle="collapse" href="#">
+          <i class="bi bi-people"></i><span>Staff Management</span><i class="bi bi-chevron-down ms-auto"></i>
+        </a>
+        <ul id="components-nav" class="nav-content collapse " data-bs-parent="#sidebar-nav">
+            
+            <li class="nav-item">
+              <a class="nav-link collapsed" href="newStaff">
+                <i class="bi bi-people-fill" style="font-size: 16px;"></i>
+                <span>Staff Personnel</span>
+              </a>
+            </li><!-- End Staff Page Nav -->
+
+            <li class="nav-item">
+              <a class="nav-link collapsed" href="#">
+                <i class="bi bi-building" style="font-size: 16px;"></i>
+                <span>Personnel Roles</span>
+              </a>
+            </li><!-- End Roles Page Nav -->
+         
+        </ul>
+      </li><!-- End Components Nav -->
+
+        <!--li class="nav-item">
+          <a class="nav-link collapsed" href="#">
+            <i class="bi bi-building" ></i>
+            <span>#Staff Management</span>
+          </a>
+        </li--><!-- End Forum Page Nav -->
+
 
         <li class="nav-item">
           <a class="nav-link collapsed" href="#">
@@ -374,7 +369,7 @@
                       <i class="bi bi-people"></i>
                     </div>
                     <div class="ps-3">
-                      <h6>4</h6><span class="text-muted small pt-2 ps-1">Members</span>
+                      <h6>6</h6><span class="text-muted small pt-2 ps-1">Members</span>
                       <!--span class="text-danger small pt-1 fw-bold">12%</span> <span class="text-muted small pt-2 ps-1">decrease</span-->
 
                     </div>

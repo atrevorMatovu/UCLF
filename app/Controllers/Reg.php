@@ -165,15 +165,11 @@ class Reg extends BaseController
                         
                         $status = $this->memberRegModel->updateStatus($userdata->user_id);
                         if ($status) {
-                            $this->session->setFlashdata('success', 'Account activated successfully, proceed to log in.');
+                            $this->session->set('pending', $userdata->user_id);
+                            $this->session->setFlashdata('success', 'Account activation in progress!<br>Please proceed through the next steps to be activated fully.');
                             return redirect()->to('acti');
                         }
                     } 
-                    else 
-                    {
-                        $this->session->setFlashdata('success', 'Account already successfully activated, please proceed to login.');
-                        return redirect()->to('acti');
-                    }
                 }
                     else
                     {
@@ -184,7 +180,7 @@ class Reg extends BaseController
                 } 
                 else 
                 {
-                    $this->session->setFlashdata('error', 'Sorry! something with the activation link. Please contact support.');
+                    $this->session->setFlashdata('error', 'Sorry! something wrong with the activation link. Please contact support.');
                     return redirect()->to('/');
                 }
             }

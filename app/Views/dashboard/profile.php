@@ -46,13 +46,7 @@
       <i class="bi bi-list toggle-sidebar-btn"></i>
     </div><!-- End Logo -->
 
-    <!--div class="search-bar">
-      <form class="search-form d-flex align-items-center" method="POST" action="#">
-        <input type="text" name="query" placeholder="Search" title="Enter search keyword">
-        <button type="submit" title="Search"><i class="bi bi-search"></i></button>
-      </form>
-    </div><! End Search Bar -->
-
+   
     <nav class="header-nav ms-auto">
       <ul class="d-flex align-items-center">
 
@@ -71,8 +65,8 @@
 
           <ul class="dropdown-menu dropdown-menu-end dropdown-menu-arrow notifications">
             <li class="dropdown-header">
-              You have 4 new notifications
-              <a href="#"><span class="badge rounded-pill bg-primary p-2 ms-2">View all</span></a>
+              You have new notifications
+              <!--a href="#"><span class="badge rounded-pill bg-primary p-2 ms-2">View all</span></a-->
             </li>
             <li>
               <hr class="dropdown-divider">
@@ -91,44 +85,6 @@
               <hr class="dropdown-divider">
             </li>
 
-            <li class="notification-item">
-              <i class="bi bi-x-circle text-danger"></i>
-              <div>
-                <h4>Atque rerum nesciunt</h4>
-                <p>Quae dolorem earum veritatis oditseno</p>
-                <p>1 hr. ago</p>
-              </div>
-            </li>
-
-            <li>
-              <hr class="dropdown-divider">
-            </li>
-
-            <li class="notification-item">
-              <i class="bi bi-check-circle text-success"></i>
-              <div>
-                <h4>Sit rerum fuga</h4>
-                <p>Quae dolorem earum veritatis oditseno</p>
-                <p>2 hrs. ago</p>
-              </div>
-            </li>
-
-            <li>
-              <hr class="dropdown-divider">
-            </li>
-
-            <li class="notification-item">
-              <i class="bi bi-info-circle text-primary"></i>
-              <div>
-                <h4>Dicta reprehenderit</h4>
-                <p>Quae dolorem earum veritatis oditseno</p>
-                <p>4 hrs. ago</p>
-              </div>
-            </li>
-
-            <li>
-              <hr class="dropdown-divider">
-            </li>
             <li class="dropdown-footer">
               <a href="#">Show all notifications</a>
             </li>
@@ -137,83 +93,19 @@
 
         </li><!-- End Notification Nav -->
 
-        <li class="nav-item dropdown">
-
-          <a class="nav-link nav-icon" href="#" data-bs-toggle="dropdown">
-            <i class="bi bi-chat-left-text"></i>
-            <span class="badge bg-success badge-number">3</span>
-          </a><!-- End Messages Icon -->
-
-          <ul class="dropdown-menu dropdown-menu-end dropdown-menu-arrow messages">
-            <li class="dropdown-header">
-              You have 3 new messages
-              <a href="#"><span class="badge rounded-pill bg-primary p-2 ms-2">View all</span></a>
-            </li>
-            <li>
-              <hr class="dropdown-divider">
-            </li>
-
-            <li class="message-item">
-              <a href="#">
-                <img src="public/assets/img/messages-1.jpg" alt="" class="rounded-circle">
-                <div>
-                  <h4>Maria Hudson</h4>
-                  <p>Velit asperiores et ducimus soluta repudiandae labore officia est ut...</p>
-                  <p>4 hrs. ago</p>
-                </div>
-              </a>
-            </li>
-            <li>
-              <hr class="dropdown-divider">
-            </li>
-
-            <li class="message-item">
-              <a href="#">
-                <img src="public/assets/img/messages-2.jpg" alt="" class="rounded-circle">
-                <div>
-                  <h4>Anna Nelson</h4>
-                  <p>Velit asperiores et ducimus soluta repudiandae labore officia est ut...</p>
-                  <p>6 hrs. ago</p>
-                </div>
-              </a>
-            </li>
-            <li>
-              <hr class="dropdown-divider">
-            </li>
-
-            <li class="message-item">
-              <a href="#">
-                <img src="public/assets/img/messages-3.jpg" alt="" class="rounded-circle">
-                <div>
-                  <h4>David Muldon</h4>
-                  <p>Velit asperiores et ducimus soluta repudiandae labore officia est ut...</p>
-                  <p>8 hrs. ago</p>
-                </div>
-              </a>
-            </li>
-            <li>
-              <hr class="dropdown-divider">
-            </li>
-
-            <li class="dropdown-footer">
-              <a href="#">Show all messages</a>
-            </li>
-
-          </ul><!-- End Messages Dropdown Items -->
-
-        </li><!-- End Messages Nav -->
+        
 
         <li class="nav-item dropdown pe-3">
 
           <a class="nav-link nav-profile d-flex align-items-center pe-0" href="#" data-bs-toggle="dropdown">
-            <img src="public/assets/img/alanTrevor.png" alt="Profile" class="rounded-circle">
+            <img src="<?= base_url('public/uploads/' . $userdata['Photo']) ?>" alt="Profile" class="rounded-circle">
             <span class="d-none d-md-block dropdown-toggle ps-2"><?= $userdata['FirstName']?> <?= $userdata['LastName']?></span>
           </a><!-- End Profile Iamge Icon -->
 
           <ul class="dropdown-menu dropdown-menu-end dropdown-menu-arrow profile">
             <li class="dropdown-header">
               <h6><?php echo $userdata['FirstName']?> <?php echo $userdata['LastName']?></h6>
-              <span><?php echo $acc_board['Position']?></span>
+              <span><?php echo $userdata['Position']?></span>
             </li>
             <li>
               <hr class="dropdown-divider">
@@ -277,10 +169,9 @@
       </li><!-- End Dashboard Nav -->     
       
 
-      <li class="nav-heading">Menus</li>
       <li class="nav-item">
         <a class="nav-link collapsed" data-bs-target="#components-nav" data-bs-toggle="collapse" href="#" aria-expanded="false">
-          <i class="bi bi-person-vcard"></i><span>#Membership Directory</span><i class="bi bi-chevron-down ms-auto"></i>
+          <i class="bi bi-person-vcard"></i><span>Membership Directory</span><i class="bi bi-chevron-down ms-auto"></i>
         </a>
         <ul id="components-nav" class="nav-content collapse" data-bs-parent="#sidebar-nav" style="">
           <li>
@@ -312,26 +203,26 @@
       </li><!-- End Directory Page Nav -->
 
       <li class="nav-item">
+        <a class="nav-link collapsed" href="userprofile">
+          <i class="bi bi-person-circle"></i>
+          <span>Account Profile</span>
+        </a>
+      </li><!-- End Profile Page Nav -->
+      
+      <li class="nav-item">
         <a class="nav-link collapsed" href="#">
           <i class="bi bi-stickies"></i>
           <span>#Forum</span>
         </a>
-      </li><!-- End Forum Page Nav -->
-
+      </li><!-- End Forum Page Nav -->     
       
-      <li class="nav-item">
-        <a class="nav-link collapsed" href="userprofile">
-          <i class="bi bi-person-circle"></i>
-          <span>#Account Profile</span>
-        </a>
-      </li><!-- End Profile Page Nav -->
 
-      <li class="nav-item">
+      <!--li class="nav-item">
         <a class="nav-link collapsed" href="#">
           <i class="bi bi-chat-square"></i>
           <span>#Support</span>
         </a>
-      </li><!-- End Contact Page Nav -->   
+      </li--><!-- End Contact Page Nav -->   
 
     </ul>
 
@@ -377,10 +268,11 @@
           <div class="card">
             <div class="card-body profile-card pt-4 d-flex flex-column align-items-center">
 
-              <img src="public/assets/img/alanTrevor.png" alt="Profile" class="rounded-circle">
+              <img src="<?= base_url('public/uploads/' . $userdata['Photo']) ?>" alt="Profile" class="rounded-circle">
               <h2><?php echo $userdata['FirstName']?> <?php echo $userdata['LastName']?></h2>
-              <h3><?php echo $userdata['Email']?></h3>
-              <h3><?php echo $acc_board['Position']?></h3>
+              <h3><?php echo $userdata['Company']?></h3>
+              <h3><?php echo $userdata['Position']?></h3>
+              <h3><?php echo $userdata['Email']?></h3>              
               <h3>0<?php echo $userdata['Tel']?></h3>
               </div>
           </div>
@@ -419,12 +311,12 @@
 
                   <div class="row">
                     <div class="col-lg-3 col-md-4 label">Company</div>
-                    <div class="col-lg-9 col-md-8"><?php echo $acc_board['Company']?></div>
+                    <div class="col-lg-9 col-md-8"><?php echo $userdata['Company']?></div>
                   </div>
 
                   <div class="row">
                     <div class="col-lg-3 col-md-4 label">Position</div>
-                    <div class="col-lg-9 col-md-8"><?php echo $acc_board['Position']?></div>
+                    <div class="col-lg-9 col-md-8"><?php echo $userdata['Position']?></div>
                   </div>
 
                   <div class="row">
@@ -434,7 +326,7 @@
 
                   <div class="row">
                     <div class="col-lg-3 col-md-4 label">Address</div>
-                    <div class="col-lg-9 col-md-8"><?php echo $acc_board['Address']?></div>
+                    <div class="col-lg-9 col-md-8"><?php echo $userdata['Address']?></div>
                   </div>
 
                   <div class="row">
@@ -457,7 +349,7 @@
                       <label for="profileImage" class="col-md-4 col-lg-3 col-form-label">Profile Image</label>
                       <div class="col-md-8 col-lg-9">
                         <div id="image-container">
-                          <img id="profile-image" name="photo" src="<?php echo $acc_board['Photo']?>" class="rounded-circle" alt="">
+                          <img id="profile-image" name="photo" src="<?= base_url('public/uploads/' . $userdata['Photo']) ?>" class="rounded-circle" alt="">
                           <i id="image-placeholder" class="bi bi-person-fill" height='60'></i>
                         </div>
 
@@ -483,7 +375,8 @@
 
                             // Remove the selected image preview (if any)
                             var imagePreview = document.getElementById("image-preview");
-                            if (imagePreview) {
+                            if (imagePreview) 
+                            {
                               imagePreview.parentNode.removeChild(imagePreview);
                             }
                           }
@@ -542,31 +435,26 @@
                       </div>
                     </div>
 
-                    <!--div class="row mb-3">
-                      <label for="about" class="col-md-4 col-lg-3 col-form-label">About</label>
-                      <div class="col-md-8 col-lg-9">
-                        <textarea name="about" class="form-control" id="about" style="height: 100px">Sunt est soluta temporibus accusantium neque nam maiores cumque temporibus. Tempora libero non est unde veniam est qui dolor. Ut sunt iure rerum quae quisquam autem eveniet perspiciatis odit. Fuga sequi sed ea saepe at unde.</textarea>
-                      </div>
-                    </div-->
+                   
 
                     <div class="row mb-3">
                       <label for="company" class="col-md-4 col-lg-3 col-form-label">Company</label>
                       <div class="col-md-8 col-lg-9">
-                        <input name="company" type="text" class="form-control" id="company" value=<?php echo $acc_board['Company']?>>
+                        <input name="company" type="text" class="form-control" id="company" value=<?php echo $userdata['Company']?>>
                       </div>
                     </div>
 
                     <div class="row mb-3">
                       <label for="position" class="col-md-4 col-lg-3 col-form-label">Position</label>
                       <div class="col-md-8 col-lg-9">
-                        <input name="position" type="text" class="form-control" id="position" value=<?php echo $acc_board['Position']?>>
+                        <input name="position" type="text" class="form-control" id="position" value=<?php echo $userdata['Position']?>>
                       </div>
                     </div>
 
                     <div class="row mb-3">
                       <label for="Address" class="col-md-4 col-lg-3 col-form-label">Address</label>
                       <div class="col-md-8 col-lg-9">
-                        <input name="address" type="text" class="form-control" id="Address" value=<?php echo $acc_board['Address']?>>
+                        <input name="address" type="text" class="form-control" id="Address" value=<?php echo $userdata['Address']?>>
                       </div>
                     </div>
 

@@ -232,7 +232,6 @@
       </li><!-- End Dashboard Nav -->     
       
 
-      <li class="nav-heading">Menus</li>
       <li class="nav-item">
         <a class="nav-link collapsed" data-bs-target="#components-nav" data-bs-toggle="collapse" href="#" aria-expanded="false">
           <i class="bi bi-person-vcard"></i><span>#Membership Directory</span><i class="bi bi-chevron-down ms-auto"></i>

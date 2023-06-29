@@ -70,9 +70,9 @@
                     <img src="public/assets/img/logo-rmbg.png" alt="">
                  </a>
                  <div class="col-lg-8 mx-3 pt-2">
-                  <h3 class="card-title pb-0 fs-3 hidden">About UCLF.</h3>
+                  <h3 class="card-title pb-0 fs-3 hidden ">About UCLF.</h3>
                   <p class="desc"><i>
-                  Prestigious lawyer fraternity group that unites 
+                  Prestigious law fraternity group that unites 
                   legal professionals dedicated to practicing law
                   with Christian values.</i>
                   </p>
@@ -96,9 +96,11 @@
                         <p class="text-center small">Fill in the provided fields to get started.</p>
                     </div-->
                     <div>
-                    <div class="text-center card-title"><h3 class="pt-2 pb-0 fs-4">UCLF Account Onboarding.</h3>
-                    <div class="small"><p>Please provide the necessary information as required:</p></div>
+                      <div class="text-center card-title"><h3 class="pt-2 pb-0 fs-4">UCLF Account Onboarding.</h3>
+                      <div class="small"><p>Please provide the necessary information as required:</p></div>
+                      </div>
                     </div>
+                    
 
                     <?php if(session()->getFlashdata('success')): ?>
                     <div class='alert alert-success'><?= session()->getFlashdata('success');?></div>
@@ -116,8 +118,7 @@
                     <?php endif;?> 
 
                     
-                      </div>
-                    
+                     
                     
                     <!--FORMS-->
                     <form action="http://localhost/UCLF/onboard" method="post" enctype="multipart/form-data" accept-charset="utf-8">
@@ -214,17 +215,17 @@
                                 </div>
 
                                 <div class="col-12 d-flex pt-1">
-                                <div class="col-md-6 col-12 mx-2 pt-2 pb-0.2">
-                                <lable for="photo">Photo/Company Logo<p class="examples">(500px by 500px):</p></lable>
-                                </div>
-                                <div class="col-md-4 col-12 pt-2 pb-0.2 form-floating">                                  
-                                  <input type="file" name="avatar" >
-                                  <!--input type="submit" value="Upload"-->
-                                </div>
+                                  <div class="col-md-6 col-12 mx-2 pt-2 pb-0.2">
+                                  <lable for="avatar">Photo/Company Logo<p class="examples">(500px by 500px):</p></lable>
+                                  </div>
+                                  <div class="col-md-4 col-12 pt-2 pb-0.2 form-floating">                                  
+                                    <input type="file" name="avatar" >
+                                    <!--input type="submit" value="Upload"-->
+                                  </div>
                                 </div>
 
                                 <div class="col-12 pt-2 btn-fr">
-                                  <input type="submit" class="btn btn-primary w-100 " value = "Continue" >
+                                  <input type="submit" class="btn btn-primary w-100 " value = "Continue">
                                 </div>
                                 </div>
                                

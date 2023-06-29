@@ -6,9 +6,9 @@ namespace App\Models;
 
 use CodeIgniter\Model;
 
-class onboardModel extends Model
+class OnboardModel extends Model
 {
-    protected $table      = 'membship';
+    protected $table      = 'members';
     protected $primaryKey = 'id';
 
     protected $allowedFields = ['Region', 'State', 'City', 'Address', 'Company', 'Position', 'Practice_area', 'user_id', 'Photo', 'user_id', 'activation_date'];
@@ -24,13 +24,17 @@ class onboardModel extends Model
         $onboardModel = new OnboardModel();
         $builder = $onboardModel->builder();
         $builder = $this->db->table('membship');
-        $res = $builder->insert($data);
-        if($this->db->affectedRows()==1)
+        $builder->insert($data);
+       if($this->db->affectedRows()==1)
         {
             return true;
         }else{
             return false;
         }
+    }
+    public function saveUserInfo($data)
+    {
+        return $this->insert($data);
     }
 
     public function updateUser($id, $data)
@@ -42,6 +46,31 @@ class onboardModel extends Model
           'Company'   => $data['Company'],
           'Position'  => $data['Position'],
           'Address'   => $data['Address'],
+          'Photo'     => $data['Photo']      
+        ]);
+        $builder->where('user_id', $id);
+        $builder->update();
+        if($this->db->affectedRows()==1)
+        {
+            return true;
+        }else{
+            return false;
+        }
+    }
+
+    public function updateUserInfo($id, $data)
+    {
+      $onboardModel = new OnboardModel();
+        $builder = $onboardModel->builder();
+        $builder = $this->db->table('members');
+        $builder->set([
+          'Company'   => $data['Company'],
+          'Position'  => $data['Position'],
+          'Region'    => $data['Region'],
+          'State'    => $data['State'],
+          'City'    => $data['City'],
+          'Address'   => $data['Address'],
+          'Practice_area' => $data['Practice_area'],
           'Photo'     => $data['Photo']      
         ]);
         $builder->where('user_id', $id);
