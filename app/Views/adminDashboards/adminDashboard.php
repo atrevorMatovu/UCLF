@@ -159,8 +159,8 @@
 
           <a class="nav-link nav-profile d-flex align-items-center pe-0" href="bi bi-person-circle" data-bs-toggle="dropdown">
           <div class="icon">
-          <i class="bi bi-person-circle"></i> 
-            <img src="" alt="" class="rounded-circle">
+          <!--i class="bi bi-person-circle"></i--> 
+            <img src="<?= base_url('public/uploads/' . $userdata['photo']) ?>" class="rounded-circle">
             <div class="label">
                 <span class="d-none d-md-block dropdown-toggle ps-2"><?php echo $userdata['username']?></span>
             </div>
@@ -170,7 +170,7 @@
           <ul class="dropdown-menu dropdown-menu-end dropdown-menu-arrow profile">
             <li class="dropdown-header">
               <h6><?php echo $userdata['username']?></h6>
-              <span>Admin</span>
+              <span><?php echo $userdata['position']?></span>
             </li>
             <li>
               <hr class="dropdown-divider">
@@ -206,7 +206,7 @@
               <hr class="dropdown-divider">
             </li>
 
-            <li>
+            <!--li>
               <a class="dropdown-item d-flex align-items-center" href="#">
                 <i class="bi bi-question-circle"></i>
                 <span>Need Help?</span>
@@ -214,7 +214,7 @@
             </li>
             <li>
               <hr class="dropdown-divider">
-            </li>
+            </li-->
 
             <li>
               <a class="dropdown-item d-flex align-items-center" href='dashboard/logout'>
@@ -248,7 +248,7 @@
           <a class="nav-link collapsed" data-bs-target="#components-nav" data-bs-toggle="collapse" href="#" aria-expanded="false">
             <i class="bi bi-card-list"></i><span>Account Management</span><i class="bi bi-chevron-down ms-auto"></i>
           </a>
-          <ul id="components-nav" class="nav-content collapse" data-bs-parent="#sidebar-nav" style="">
+          <ul id="components-nav" class="nav-content collapse" data-bs-parent="#sidebar-nav">
             
             <li class="nav-item">
               <a class="nav-link collapsed" href="adminProfile">

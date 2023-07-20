@@ -123,7 +123,7 @@
             <li>
               <a class="dropdown-item d-flex align-items-center" href="#">
                 <i class="bi bi-question-circle"></i>
-                <span>Need Help?</span>
+                <span>Events</span>
               </a>
             </li>
             <li>
@@ -175,7 +175,7 @@
             <li class="nav-item">
               <a class="nav-link collapsed" href="users">
                 <i class="bi bi-people" style="font-size: 16px"></i>
-                <span>#Member Accounts</span>
+                <span>Member Accounts</span>
               </a>
             </li><!-- End Forum Nav -->
           </ul>
@@ -194,12 +194,12 @@
               </a>
             </li><!-- End Staff Page Nav -->
 
-            <li class="nav-item">
+            <!--li class="nav-item">
               <a class="nav-link collapsed" href="#">
                 <i class="bi bi-building" style="font-size: 16px;"></i>
                 <span>Personnel Roles</span>
               </a>
-            </li><!-- End Roles Page Nav -->
+            </li--><!-- End Roles Page Nav -->
          
           </ul>
         </li><!-- End Components Nav -->
@@ -207,7 +207,7 @@
         <li class="nav-item"><!-- Upcoming Events page -->
           <a class="nav-link collapsed" href="#">
             <i class="bi bi-stickies"></i>
-            <span>#Forum</span>
+            <span>Forum</span>
           </a>
         </li><!-- End Forum Page Nav -->       
         
@@ -215,7 +215,7 @@
         <li class="nav-item">
           <a class="nav-link collapsed" href="#">
             <i class="bi bi-chat-square"></i>
-            <span>#Support</span>
+            <span>Events</span>
           </a>
         </li><!-- End Contact Page Nav -->   
 
@@ -273,7 +273,8 @@
                       <tr>
                         <th scope="col">#</th>
                         <th scope="col">Fullname</th>
-                        <th scope="col">Photo</th>                       
+                        <th scope="col">Photo</th>
+                        <th scope="col">Action</th>                       
                         <th scope="col">Email</th>  
                         <th scope="col">Membership</th>
                         <th scope="col">Contact</th>
@@ -285,46 +286,139 @@
                     <?php foreach ($users as $user) : ?>
                       <tr>
                         <th scope="row"><a href="#"><?php echo $user['id'];?></a></th>
-                        <td><?php echo $user['FirstName'];?> <?php echo $user['LastName'];?></td>
-                        <td ><img src="<?= base_url('public/uploads/' . $user['Photo']) ?>" class="rounded-circle align-items-center" style="max-width:20%"</td>
-                        <td><a href="#" class="text-primary"><?php echo $user['Email'];?></a></td>
-                        <!--td></td-->
+                        <!--td> </td-->
+                        <td><input type="hidden" name="user_id" value="<?php echo $user['user_id']; ?>"><a href="userRequest" class="text-primary"><?php echo $user['FirstName'];?> <?php echo $user['LastName'];?></a></td>
+                        <td><img src="<?= base_url('public/uploads/' . $user['Photo']) ?>" class="rounded-circle align-items-center" style="max-width:20%"></td>
+                        <td><button id="openPopup" class="btn" title="View user information"><i class="bi bi-question-diamond"style="font-size: 1rem; color: #a6efb9";></i></button></td>
+                        <td><?php echo $user['Email'];?></td>
                         <td><?php echo ucfirst($user['Membership_type']);?></td>
                         <td><span class="badge bg-success">0<?php echo $user['Tel'];?></span></td>
                         <td><?php echo $user['Gender'];?></td>
-                        <td><?php echo $user['Account_status'];?></td>
-                        <!--td>
-                          <form method="POST" action="http://localhost/UCLF/users/status_update">
-                            <input type="hidden" name="user_id" value="<//?php echo $user['user_id']; ?>">
-                            <label class="switch">
-                                <input type="checkbox" name="status" <//?php echo ($user['Account_status'] === 'Approved') ? 'checked' : ''; ?>>
-                                <span class="slider round"></span>
-                            </label>
-                          </form> 
-                          <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-                          <script>
-                            $(document).ready(function() {
-                              $('#statusCheckbox').change(function() {
-                                if ($(this).is(':checked')) {
-                                  // Set the Account_status to "Approved"
-                                  $('[name="status"]').val('Approved');
-                                } else {
-                                  // Set the Account_status to "Pending"
-                                  $('[name="status"]').val('Pending');
-                                }
-                                
-                                // Submit the form asynchronously
-                                $('#statusForm').submit();
-                              });
-                            });
-                          </script>
-                        </td-->                 
+                        <td><?php echo $user['Account_status'];?></td> 
                         <?php endforeach; ?>
                       </tr>
                      </tbody>
                   </table>
                   </div>
+              
+                  <div id="popupForm" class="popup">
+                    <div class="popup-content">
+                      <span class="close">&times;</span>
+                      <div class="card">
+                        <div class="card-body profile-card pt-4  flex-column align-items-center">
+                          <h5 class="card-title align-middle pb-1" style="font-size: larger;">User Account Details</h5>
+                          <img src="#" style="max-width:50%" class="mb-1 rounded-circle">             
+                              <div class="row mb-1">
+                                  <div class="col-lg-3 col-md-5 text-dark ">Full Name</div>
+                                  <div class="col-lg-9 col-md-8 text-dark"></div>
+                              </div>
 
+                              <div class="row mb-1">
+                                  <div class="col-lg-3 col-md-5 text-dark">Email</div>
+                                  <div class="col-lg-9 col-md-8 text-dark"></div>
+                              </div>
+
+                              <div class="row mb-1">
+                                  <div class="col-lg-3 col-md-5 text-dark">Company</div>
+                                  <div class="col-lg-9 col-md-8 text-dark"></div>
+                              </div>
+
+                              <div class="row mb-1">
+                                  <div class="col-lg-3 col-md-5 text-dark">Position</div>
+                                  <div class="col-lg-9 col-md-8 text-dark"></div>
+                              </div>
+
+                              <div class="row mb-1">
+                                  <div class="col-lg-4 col-md-5 text-dark">Membership</div>
+                                  <div class="col-lg-9 col-md-8 text-dark"></div>
+                              </div>
+
+                              <div class="row mb-1">
+                                  <div class="col-lg-3 col-md-5 text-dark">District</div>
+                                  <div class="col-lg-9 col-md-8 text-dark"></div>
+                              </div>
+                              <div class="row mb-1">
+                                  <div class="col-lg-3 col-md-5 text-dark">City</div>
+                                  <div class="col-lg-9 col-md-8 text-dark"></div>
+                              </div>
+                      <h3>Pop-up Form</h3>
+                      <form>
+                        <!-- Form fields go here -->
+                        <label for="comment" >Comments:</label><br>
+                          <input type="textbox" id="comment" class="form-control pt-2" name="comment" placeholder="Information review comment is necessary."><br>
+                        <button type="button" class="btn btn-primary w-100 pb-2" onclick="displayComments()">Submit</button>
+                        <p class="font-italic">
+                          <i>**Review Comments**</i>
+                        </p>  
+                        <div id="commentDisplay"class="text-dark" style="display: none;"></div>
+                        <input type="hidden" id="userId" value="">
+                        <button id="approveBtn"class="btn btn-primary align-middle" style="display: none;" onclick="approveUser()">Approve</button>
+
+                        <button id="rejectBtn" class="btn btn-danger align-middle" style="display: none;" onclick="rejectUser()">Reject</button>
+
+                      </form>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                  <script>
+                  function displayComments() {
+                      var comment = document.getElementById("comment").value;
+                      var commentDisplay = document.getElementById("commentDisplay");
+                      var approveBtn = document.getElementById("approveBtn");
+                      var rejectBtn = document.getElementById("rejectBtn");
+                      
+                      if (comment.trim() !== "") 
+                      {
+                        commentDisplay.innerHTML = comment;
+                        commentDisplay.style.display = "block";
+                        approveBtn.style.display = "inline-block";
+                        rejectBtn.style.display = "inline-block";
+                        document.getElementById("comment").value = "";
+                      }
+
+                      function approveUser() {
+                        var userId = document.getElementById("userId").value;
+
+                          $.ajax({
+                              url: "approve_user.php",
+                              type: "POST",
+                              data: { userId: userId },
+                              success: function(response) {
+                                  alert("User approved!");
+                              },
+                              error: function(xhr, status, error) {
+                                  alert("Error approving user: " + error);
+                              }
+                          });
+                      }
+
+                      function rejectUser() {
+                          var userId = document.getElementById("userId").value;
+
+                          $.ajax({
+                              url: "suspend_user.php",
+                              type: "POST",
+                              data: { userId: userId },
+                              success: function(response) {
+                                  alert("User suspended!");
+                              },
+                              error: function(xhr, status, error) {
+                                  alert("Error suspending user: " + error);
+                              }
+                          });
+                        }
+                  }
+              </script>
+
+                  <script>
+                    document.getElementById("openPopup").addEventListener("click", function() {
+                      document.getElementById("popupForm").style.display = "block";
+                    });
+                    document.getElementsByClassName("close")[0].addEventListener("click", function() {
+                      document.getElementById("popupForm").style.display = "none";
+                    });
+                  </script>
                 </div>
 
               </div>

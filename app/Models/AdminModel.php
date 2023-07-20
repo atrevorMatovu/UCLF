@@ -14,7 +14,7 @@ class AdminModel extends Model
     protected $returnType     = 'array';
     protected $useSoftDeletes = true;
 
-    protected $allowedFields = ['email', 'password', 'username'];
+    protected $allowedFields = ['email', 'password', 'username', 'photo', 'position', 'Tel'];
 
     protected $useTimestamps = false;
     protected $dateFormat    = 'datetime';
@@ -25,7 +25,7 @@ class AdminModel extends Model
     public function verifyEmail($email)
     {
         $builder = $this->db->table('admins');
-        $builder->select("email, password, username");
+        $builder->select("email, password, username, photo, position, Tel");
         $builder->where('email', $email);
         $result = $builder->get()->getRowArray();
         return $result;        
@@ -39,6 +39,24 @@ class AdminModel extends Model
         return $res;   
     }
 
+    public function updatePassword($email, $new_password)
+    {
+        $data = [
+            'password' => password_hash($new_password, PASSWORD_DEFAULT),
+            'updated_at' => date('Y-m-d H:i:s')
+        ];
+    
+        $builder = $this->db->table('admins');
+        $builder->where('email', $email);
+        $builder->update($data);
+    
+        if($this->db->affectedRows() == 1)
+        {
+            return true;
+        }else{
+            return false;
+        }
+    }
     public function verifyPassword($pwd)
     {
         $builder = $this->db->table('admins');

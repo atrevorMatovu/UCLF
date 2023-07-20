@@ -5,7 +5,7 @@
   <meta charset="utf-8">
   <meta content="width=device-width, initial-scale=1.0" name="viewport">
 
-  <title>AddMember - UCLF</title>
+  <title>Requests - UCLF</title>
   <meta content="" name="description">
   <meta content="" name="keywords">
 
@@ -55,8 +55,8 @@
 
           <ul class="dropdown-menu dropdown-menu-end dropdown-menu-arrow notifications">
             <li class="dropdown-header">
-              You have 4 new notifications
-              <a href="#"><span class="badge rounded-pill bg-primary p-2 ms-2">View all</span></a>
+              New notifications here!
+              <!--a href="#"><span class="badge rounded-pill bg-primary p-2 ms-2">View all</span></a-->
             </li>
             <li>
               <hr class="dropdown-divider">
@@ -65,9 +65,7 @@
             <li class="notification-item">
               <i class="bi bi-exclamation-circle text-warning"></i>
               <div>
-                <h4>Lorem Ipsum</h4>
-                <p>Quae dolorem earum veritatis oditseno</p>
-                <p>30 min. ago</p>
+                
               </div>
             </li>
 
@@ -78,9 +76,7 @@
             <li class="notification-item">
               <i class="bi bi-x-circle text-danger"></i>
               <div>
-                <h4>Atque rerum nesciunt</h4>
-                <p>Quae dolorem earum veritatis oditseno</p>
-                <p>1 hr. ago</p>
+                
               </div>
             </li>
 
@@ -88,31 +84,6 @@
               <hr class="dropdown-divider">
             </li>
 
-            <li class="notification-item">
-              <i class="bi bi-check-circle text-success"></i>
-              <div>
-                <h4>Sit rerum fuga</h4>
-                <p>Quae dolorem earum veritatis oditseno</p>
-                <p>2 hrs. ago</p>
-              </div>
-            </li>
-
-            <li>
-              <hr class="dropdown-divider">
-            </li>
-
-            <li class="notification-item">
-              <i class="bi bi-info-circle text-primary"></i>
-              <div>
-                <h4>Dicta reprehenderit</h4>
-                <p>Quae dolorem earum veritatis oditseno</p>
-                <p>4 hrs. ago</p>
-              </div>
-            </li>
-
-            <li>
-              <hr class="dropdown-divider">
-            </li>
             <li class="dropdown-footer">
               <a href="#">Show all notifications</a>
             </li>
@@ -121,75 +92,9 @@
 
         </li><!-- End Notification Nav -->
 
-        <li class="nav-item dropdown">
-
-          <a class="nav-link nav-icon" href="#" data-bs-toggle="dropdown">
-            <i class="bi bi-chat-left-text"></i>
-            <span class="badge bg-success badge-number">3</span>
-          </a><!-- End Messages Icon -->
-
-          <ul class="dropdown-menu dropdown-menu-end dropdown-menu-arrow messages">
-            <li class="dropdown-header">
-              You have 3 new messages
-              <a href="#"><span class="badge rounded-pill bg-primary p-2 ms-2">View all</span></a>
-            </li>
-            <li>
-              <hr class="dropdown-divider">
-            </li>
-
-            <li class="message-item">
-              <a href="#">
-                <img src="public/assets/img/messages-1.jpg" alt="" class="rounded-circle">
-                <div>
-                  <h4>Maria Hudson</h4>
-                  <p>Velit asperiores et ducimus soluta repudiandae labore officia est ut...</p>
-                  <p>4 hrs. ago</p>
-                </div>
-              </a>
-            </li>
-            <li>
-              <hr class="dropdown-divider">
-            </li>
-
-            <li class="message-item">
-              <a href="#">
-                <img src="public/assets/img/messages-2.jpg" alt="" class="rounded-circle">
-                <div>
-                  <h4>Anna Nelson</h4>
-                  <p>Velit asperiores et ducimus soluta repudiandae labore officia est ut...</p>
-                  <p>6 hrs. ago</p>
-                </div>
-              </a>
-            </li>
-            <li>
-              <hr class="dropdown-divider">
-            </li>
-
-            <li class="message-item">
-              <a href="#">
-                <img src="public/assets/img/messages-3.jpg" alt="" class="rounded-circle">
-                <div>
-                  <h4>David Muldon</h4>
-                  <p>Velit asperiores et ducimus soluta repudiandae labore officia est ut...</p>
-                  <p>8 hrs. ago</p>
-                </div>
-              </a>
-            </li>
-            <li>
-              <hr class="dropdown-divider">
-            </li>
-
-            <li class="dropdown-footer">
-              <a href="#">Show all messages</a>
-            </li>
-
-          </ul><!-- End Messages Dropdown Items -->
-
-        </li><!-- End Messages Nav -->
-    
-        <li class="nav-item dropdown pe-3">
-
         
+    
+        <li class="nav-item dropdown pe-3">     
 
           <a class="nav-link nav-profile d-flex align-items-center pe-0" href="bi bi-person-circle" data-bs-toggle="dropdown">
           <div class="icon">
@@ -270,21 +175,21 @@
       <li class="nav-heading">Accounts</li>
         <li class="nav-item">
           <a class="nav-link collapsed" data-bs-target="#components-nav" data-bs-toggle="collapse" href="#" aria-expanded="false">
-            <i class="bi bi-card-list"></i><span>#Account Management</span><i class="bi bi-chevron-down ms-auto"></i>
+            <i class="bi bi-card-list"></i><span>Account Management</span><i class="bi bi-chevron-down ms-auto"></i>
           </a>
           <ul id="components-nav" class="nav-content collapse" data-bs-parent="#sidebar-nav" >
             
             <li class="nav-item">
               <a class="nav-link collapsed" href="adminProfile">
                 <i class="bi bi-person-circle" style="font-size: 16px;"></i>
-                <span>#Account Profile</span>
+                <span>Account Profile</span>
               </a>
             </li><!-- End Profile Page Nav --> 
 
             <li class="nav-item">
               <a class="nav-link collapsed" href="users">
                 <i class="bi bi-people" style="font-size: 16px;"></i>
-                <span>#User Accounts</span>
+                <span>User Accounts</span>
               </a>
             </li><!-- End User Accounts Nav -->
           </ul>
@@ -320,16 +225,6 @@
           </a>
         </li><!-- End Forum Page Nav -->
 
-        
-        
-
-        <li class="nav-item">
-          <a class="nav-link collapsed" href="#">
-            <i class="bi bi-chat-square"></i>
-            <span>#Support</span>
-          </a>
-        </li><!-- End Contact Page Nav -->   
-
     </ul>
 
 </aside><!-- End Sidebar-->
@@ -341,7 +236,7 @@
       <nav>
         <ol class="breadcrumb">
           <li class="breadcrumb-item"><a href="dashboard">Home</a></li>
-          <li class="breadcrumb-item active">AddMember</li>
+          <li class="breadcrumb-item active">MemberRequest</li>
         </ol>
       </nav>
     </div><!-- End Page Title -->
@@ -371,22 +266,41 @@
         <div class="col-xl-6">
 
           <div class="card">
-            <div class="card-body profile-card pt-4 d-flex flex-column align-items-center">
-            <h5 class="card-title pb-1">User Account Details</h5>
-            <img src="<?= base_url('public/uploads/' . $user['Photo']) ?>" style="max-width:40%" class="rounded-circle">            
-                <div class="row">
-                    <div class="col-lg-3 col-md-4 label ">Full Name</div>
-                    <div class="col-lg-9 col-md-8"><?php echo $user['username']?></div>
+            <div class="card-body profile-card pt-4  flex-column align-items-center">
+            <h5 class="card-title align-middle pb-1" style="font-size: larger;">User Account Details</h5>
+            <img src="#" style="max-width:50%" class="mb-1 rounded-circle">             
+                <div class="row mb-1">
+                    <div class="col-lg-3 col-md-5 text-dark ">Full Name</div>
+                    <div class="col-lg-9 col-md-8 text-dark"></div>
                 </div>
 
-                <div class="row">
-                    <div class="col-lg-3 col-md-4 label">Email</div>
-                    <div class="col-lg-9 col-md-8"><?php echo $user['email']?></div>
+                <div class="row mb-1">
+                    <div class="col-lg-3 col-md-5 text-dark">Email</div>
+                    <div class="col-lg-9 col-md-8 text-dark"></div>
                 </div>
 
-                <div class="row">
-                    <div class="col-lg-3 col-md-4 label">Country</div>
-                    <div class="col-lg-9 col-md-8">UGANDA</div>
+                <div class="row mb-1">
+                    <div class="col-lg-3 col-md-5 text-dark">Company</div>
+                    <div class="col-lg-9 col-md-8 text-dark"></div>
+                </div>
+
+                <div class="row mb-1">
+                    <div class="col-lg-3 col-md-5 text-dark">Position</div>
+                    <div class="col-lg-9 col-md-8 text-dark"></div>
+                </div>
+
+                <div class="row mb-1">
+                    <div class="col-lg-4 col-md-5 text-dark">Membership</div>
+                    <div class="col-lg-9 col-md-8 text-dark"></div>
+                </div>
+
+                <div class="row mb-1">
+                    <div class="col-lg-3 col-md-5 text-dark">District</div>
+                    <div class="col-lg-9 col-md-8 text-dark"></div>
+                </div>
+                <div class="row mb-1">
+                    <div class="col-lg-3 col-md-5 text-dark">City</div>
+                    <div class="col-lg-9 col-md-8 text-dark"></div>
                 </div>
               </div>
           </div>
@@ -397,10 +311,72 @@
 
           <div class="card">
             <div class="card-body pt-3">             
-                <div class=" profile-edit pt-3" id="profile-edit">
+              <div class=" profile-edit pt-3" id="profile-edit">
+                <div class="justify-content-center align-middle"><h5>Request Review</h5></div>
+              <script>
+                  function displayComments() {
+                      var comment = document.getElementById("comment").value;
+                      var commentDisplay = document.getElementById("commentDisplay");
+                      var approveBtn = document.getElementById("approveBtn");
+                      var rejectBtn = document.getElementById("rejectBtn");
+                      
+                      if (comment.trim() !== "") 
+                      {
+                        commentDisplay.innerHTML = comment;
+                        commentDisplay.style.display = "block";
+                        approveBtn.style.display = "inline-block";
+                        rejectBtn.style.display = "inline-block";
+                        document.getElementById("comment").value = "";
+                      }
 
+                      function approveUser() {
+                        var userId = document.getElementById("userId").value;
+
+                          $.ajax({
+                              url: "approve_user.php",
+                              type: "POST",
+                              data: { userId: userId },
+                              success: function(response) {
+                                  alert("User approved!");
+                              },
+                              error: function(xhr, status, error) {
+                                  alert("Error approving user: " + error);
+                              }
+                          });
+                      }
+
+                      function rejectUser() {
+                          var userId = document.getElementById("userId").value;
+
+                          $.ajax({
+                              url: "suspend_user.php",
+                              type: "POST",
+                              data: { userId: userId },
+                              success: function(response) {
+                                  alert("User suspended!");
+                              },
+                              error: function(xhr, status, error) {
+                                  alert("Error suspending user: " + error);
+                              }
+                          });
+                        }
+                  }
+              </script>
+
+              <form>
+                  <label for="comment" >Comments:</label><br>
+                  <input type="textbox" id="comment" class="form-control pt-2" name="comment" placeholder="Information review comment is necessary."><br><br>
+                  <button type="button" class="btn btn-primary w-100 pb-2" onclick="displayComments()">Submit</button>
+                  <p class="font-italic"><i>**Review Comments**</i></p>  
+                  <div id="commentDisplay"class="text-dark" style="display: none;"></div>
+                  <input type="hidden" id="userId" value="">
+                  <button id="approveBtn"class="btn btn-primary align-middle" style="display: none;" onclick="approveUser()">Approve</button>
+                  <button id="rejectBtn" class="btn btn-danger align-middle" style="display: none;" onclick="rejectUser()">Reject</button>
+
+                </form>
+              
                   
-                </div>
+              </div>
 
             </div>
           </div>
@@ -409,7 +385,7 @@
       </div>
     </section>
 
-  </main><!-- End #main -->
+  </main><!-- End main -->
 
   <!-- ======= Footer ======= -->
   <footer id="footer" class="footer">

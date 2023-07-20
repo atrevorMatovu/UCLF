@@ -82,8 +82,10 @@ $routes->group('', ['filter'=>'isAdmin'],function($routes)
     $routes->get('admin', 'AccDashboard::adminDash');
     $routes->post('users/status_update', 'AccDashboard::statusToggle');    
     $routes->get('users', 'AccDashboard::userMgt');
+    $routes->get('userRequest', 'AccDashboard::userReq');
     $routes->get('newMember', 'AccDashboard::addMember'); 
-    $routes->get('adminProfile', 'AccDashboard::adminProf'); 
+    $routes->get('adminProfile', 'AccDashboard::adminProf');
+    $routes->post('updatePwd', 'AccDashboard::adminupdatePwd'); 
     $routes->get('newStaff', 'AccDashboard::addStaff');  
 });
 /*

@@ -84,7 +84,7 @@ class AccDashboard extends BaseController
             $loggedInUserid = session()->get('loggedInUser');
             $userdata = $loginModel->where('user_id',$loggedInUserid)->first();
             //var_dump($userdata);
-                    
+
             $data = [
                 'title'     => 'UserProfile',
                 'userdata'  => $userdata,
@@ -158,6 +158,10 @@ class AccDashboard extends BaseController
                     'Company' => $this->request->getVar('company'),
                     'Position' => $this->request->getVar('position'),
                     'Photo' => $avatar,
+                    'FirstName' => $this->request->getVar('fname'),
+                    'LastName' => $this->request->getVar('lname'),
+                    'Tel' => $this->request->getVar('phone'),
+                    'Email' => $this->request->getVar('email')
                 ];
                 
                 $udata = [
@@ -168,9 +172,9 @@ class AccDashboard extends BaseController
                 ]; 
 
                 
-                $update     = $memberRegModel->updateUser($user_id, $udata);
-                $updateMEMB = $onboardModel->updateUser($user_id, $userdata);
-                if($update && $updateMEMB)// Update user's information in the database
+                $update     = $memberRegModel->updateUser($user_id, $userdata);
+                //$updateMEMB = $onboardModel->updateUser($user_id, $userdata);
+                if($update )// Update user's information in the database
                 {
                     //$this->session->regenerate();
                     $this->session->setFlashdata('success', 'User Profile details updated successfully.');
@@ -241,6 +245,151 @@ class AccDashboard extends BaseController
 
         }
         return view("dashboard/profile", $vdata);
+    }
+    public function updateAdmin()
+    {
+        $vdata = [];
+        $vdata['validation'] = null;
+        $email = \Config\Services::email();
+        $adminModel = new AdminModel();
+        $this->session = \Config\Services::session();
+
+        if($this->request->getPost())
+        {
+            $rules = [
+                'address' =>[
+                    'rules'=>'required|alpha_numeric_space',
+                    'errors'=> [
+                        'required'=>'Address is required',
+                        'alpha_numeric_space'=>'Address name can only be of alphanumerics and space'
+                    ],
+                ],
+                // 'practice_area' =>[
+                //     'rules'=>'required',
+                //     'errors'=> [
+                //         'required'=>'Choose your practice areas.',
+                //     ],
+                // ],
+                'company' =>[
+                    'rules'=>'required|alpha_numeric_space',
+                    'errors'=> [
+                        'required'             => 'Company name is required.',
+                        'alpha_numeric_space'  => 'Company name can only be of alphanumerics and space'
+                    ],
+                ],
+                'position' =>[
+                    'rules'=>'required|alpha_space',
+                    'errors'=> [
+                        'required'      => 'Company name is required.',
+                        'alpha_space'   => 'Company name can only be of alphabets and space'
+                    ],
+                ],
+                'avatar'   =>[
+                    'rules'=>'uploaded[avatar]|ext_in[avatar,png,jpg,jpeg,gif]|max_size[avatar,4096]',
+                    'errors'=> [
+                        'uploaded[avatar]'=>'Photo is required.',
+                        'ext_in[avatar,png,jpg,jpeg,gif]'=>'File uploaded should be of jpg,png,gif',
+                        'max_size[avatar,4096]' => 'Photo should not exceed 5MBs.'
+                    ],
+                ]
+            ];
+            if($this->validate($rules))
+            {
+                $user_id = $this->session->get('loggedInUser');
+                $email = $user_id['email'];
+                $avatar = $this->request->getFile('photo');
+                //var_dump($user_id);
+                if ($avatar) {
+                    if ($avatar->isValid() && !$avatar->hasMoved()) {
+                        $newName = $avatar->getRandomName();
+                        $avatar->move(ROOTPATH . 'public/uploads', $newName);
+                        $userdata['photo'] = $newName;
+                    }
+                }
+                $userdata = [
+                    //'Address' => $this->request->getVar('address'),
+                    'position' => $this->request->getVar('position'),
+                    'photo' => $avatar,
+                    'username' => $this->request->getVar('uname'),
+                    'Tel' => $this->request->getVar('phone'),
+                    'email' => $this->request->getVar('email')
+                ]; 
+
+                
+                $update     = $adminModel->updateUser($email, $userdata);
+                //$updateMEMB = $onboardModel->updateUser($user_id, $userdata);
+                if($update )// Update user's information in the database
+                {
+                    //$this->session->regenerate();
+                    $this->session->setFlashdata('success', 'User Profile details updated successfully.');
+                    return redirect()->to('userprofile');
+                } 
+                else
+                {
+                    $this->session->setFlashdata('error', 'Updating user details failed, try again with all required information provided.');
+                    return redirect()->to(current_url()); 
+                }               
+                
+            }
+            else
+            {
+                $vdata['validation'] = $this->validator;
+            }
+        }
+        return view("dashboard/profile",  $vdata);
+    }
+
+    public function adminupdatePwd()
+    {
+        $vdata = [];
+        $vdata['validation'] = null;
+        $email = \Config\Services::email();
+        $adminModel = new adminModel();
+        $this->session = \Config\Services::session();
+
+        if($this->request->getPost())
+        {
+            $rules = [
+                'password' =>[
+                'rules'=>'required|min_length[8]|max_length[20]',
+                'errors'=> [
+                    'required'=>'Password is required',
+                    'min_length[5]'=>'Password should be more than 8 characters',
+                    'max_length[20]'=>'Password should not exceed 20 characters',
+                ],
+            ],
+        ];
+            if($this->validate($rules))
+            {
+                $user_id = $this->session->get('loggedInUser');
+                $email = $user_id['email'];
+            
+                $pwd = [
+                    'password' => password_hash($this->request->getVar('newpassword'), PASSWORD_DEFAULT),
+                ];
+                $updatePwd  = $adminModel->updatePassword($email, $pwd);
+                if($updatePwd)
+                {
+                    if($this->session->get('loggedInUser'))
+                    {
+                    $this->session->setFlashdata('success', 'Password updated successfully.');
+                    return redirect()->to('adminProfile');
+                    }
+                }
+                else
+                {
+                    $this->session->setFlashdata('error', 'Updating password failed.');
+                    return redirect()->to('adminProfile');
+                }
+            }
+            else
+            {
+                $vdata['validation'] = $this->validator;
+            }
+
+
+        }
+        return view("adminDashboards/adminProf", $vdata);
     }
     
     public function onboarding()
@@ -375,17 +524,46 @@ class AccDashboard extends BaseController
         $adminModel = new adminModel;
         $loginModel = new loginModel;
         $loggedInUserid = session()->get('loggedInUser');
-        //$userdata = $adminModel->find($loggedInUserid);
+    $account = null;
+    $users = null;
+    $singleUser = null;
+     if (!empty($loggedInUserid)) {
         $account = $adminModel->getEmail($loggedInUserid['email']);
-        $users  = $loginModel->findAll();
-        //var_dump($users);
-        
+    }
+        $user_id = $this->request->getPost('user_id');
+    if (!empty($user_id)) {
+        $singleUser = $loginModel->where('user_id', $user_id)->first();
+    }
+     $users = $loginModel->findAll();
         $data = [
-            'title'     => 'Dashboard',
-            'users'  => $users,
-            'userdata'    => $account
+        'title' => 'UserAccounts',
+        'users' => $users,
+        'userdata' => $account,
+        'singleUser' => $singleUser
         ];
         return view("adminDashboards/adminUserMgt", $data);
+    }
+    /**USER REQUESTS FUNCTION THAT SHOWS USER INFO TO ADMIN FOR APPROVAL */
+    public function userReq()
+    {
+        $adminModel = new adminModel;
+        $loginModel = new loginModel;
+        $loggedInUserid = session()->get('loggedInUser');
+        $account = $adminModel->getEmail($loggedInUserid['email']);
+        $users  = $loginModel->findAll();
+
+        $user_id = $this->request->getVar('user_id');
+        var_dump($user_id);
+        $singleUser = $loginModel->verifyUser($user_id);
+        var_dump($singleUser);
+        
+        $data = [
+            'title'       => 'ApprovalRequests',
+            'users'       => $users,
+            'userdata'    => $account,
+            'singleUser'  => $singleUser
+        ];
+        return view("adminDashboards/adminUserReq", $data);
     }
     public function student()
     {
@@ -401,9 +579,6 @@ class AccDashboard extends BaseController
         
         $membership = 'student';
         $userdata1 = $loginModel->where('Membership_type',$membership)->findAll();
-        //var_dump($userdata1);
-        //$otherdata = $onboardModel->where('user_id',$onboarding_completed)->find('Position');
-        
         
         $data = [
             'title'     => 'Dashboard',
