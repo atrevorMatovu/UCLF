@@ -15,7 +15,7 @@ class MemberRegModel extends Model
     protected $returnType     = 'array';
     protected $useSoftDeletes = true;
 
-    protected $allowedFields = ['Firstname', 'Lastname', 'Email', 'Password', 'Membership_type', 'Account_status', 'user_id', 'Gender', 'Tel', 'activation_date'];
+    protected $allowedFields = ['Firstname', 'Lastname', 'Email', 'Password', 'Membership_type', 'Account_status', 'user_id', 'Gender', 'Tel', 'Region', 'State', 'City', 'Address', 'Company', 'Position', 'Practice_area', 'user_id', 'Photo', 'activation_date'];
 
     protected $useTimestamps = false;
     protected $dateFormat    = 'datetime';
@@ -62,16 +62,22 @@ class MemberRegModel extends Model
           'FirstName' => $data['FirstName'],
           'LastName'  => $data['LastName'],
           'Email'     => $data['Email'],
-          'Tel'       => $data['Tel']
+          'Tel'       => $data['Tel'],
+          'Company'   => $data['Company'],
+          'Position'  => $data['Position'],
+          'Address'   => $data['Address'],
+          //'Photo'   => $data['Photo']
         ]);
         $builder->where('user_id', $id);
         $builder->update();
-        if($this->db->affectedRows()==1)
-        {
-            return true;
-        }else{
-            return false;
-        }
+        $result = $builder->get()->getRow();
+        return $result;    
+        // if($this->db->affectedRows()==1)
+        // {
+        //     return true;
+        // }else{
+        //     return false;
+        // }
     }
 
     public function verifyUserid($id) 

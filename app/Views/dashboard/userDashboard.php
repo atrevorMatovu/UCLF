@@ -63,44 +63,6 @@
               <hr class="dropdown-divider">
             </li>
 
-            <li class="notification-item">
-              <i class="bi bi-exclamation-circle text-warning"></i>
-              <div>
-                <h4>Lorem Ipsum</h4>
-                <p>Quae dolorem earum veritatis oditseno</p>
-                <p>30 min. ago</p>
-              </div>
-            </li>
-
-            <li>
-              <hr class="dropdown-divider">
-            </li>
-
-            <li class="notification-item">
-              <i class="bi bi-x-circle text-danger"></i>
-              <div>
-                <h4>#</h4>
-                <p>Quae dolorem earum veritatis oditseno</p>
-                <p>1 hr. ago</p>
-              </div>
-            </li>
-
-            <li>
-              <hr class="dropdown-divider">
-            </li>
-
-            <li class="notification-item">
-              <i class="bi bi-info-circle text-primary"></i>
-              <div>
-                <h4>Dicta reprehenderit</h4>
-                <p>Quae dolorem earum veritatis oditseno</p>
-                <p>4 hrs. ago</p>
-              </div>
-            </li>
-
-            <li>
-              <hr class="dropdown-divider">
-            </li>
             <li class="dropdown-footer">
               <a href="#">Show all notifications</a>
             </li>
@@ -112,15 +74,11 @@
        
     
         <li class="nav-item dropdown pe-3">
-
-          <a class="nav-link nav-profile d-flex align-items-center justify-content-center pe-0" href="bi bi-person-circle" data-bs-toggle="dropdown">
-          <div class="label">
-            <div class="icon">
-              <img src="<?= base_url('public/uploads/' . $userdata['Photo']) ?>"  class="rounded-circle">
-            </div>
-              <span class="d-none d-md-block dropdown-toggle ps-2"><?= $userdata['FirstName']?> <?php echo $userdata['LastName']?></span>
-            </div>
-          </a><!-- End Profile Iamge Icon -->
+        <a class="nav-link nav-profile d-flex align-items-center pe-0" href="#" data-bs-toggle="dropdown">
+            <img src="<?= base_url('public/uploads/' . $userdata['Photo']) ?>" alt="Profile" class="rounded-circle">
+            <span class="d-none d-md-block dropdown-toggle ps-2"><?php echo $userdata['FirstName']?> <?php echo $userdata['LastName']?></span>
+        </a>
+        <!-- End Profile Iamge Icon -->
 
           <ul class="dropdown-menu dropdown-menu-end dropdown-menu-arrow profile">
             <li class="dropdown-header">
@@ -145,8 +103,8 @@
 
             <li>
               <a class="dropdown-item d-flex align-items-center" href="userprofile">
-                <i class="bi bi-gear"></i>
-                <span>#Account Settings</span>
+                <i class="bi bi-stickies"></i>
+                <span>Forum</span>
               </a>
             </li>
             <li>
@@ -190,7 +148,7 @@
         <a class="nav-link collapsed" data-bs-target="#components-nav" data-bs-toggle="collapse" href="#" aria-expanded="false">
           <i class="bi bi-person-vcard"></i><span>Membership Directory</span><i class="bi bi-chevron-down ms-auto"></i>
         </a>
-        <ul id="components-nav" class="nav-content collapse" data-bs-parent="#sidebar-nav" style="">
+        <ul id="components-nav" class="nav-content collapse" data-bs-parent="#sidebar-nav" >
           <li>
             <a href="Indirectory" class="">
               <i class="bi bi-person-lock" style="font-size: 16px;"></i><span>Individual</span>
@@ -229,16 +187,16 @@
       <li class="nav-item">
         <a class="nav-link collapsed" href="#">
           <i class="bi bi-stickies"></i>
-          <span>#Forum</span>
+          <span>Forum</span>
         </a>
       </li><!-- End Forum Page Nav -->
       
-      <li class="nav-item">
+      <!--li class="nav-item">
         <a class="nav-link collapsed" href="#">
           <i class="bi bi-chat-square"></i>
-          <span>#Support</span>
+          <span>Support</span>
         </a>
-      </li><!-- End Contact Page Nav -->
+      </li--><!-- End Contact Page Nav -->
 
     </ul>
 
@@ -286,7 +244,7 @@
             <div class="col-xxl-4 col-xl-12">
               <div class="card info-card revenue-card">
               <div class="card-body">
-                <h5 class="card-title">Membership <span> Status</span></h5>
+                <h5 class="card-title">Upcoming <span> Events</span></h5>
               </div>
               <div class="d-flex align-items-center justify-content-center pt-0">
                     <div class="card-icon rounded-circle d-flex align-items-center justify-content-center">
@@ -294,7 +252,7 @@
                     </div>
                     <div class="ps-3">
                   
-                      <h6><?php echo $userdata['Account_status']?></h6>
+                      <h6><//?php echo $userdata['Account_status']?></h6>
                    
                     </div>
                   </div>
@@ -320,64 +278,9 @@
                 </div>
 
                 <div class="card-body">
-                  <h5 class="card-title">Reports <span>/Today</span></h5>
+                  <h5 class="card-title">Timeline <span></span></h5>
 
-                  <!-- Line Chart -->
-                  <div id="reportsChart"></div>
-
-                  <script>
-                    document.addEventListener("DOMContentLoaded", () => {
-                      new ApexCharts(document.querySelector("#reportsChart"), {
-                        series: [{
-                          name: 'Sales',
-                          data: [31, 40, 28, 51, 42, 82, 56],
-                        }, {
-                          name: 'Revenue',
-                          data: [11, 32, 45, 32, 34, 52, 41]
-                        }, {
-                          name: 'Customers',
-                          data: [15, 11, 32, 18, 9, 24, 11]
-                        }],
-                        chart: {
-                          height: 350,
-                          type: 'area',
-                          toolbar: {
-                            show: false
-                          },
-                        },
-                        markers: {
-                          size: 4
-                        },
-                        colors: ['#4154f1', '#2eca6a', '#ff771d'],
-                        fill: {
-                          type: "gradient",
-                          gradient: {
-                            shadeIntensity: 1,
-                            opacityFrom: 0.3,
-                            opacityTo: 0.4,
-                            stops: [0, 90, 100]
-                          }
-                        },
-                        dataLabels: {
-                          enabled: false
-                        },
-                        stroke: {
-                          curve: 'smooth',
-                          width: 2
-                        },
-                        xaxis: {
-                          type: 'datetime',
-                          categories: ["2018-09-19T00:00:00.000Z", "2018-09-19T01:30:00.000Z", "2018-09-19T02:30:00.000Z", "2018-09-19T03:30:00.000Z", "2018-09-19T04:30:00.000Z", "2018-09-19T05:30:00.000Z", "2018-09-19T06:30:00.000Z"]
-                        },
-                        tooltip: {
-                          x: {
-                            format: 'dd/MM/yy HH:mm'
-                          },
-                        }
-                      }).render();
-                    });
-                  </script>
-                  <!-- End Line Chart -->
+                  
 
                 </div>
 

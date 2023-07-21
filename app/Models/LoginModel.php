@@ -6,7 +6,7 @@ namespace App\Models;
 
 use CodeIgniter\Model;
 
-class loginModel extends Model
+class LoginModel extends Model
 {
     protected $table      = 'members';
     protected $primaryKey = 'id';

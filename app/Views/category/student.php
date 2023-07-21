@@ -63,44 +63,7 @@
               <hr class="dropdown-divider">
             </li>
 
-            <li class="notification-item">
-              <i class="bi bi-exclamation-circle text-warning"></i>
-              <div>
-                <h4>Lorem Ipsum</h4>
-                <p>Quae dolorem earum veritatis oditseno</p>
-                <p>30 min. ago</p>
-              </div>
-            </li>
-
-            <li>
-              <hr class="dropdown-divider">
-            </li>
-
-            <li class="notification-item">
-              <i class="bi bi-x-circle text-danger"></i>
-              <div>
-                <h4>#</h4>
-                <p>Quae dolorem earum veritatis oditseno</p>
-                <p>1 hr. ago</p>
-              </div>
-            </li>
-
-            <li>
-              <hr class="dropdown-divider">
-            </li>
-
-            <li class="notification-item">
-              <i class="bi bi-info-circle text-primary"></i>
-              <div>
-                <h4>Dicta reprehenderit</h4>
-                <p>Quae dolorem earum veritatis oditseno</p>
-                <p>4 hrs. ago</p>
-              </div>
-            </li>
-
-            <li>
-              <hr class="dropdown-divider">
-            </li>
+           
             <li class="dropdown-footer">
               <a href="#">Show all notifications</a>
             </li>
@@ -109,64 +72,15 @@
 
         </li><!-- End Notification Nav -->
 
-        <li class="nav-item dropdown">
-
-          <a class="nav-link nav-icon" href="#" data-bs-toggle="dropdown">
-            <i class="bi bi-chat-left-text"></i>
-            <span class="badge bg-success badge-number">3</span>
-          </a><!-- End Messages Icon -->
-
-          <ul class="dropdown-menu dropdown-menu-end dropdown-menu-arrow messages">
-            <li class="dropdown-header">
-              You have new messages
-              <a href="#"><span class="badge rounded-pill bg-primary p-2 ms-2">View all</span></a>
-            </li>
-            <li>
-              <hr class="dropdown-divider">
-            </li>
-
-           <li class="message-item">
-              <a href="#">
-                <img src="public/assets/img/messages-2.jpg" alt="" class="rounded-circle">
-                <div>
-                  <h4>#</h4>
-                  <p></p>
-                  <p></p>
-                </div>
-              </a>
-            </li>
-            <li>
-              <hr class="dropdown-divider">
-            </li>
-
-            <li class="message-item">
-              <a href="#">
-                <img src="public/assets/img/messages-3.jpg" alt="" class="rounded-circle">
-                <div>
-                  <h4>#</h4>
-                  <p></p>
-                </div>
-              </a>
-            </li>
-            <li>
-              <hr class="dropdown-divider">
-            </li>
-
-            <li class="dropdown-footer">
-              <a href="#">Show all messages</a>
-            </li>
-
-          </ul><!-- End Messages Dropdown Items -->
-
-        </li><!-- End Messages Nav -->
+        
     
         <li class="nav-item dropdown pe-3">
 
           <a class="nav-link nav-profile d-flex align-items-center justify-content-center pe-0" href="bi bi-person-circle" data-bs-toggle="dropdown">
           <div class="label">
             <div class="icon">
-              <i class="bi bi-person-circle "></i> 
-                <img src=""  class="rounded-circle">
+              <!--i class="bi bi-person-circle "></i--> 
+                <img src="<?= base_url('public/uploads/' . $acc_board['Photo']) ?>"  class="rounded-circle">
             </div>
               <span class="d-none d-md-block dropdown-toggle ps-2"><?= $userdata['FirstName']?> <?php echo $userdata['LastName']?></span>
             </div>
@@ -175,8 +89,8 @@
           <ul class="dropdown-menu dropdown-menu-end dropdown-menu-arrow profile">
             <li class="dropdown-header">
             <div class="icon">
-              <i class="bi bi-person-circle "></i> 
-                <img src=""  class="rounded-circle">
+              <!--i class="bi bi-person-circle "></i--> 
+                <img src="<?= base_url('public/uploads/' . $acc_board['Photo']) ?>"  class="rounded-circle" height="60">
             </div>
               <span><?php echo $userdata['FirstName']?> <?php echo $userdata['LastName']?></span>
             </li>
@@ -239,9 +153,9 @@
 
       <li class="nav-item">
         <a class="nav-link collapsed" data-bs-target="#components-nav" data-bs-toggle="collapse" href="#" aria-expanded="false">
-          <i class="bi bi-person-vcard"></i><span>#Membership Directory</span><i class="bi bi-chevron-down ms-auto"></i>
+          <i class="bi bi-person-vcard"></i><span>Membership Directory</span><i class="bi bi-chevron-down ms-auto"></i>
         </a>
-        <ul id="components-nav" class="nav-content collapse" data-bs-parent="#sidebar-nav" style="">
+        <ul id="components-nav" class="nav-content collapse" data-bs-parent="#sidebar-nav">
           <li>
             <a href="Indirectory" class="">
               <i class="bi bi-person-lock" style="font-size: 16px;"></i><span>Individual</span>
@@ -271,26 +185,28 @@
       </li><!-- End Directory Page Nav -->
 
       <li class="nav-item">
+        <a class="nav-link collapsed" href="userprofile">
+          <i class="bi bi-person-circle"></i>
+          <span>Account Profile</span>
+        </a>
+      </li><!-- End Profile Page Nav -->
+      
+      <li class="nav-item">
         <a class="nav-link collapsed" href="#">
           <i class="bi bi-stickies"></i>
-          <span>#Forum</span>
+          <span>Forum</span>
         </a>
       </li><!-- End Forum Page Nav -->
 
       
-      <li class="nav-item">
-        <a class="nav-link collapsed" href="userprofile">
-          <i class="bi bi-person-circle"></i>
-          <span>#Account Profile</span>
-        </a>
-      </li><!-- End Profile Page Nav -->
+      
 
-      <li class="nav-item">
+      <!--li class="nav-item">
         <a class="nav-link collapsed" href="#">
           <i class="bi bi-chat-square"></i>
-          <span>#Support</span>
+          <span>Support</span>
         </a>
-      </li><!-- End Contact Page Nav -->
+      </li--><!-- End Contact Page Nav -->
 
     </ul>
 
@@ -339,10 +255,16 @@
                         <div class="col-xl-4">
                         <div class="card">
                             <div class="card-body profile-card pt-4 d-flex flex-column align-items-center">
-                            <img src="" alt="Profile" class="rounded-circle" height="100">
+                            <?php if (!empty($user['Photo'] )) : ?>
+                                  <!-- Display the user's photo -->
+                                  <img src="<?= base_url('public/uploads/' . $user['Photo']) ?>" class="rounded-circle" height="100">
+                                <?php else : ?>
+                                  <!-- Display the icon or placeholder image -->
+                                  <img src="public/assets/img/usercon.png"  height="100">
+                              <?php endif; ?>
                             <h3 class="text-align-left"><strong><?php echo $user['FirstName']?> <?php echo $user['LastName']?></strong></h3>
                             <h3><?php echo $user['Email']?></h3>
-                            <!--h3><//?php echo $otherdata ?></h3-->
+                            <h3><//?php echo $user['position'] ?></h3>
                             <h3>0<?php echo $user['Tel']?></h3>
                             </div>
                         </div>

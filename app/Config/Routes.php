@@ -68,7 +68,8 @@ $routes->group('', ['filter'=>'isLoggedIn'],function($routes)
     $routes->get('dashboard', 'AccDashboard::userdash');
     $routes->get('dashboard/logout', 'AccDashboard::logout');
     $routes->get('userprofile', 'AccDashboard::profDash');
-    $routes->post('userprofile', 'AccDashboard::updateUser');
+    //$routes->get('update', 'AccDashboard::updateUser');
+    $routes->post('update', 'AccDashboard::updateUser');
     $routes->post('updatePwd', 'AccDashboard::updatePwd');
     $routes->get('Studirectory', 'AccDashboard::student');
     $routes->get('Indirectory', 'AccDashboard::individual');
@@ -85,7 +86,8 @@ $routes->group('', ['filter'=>'isAdmin'],function($routes)
     $routes->get('userRequest', 'AccDashboard::userReq');
     $routes->get('newMember', 'AccDashboard::addMember'); 
     $routes->get('adminProfile', 'AccDashboard::adminProf');
-    $routes->post('updatePwd', 'AccDashboard::adminupdatePwd'); 
+    $routes->post('updatePwd', 'AccDashboard::adminupdatePwd');
+    $routes->post('updateAdmin', 'AccDashboard::updateAdmin'); 
     $routes->get('newStaff', 'AccDashboard::addStaff');  
 });
 /*

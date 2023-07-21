@@ -3,7 +3,7 @@
 namespace App\Controllers;
 
 use App\Controllers\BaseController;
-use App\Models\loginModel;
+use App\Models\LoginModel;
 use App\Models\adminModel;
 use App\Models\MemberRegModel;
 use App\Models\OnboardModel;
@@ -15,6 +15,10 @@ class AccDashboard extends BaseController
 {
     public $session;
     public $onboardModel;
+    public $loginModel;
+    public function __construct(){
+        $this->loginModel = new LoginModel();
+    }
     public function userdash()
         {
             $loginModel = new loginModel;
@@ -64,11 +68,9 @@ class AccDashboard extends BaseController
         $adminModel = new adminModel;
         $loginModel = new loginModel;
             $loggedInUserid = session()->get('loggedInUser');
-            //$users = $loginModel->findAll();
-            $account = $adminModel->verifyEmail($loggedInUserid['email']);
+           $account = $adminModel->verifyEmail($loggedInUserid['email']);
             //$memberCounts = $loginModel->getMemberCountsByMembershipType();
-            //$members = $loginModel->getTotalMembers();
-            //var_dump($members);        
+            //$members = $loginModel->getTotalMembers();        
 
             $data = [
                 'title'     => 'Dashboard',
@@ -95,15 +97,20 @@ class AccDashboard extends BaseController
 
     public function updateUser()
     {
-        $vdata = [];
-        $vdata['validation'] = null;
-        $email = \Config\Services::email();
-        $memberRegModel = new MemberRegModel;
-        $onboardModel   = new onboardModel;
-        $this->session = \Config\Services::session();
+        $user_id = $this->request->getVar('id');
+        $data['userdata'] = $this->loginModel->verifyUser($user_id);
+        //var_dump($data['userdata']);
+        //$vdata = [];
+        $data['validation'] = null;
 
-        if($this->request->getPost())
-        {
+        $email = \Config\Services::email();
+        
+        $loginModel = new loginModel();
+        $memberRegModel = new MemberRegModel;
+        $this->session = \Config\Services::session();
+        
+        //if($this->request->getPost())
+        //{
             $rules = [
                 'address' =>[
                     'rules'=>'required|alpha_numeric_space',
@@ -112,13 +119,7 @@ class AccDashboard extends BaseController
                         'alpha_numeric_space'=>'Address name can only be of alphanumerics and space'
                     ],
                 ],
-                // 'practice_area' =>[
-                //     'rules'=>'required',
-                //     'errors'=> [
-                //         'required'=>'Choose your practice areas.',
-                //     ],
-                // ],
-                'company' =>[
+               'company' =>[
                     'rules'=>'required|alpha_numeric_space',
                     'errors'=> [
                         'required'             => 'Company name is required.',
@@ -132,67 +133,79 @@ class AccDashboard extends BaseController
                         'alpha_space'   => 'Company name can only be of alphabets and space'
                     ],
                 ],
-                'avatar'   =>[
-                    'rules'=>'uploaded[avatar]|ext_in[avatar,png,jpg,jpeg,gif]|max_size[avatar,4096]',
-                    'errors'=> [
-                        'uploaded[avatar]'=>'Photo is required.',
-                        'ext_in[avatar,png,jpg,jpeg,gif]'=>'File uploaded should be of jpg,png,gif',
-                        'max_size[avatar,4096]' => 'Photo should not exceed 5MBs.'
-                    ],
-                ]
+                
             ];
-            if($this->validate($rules))
+            // $photoRules = [
+            //     'rules'=>'uploaded[avatar]|ext_in[avatar,png,jpg,jpeg,gif]|max_size[avatar,4096]',
+            //     'errors'=> [
+            //         'uploaded[avatar]'=>'Photo is required.',
+            //         'ext_in[avatar,png,jpg,jpeg,gif]'=>'File uploaded should be of jpg,png,gif',
+            //         'max_size[avatar,4096]' => 'Photo should not exceed 5MBs.'
+            //     ],
+            // ];
+
+            if($this->validate($rules) )
             {
-                $user_id = $this->session->get('loggedInUser');
-                $avatar = $this->request->getFile('avatar');
+                
                 //var_dump($user_id);
+                $avatar = $this->request->getFile('photo');
+                //var_dump($avatar);
                 if ($avatar) {
                     if ($avatar->isValid() && !$avatar->hasMoved()) {
                         $newName = $avatar->getRandomName();
                         $avatar->move(ROOTPATH . 'public/uploads', $newName);
-                        $userdata['Photo'] = $newName;
+                        //$udata['Photo'] = $newName;
+                        $memberRegModel->update($user_id, ['photo' => $newName]);
                     }
-                }
-                $userdata = [
-                    'Address' => $this->request->getVar('address'),
-                    'Company' => $this->request->getVar('company'),
-                    'Position' => $this->request->getVar('position'),
-                    'Photo' => $avatar,
-                    'FirstName' => $this->request->getVar('fname'),
-                    'LastName' => $this->request->getVar('lname'),
-                    'Tel' => $this->request->getVar('phone'),
-                    'Email' => $this->request->getVar('email')
-                ];
-                
-                $udata = [
+
+                    
+                 }
+                 $udata = [
                     'FirstName' => $this->request->getVar('fname'),
                     'LastName' => $this->request->getVar('lname'),
                     'Tel' => $this->request->getVar('phone'),
                     'Email' => $this->request->getVar('email'),
-                ]; 
-
+                    'Address' => $this->request->getVar('address'),
+                    'Company' => $this->request->getVar('company'),
+                    'Position' => $this->request->getVar('position'),
+                    //'Photo' => $avatar,
+                ];
+                // }else{
+                //     $udata = [
+                //         'FirstName' => $this->request->getVar('fname'),
+                //         'LastName' => $this->request->getVar('lname'),
+                //         'Tel' => $this->request->getVar('phone'),
+                //         'Email' => $this->request->getVar('email'),
+                //         'Address' => $this->request->getVar('address'),
+                //         'Company' => $this->request->getVar('company'),
+                //         'Position' => $this->request->getVar('position'),
+                //     ];
+                // }               
                 
-                $update     = $memberRegModel->updateUser($user_id, $userdata);
-                //$updateMEMB = $onboardModel->updateUser($user_id, $userdata);
-                if($update )// Update user's information in the database
+                 
+                
+                // Update user's information in the database
+                $update     = $memberRegModel->updateUser($user_id, $udata);                
+                if($update)
                 {
-                    //$this->session->regenerate();
-                    $this->session->setFlashdata('success', 'User Profile details updated successfully.');
-                    return redirect()->to('userprofile');
+                    if($this->session->get('loggedInUser'))
+                    {
+                        session()->setFlashdata('success', 'User Profile details updated successfully.');
+                        return redirect()->to('userprofile');
+                    }
                 } 
                 else
                 {
-                    $this->session->setFlashdata('error', 'Updating user details failed, try again with all required information provided.');
+                    session()->setFlashdata('error', 'Updating user details failed, try again with all required information provided.');
                     return redirect()->to(current_url()); 
-                }               
-                
+                }                         
             }
             else
             {
-                $vdata['validation'] = $this->validator;
+                $data['validation'] = $this->validator;
             }
-        }
-        return view("dashboard/profile",  $vdata);
+        //}
+        return view("dashboard/profile",  $data);
     }
 
     public function updatePwd()
@@ -241,8 +254,6 @@ class AccDashboard extends BaseController
             {
                 $vdata['validation'] = $this->validator;
             }
-
-
         }
         return view("dashboard/profile", $vdata);
     }
@@ -257,31 +268,26 @@ class AccDashboard extends BaseController
         if($this->request->getPost())
         {
             $rules = [
-                'address' =>[
-                    'rules'=>'required|alpha_numeric_space',
+                'phone' =>[
+                    'rules'=>'required|numeric',
                     'errors'=> [
-                        'required'=>'Address is required',
-                        'alpha_numeric_space'=>'Address name can only be of alphanumerics and space'
+                        'required'=>'Phone number is required',
+                        'numeric'=>'Address name can only be of numeric digits'
                     ],
                 ],
-                // 'practice_area' =>[
-                //     'rules'=>'required',
-                //     'errors'=> [
-                //         'required'=>'Choose your practice areas.',
-                //     ],
-                // ],
-                'company' =>[
+                
+                'email' =>[
                     'rules'=>'required|alpha_numeric_space',
                     'errors'=> [
-                        'required'             => 'Company name is required.',
-                        'alpha_numeric_space'  => 'Company name can only be of alphanumerics and space'
+                        'required'             => 'Email is required.',
+                        'alpha_numeric_space'  => 'Email can only be of alphanumerics and space'
                     ],
                 ],
                 'position' =>[
                     'rules'=>'required|alpha_space',
                     'errors'=> [
-                        'required'      => 'Company name is required.',
-                        'alpha_space'   => 'Company name can only be of alphabets and space'
+                        'required'      => 'Position in company is required.',
+                        'alpha_space'   => 'Position name can only be of alphabets and space'
                     ],
                 ],
                 'avatar'   =>[
@@ -316,17 +322,15 @@ class AccDashboard extends BaseController
                 ]; 
 
                 
-                $update     = $adminModel->updateUser($email, $userdata);
-                //$updateMEMB = $onboardModel->updateUser($user_id, $userdata);
-                if($update )// Update user's information in the database
+                $update     = $adminModel->updateAdmin($email, $userdata);
+               if($update )// Update user's information in the database
                 {
-                    //$this->session->regenerate();
-                    $this->session->setFlashdata('success', 'User Profile details updated successfully.');
-                    return redirect()->to('userprofile');
+                    $this->session->setFlashdata('success', 'Profile details updated successfully.');
+                    return redirect()->to('adminProfile');
                 } 
                 else
                 {
-                    $this->session->setFlashdata('error', 'Updating user details failed, try again with all required information provided.');
+                    $this->session->setFlashdata('error', 'Updating profile details failed, try again with all required information provided.');
                     return redirect()->to(current_url()); 
                 }               
                 
@@ -336,7 +340,7 @@ class AccDashboard extends BaseController
                 $vdata['validation'] = $this->validator;
             }
         }
-        return view("dashboard/profile",  $vdata);
+        return view("adminDashboards/adminProf",  $vdata);
     }
 
     public function adminupdatePwd()
@@ -543,7 +547,7 @@ class AccDashboard extends BaseController
         ];
         return view("adminDashboards/adminUserMgt", $data);
     }
-    /**USER REQUESTS FUNCTION THAT SHOWS USER INFO TO ADMIN FOR APPROVAL */
+    /**USER REQUESTS FUNCTION THAT SHOWS USER INFO TO ADMIN FOR APPROVAL **/
     public function userReq()
     {
         $adminModel = new adminModel;
@@ -656,12 +660,10 @@ class AccDashboard extends BaseController
             $userOn_board = $onboardModel->find($onboarding_completed);
             $acc_board = $onboardModel->getUsers($loggedInUserid);
         
-        $membership = 'fship';
+        $membership = 'law-fellowship';
         $userdata1 = $loginModel->where('Membership_type',$membership)->findAll();
         //var_dump($userdata1);
-        //$otherdata = $onboardModel->where('user_id',$onboarding_completed)->find('Position');
-        
-        
+        //$otherdata = $onboardModel->where('user_id',$onboarding_completed)->find('Position');        
         $data = [
             'title'     => 'Dashboard',
             //'otherdata'  => $otherdata,

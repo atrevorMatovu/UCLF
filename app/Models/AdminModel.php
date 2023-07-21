@@ -38,7 +38,29 @@ class AdminModel extends Model
         $res = $builder->get()->getRow();
         return $res;   
     }
-
+    public function updateAdmin($email, $userdata)
+    {
+        $adminModel = new AdminModel();
+        $builder = $adminModel->builder();
+        $builder = $this->db->table('admins');
+        $builder->set([
+            'username' => $userdata['username'],
+            'position'  => $userdata['position'],
+            'photo'     => $userdata['photo'],
+            'email'     => $userdata['email'],
+            'Tel'       => $userdata['Tel']
+          ]);
+        $builder->where('email', $email);
+        $builder->update();
+    
+        if($this->db->affectedRows() == 1)
+        {
+            return true;
+        }else{
+            return false;
+        }
+    }
+    
     public function updatePassword($email, $new_password)
     {
         $data = [

@@ -87,7 +87,7 @@ class OnboardModel extends Model
     {
         $onboardModel = new OnboardModel();
         $builder = $onboardModel->builder();
-        $builder = $this->db->table('membship');
+        $builder = $this->db->table('members');
         $builder->select('Region, State, City, Address, Company, Position, Practice_area, user_id, Photo');
         $builder->where('user_id', $id);
         $res = $builder->get()->getRowArray();

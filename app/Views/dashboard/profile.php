@@ -60,7 +60,7 @@
 
           <a class="nav-link nav-icon" href="#" data-bs-toggle="dropdown">
             <i class="bi bi-bell"></i>
-            <span class="badge bg-primary badge-number">4</span>
+            <span class="badge bg-primary badge-number"></span>
           </a><!-- End Notification Icon -->
 
           <ul class="dropdown-menu dropdown-menu-end dropdown-menu-arrow notifications">
@@ -75,9 +75,9 @@
             <li class="notification-item">
               <i class="bi bi-exclamation-circle text-warning"></i>
               <div>
-                <h4>Lorem Ipsum</h4>
-                <p>Quae dolorem earum veritatis oditseno</p>
-                <p>30 min. ago</p>
+                <h4></h4>
+                <p></p>
+                <p></p>
               </div>
             </li>
 
@@ -98,7 +98,11 @@
         <li class="nav-item dropdown pe-3">
 
           <a class="nav-link nav-profile d-flex align-items-center pe-0" href="#" data-bs-toggle="dropdown">
-            <img src="<?= base_url('public/uploads/' . $userdata['Photo']) ?>" alt="Profile" class="rounded-circle">
+          <?php if (!empty($userdata['photo'])) : ?>
+            <img src="<?= base_url('public/uploads/' . $userdata['Photo']) ?>" class="rounded-circle" alt="">
+          <?php else : ?>
+            <img src="public/assets/img/usercon.png" class="rounded-circle">
+          <?php endif; ?>
             <span class="d-none d-md-block dropdown-toggle ps-2"><?= $userdata['FirstName']?> <?= $userdata['LastName']?></span>
           </a><!-- End Profile Iamge Icon -->
 
@@ -124,14 +128,14 @@
             <li>
               <a class="dropdown-item d-flex align-items-center" href="#">
                 <i class="bi bi-stickies"></i>
-                <span>#Forum</span>
+                <span>Forum</span>
               </a>
             </li>
             <li>
               <hr class="dropdown-divider">
             </li>
 
-            <li>
+            <!--li>
               <a class="dropdown-item d-flex align-items-center" href="#">
                 <i class="bi bi-chat-square"></i>
                 <span>#Support</span>
@@ -139,7 +143,7 @@
             </li>
             <li>
               <hr class="dropdown-divider">
-            </li>
+            </li-->
 
             <li>
               <a class="dropdown-item d-flex align-items-center" href="dashboard/logout">
@@ -173,7 +177,7 @@
         <a class="nav-link collapsed" data-bs-target="#components-nav" data-bs-toggle="collapse" href="#" aria-expanded="false">
           <i class="bi bi-person-vcard"></i><span>Membership Directory</span><i class="bi bi-chevron-down ms-auto"></i>
         </a>
-        <ul id="components-nav" class="nav-content collapse" data-bs-parent="#sidebar-nav" style="">
+        <ul id="components-nav" class="nav-content collapse" data-bs-parent="#sidebar-nav" >
           <li>
             <a href="Indirectory" class="">
               <i class="bi bi-person-lock" style="font-size: 16px;"></i><span>Individual</span>
@@ -205,14 +209,14 @@
       <li class="nav-item">
         <a class="nav-link collapsed" href="userprofile">
           <i class="bi bi-person-circle"></i>
-          <span>Account Profile</span>
+          <span>My Profile</span>
         </a>
       </li><!-- End Profile Page Nav -->
       
       <li class="nav-item">
         <a class="nav-link collapsed" href="#">
           <i class="bi bi-stickies"></i>
-          <span>#Forum</span>
+          <span>Forum</span>
         </a>
       </li><!-- End Forum Page Nav -->     
       
@@ -268,7 +272,11 @@
           <div class="card">
             <div class="card-body profile-card pt-4 d-flex flex-column align-items-center">
 
-              <img src="<?= base_url('public/uploads/' . $userdata['Photo']) ?>" alt="Profile" class="rounded-circle">
+            <?php if (!empty($userdata['photo'])) : ?>
+              <img src="<?= base_url('public/uploads/' . $userdata['Photo']) ?>" class="rounded-circle" alt="">
+            <?php else : ?>
+              <img src="public/assets/img/usercon.png" class="rounded-circle">
+            <?php endif; ?>
               <h2><?php echo $userdata['FirstName']?> <?php echo $userdata['LastName']?></h2>
               <h3><?php echo $userdata['Company']?></h3>
               <h3><?php echo $userdata['Position']?></h3>
@@ -344,26 +352,37 @@
                 <div class="tab-pane fade profile-edit pt-3" id="profile-edit">
 
                   <!-- Profile Edit Form -->
-                  <form action="http://localhost/UCLF/userprofile" method="post" enctype="multipart/form-data" accept-charset="utf-8">
+                  <form action="http://localhost/UCLF/update" method="post" enctype="multipart/form-data" accept-charset="utf-8">
+                    <input type="hidden" name="id" value="<?php echo $userdata['user_id']; ?>">
                     <div class="row mb-3">
                       <label for="profileImage" class="col-md-4 col-lg-3 col-form-label">Profile Image</label>
                       <div class="col-md-8 col-lg-9">
                         <div id="image-container">
-                          <img id="profile-image" name="photo" src="<?= base_url('public/uploads/' . $userdata['Photo']) ?>" class="rounded-circle" alt="">
-                          <i id="image-placeholder" class="bi bi-person-fill" height='60'></i>
+                        <?php if (!empty($userdata['photo'])) : ?>
+                          <img id="profile-image" src="<?= base_url('public/uploads/' . $userdata['Photo']) ?>" class="rounded-circle" alt="">
+                          <!--input type="text" name="photo" value="<//?//php echo $userdata['Photo']?>"-->
+                        <?php else : ?>
+                          <img id="profile-image" src="public/assets/img/usercon.png" class="rounded-circle">
+                        <?php endif; ?>
+                          <!--i id="image-placeholder" class="bi bi-person-fill" height='60'></i-->  
+                          <div class="pt-2">
+                              <!--Button for image upload -->
+                              <label for="upload-input" class="btn btn-primary btn-sm" title="Upload new profile image">
+                                <i class="bi bi-upload"></i>
+                              </label>
+                            <?php if (!empty($userdata['photo'])) : ?>
+                              <input id="upload-input" type="text" name="photo" style="display: none;" value="<?php echo $userdata['Photo']?>">
+                            <?php else : ?>
+                              <input id="upload-input" type="file" name="photo" style="display: none;">
+                            <?php endif; ?>
+                              <!--Button to remove image -->
+                              <button class="btn btn-danger btn-sm" title="Remove my profile image" onclick="removeImage()">
+                                <i class="bi bi-trash"></i>
+                              </button>
+                          </div>                        
                         </div>
 
-                        <div class="pt-2">
-                          <!--Button for image upload -->
-                          <label for="upload-input" class="btn btn-primary btn-sm" title="Upload new profile image">
-                            <i class="bi bi-upload"></i>
-                          </label>
-                          <input id="upload-input" type="file" style="display: none;">
-                          <!--Button to remove image -->
-                          <button class="btn btn-danger btn-sm" title="Remove my profile image" onclick="removeImage()">
-                            <i class="bi bi-trash"></i>
-                          </button>
-                        </div>
+                        
                         <script>
                           function removeImage() 
                           {
@@ -417,9 +436,9 @@
                       <label for="fullName" class="col-md-4 col-lg-3 col-form-label">Full Name:</label>
                       <div class="col-md-8 col-lg-9">
                         <div class="row">
-                        <div class="col-md-6">
+                        <div class="col-md-6 mb-1">
                           <div class="form-floating">
-                            <input type="text" name="fname" class="form-control" id="firstname" value=<?php echo $userdata['FirstName']?>>
+                            <input type="text" name="fname" class="form-control" id="firstname" value="<?php echo $userdata['FirstName']?>">
                             <label for="firstname">First Name:</label>
                           </div>
                         </div>
@@ -431,7 +450,6 @@
                             </div>
                           </div>
                         </div>
-                        <!--input name="fullName" type="text" class="form-control" id="fullName" value=""-->
                       </div>
                     </div>
 
@@ -496,14 +514,14 @@
                     <div class="row mb-3">
                       <label for="newPassword" class="col-md-4 col-lg-3 col-form-label">New Password</label>
                       <div class="col-md-8 col-lg-9">
-                        <input name="newpassword" type="password" class="form-control" id="newPassword">
+                        <input name="newpassword" type="password" class="form-control" id="newPassword" required>
                       </div>
                     </div>
 
                     <div class="row mb-3">
                       <label for="renewPassword" class="col-md-4 col-lg-3 col-form-label">Re-enter New Password</label>
                       <div class="col-md-8 col-lg-9">
-                        <input name="renewpassword" type="password" class="form-control" id="renewPassword">
+                        <input name="renewpassword" type="password" class="form-control" id="renewPassword" required>
                       </div>
                     </div>
 
