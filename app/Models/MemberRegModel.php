@@ -79,6 +79,28 @@ class MemberRegModel extends Model
         //     return false;
         // }
     }
+    public function updatePhoto($id, $data)
+    {
+      $memberRegModel = new MemberRegModel();
+        $builder = $memberRegModel->builder();
+        $builder = $this->db->table('members');
+        $builder->set('Photo' ,$data);
+        $builder->where('user_id', $id);
+        $builder->update();
+        $result = $builder->get()->getRow();
+        return $result;    
+    }
+    public function deletePhoto($id, $data)
+    {
+      $memberRegModel = new MemberRegModel();
+        $builder = $memberRegModel->builder();
+        $builder = $this->db->table('members');
+        $builder->set('Photo' ,$data);
+        $builder->where('user_id', $id);
+        $builder->update();
+        $result = $builder->get()->getRow();
+        return $result;    
+    }
 
     public function verifyUserid($id) 
     {

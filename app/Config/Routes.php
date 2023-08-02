@@ -68,7 +68,11 @@ $routes->group('', ['filter'=>'isLoggedIn'],function($routes)
     $routes->get('dashboard', 'AccDashboard::userdash');
     $routes->get('dashboard/logout', 'AccDashboard::logout');
     $routes->get('userprofile', 'AccDashboard::profDash');
-    //$routes->get('update', 'AccDashboard::updateUser');
+    $routes->get('notify', 'AccDashboard::notification');
+    $routes->get('/notifications/getNotificationCount', 'AccDashboard::getNotificationCount');
+    $routes->get('notifications/fetchRealtimeNotifications', 'AccDashboard::fetchRealtimeNotifications');
+    $routes->post('noti', 'AccDashboard::updateStatu');
+    $routes->post('updateNoti', 'AccDashboard::notification');
     $routes->post('update', 'AccDashboard::updateUser');
     $routes->post('updatePwd', 'AccDashboard::updatePwd');
     $routes->get('Studirectory', 'AccDashboard::student');

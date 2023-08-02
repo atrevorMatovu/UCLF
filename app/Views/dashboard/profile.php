@@ -30,6 +30,20 @@
   <!-- Template Main CSS File -->
   <link href="public/assets/css/style.css" rel="stylesheet">
 
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.css">
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js"></script>
+
+  <link rel="stylesheet" href="public/assets/plugins/toastr/toastr.min.css">
+  <script src="public/assets/plugins/toastr/toastr.min.js"></script>
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.4/jquery.min.js"></script>
+
+  <!-- Include toastr CSS -->
+  <link href="https://cdn.jsdelivr.net/npm/toastr@2.1.4/dist/toastr.min.css" rel="stylesheet" />
+
+  <!-- Include toastr JS -->
+  <script src="https://cdn.jsdelivr.net/npm/toastr@2.1.4/dist/toastr.min.js"></script>
+
+
   
 </head>
 
@@ -58,35 +72,134 @@
 
         <li class="nav-item dropdown">
 
-          <a class="nav-link nav-icon" href="#" data-bs-toggle="dropdown">
+          <a class="nav-link nav-icon" href="#" data-bs-toggle="dropdown" id="notify-comet">
             <i class="bi bi-bell"></i>
-            <span class="badge bg-primary badge-number"></span>
+            <span class="badge bg-primary badge-number" id="noti-count"><?php
+            
+            echo $notCount;?></span>
           </a><!-- End Notification Icon -->
 
           <ul class="dropdown-menu dropdown-menu-end dropdown-menu-arrow notifications">
             <li class="dropdown-header">
-              You have new notifications
-              <!--a href="#"><span class="badge rounded-pill bg-primary p-2 ms-2">View all</span></a-->
+            <!--div class="inbox fw-wrap">                
+                <h3 class="flex--item js-inbox-header-all">Inbox (all)</h3>
+                <form action="http://localhost/UCLF/updateNoti" method="post" name="UpdateNotiForm" enctype="multipart/form-data" accept-charset="utf-8"> 
+                  <input type="hidden" name="user_id" value="</?php echo $userdata['user_id'];?>">                  
+                <span><button type="submit" class="btn fs-notif jc-end" >Mark all as read</button></span>  
+                <form>             
+            </div-->
+              New notifications here!
+              <a href="notify"><span class="badge rounded-pill bg-primary p-2 ms-2">View all</span></a>
             </li>
             <li>
               <hr class="dropdown-divider">
             </li>
 
-            <li class="notification-item">
-              <i class="bi bi-exclamation-circle text-warning"></i>
-              <div>
-                <h4></h4>
-                <p></p>
-                <p></p>
+           
+              <?php 
+              //$notifications = array_slice($notif, 0 , 5);
+              $recentnoti = array_reverse($notif);
+              $recentnotifications = array_slice($recentnoti, 0 , 5);
+              function getTimeDifferenceString($interval) {
+                if ($interval->y > 0) {
+                    return $interval->y . ' year' . ($interval->y > 1 ? 's' : '') . ' ago';
+                } elseif ($interval->m > 0) {
+                    return $interval->m . ' month' . ($interval->m > 1 ? 's' : '') . ' ago';
+                } elseif ($interval->d > 0) {
+                    return $interval->d . ' day' . ($interval->d > 1 ? 's' : '') . ' ago';
+                } elseif ($interval->h > 0) {
+                    return $interval->h . ' hour' . ($interval->h > 1 ? 's' : '') . ' ago';
+                } elseif ($interval->i > 0) {
+                    return $interval->i . ' minute' . ($interval->i > 1 ? 's' : '') . ' ago';
+                } else {
+                    return 'Just now';
+                }
+              }   
+              foreach ($recentnotifications as $recentnotif): 
+              ?>
+               <li class="notification-item">
+              
+               <form action="http://localhost/UCLF/noti" method="post" name="UpdateNotifications" enctype="multipart/form-data" accept-charset="utf-8"> 
+                  <input type="hidden" name="statusID" value="<?php echo $recentnotif['id'] ;?>">             
+                  <button class="btn" type="submit"><i class="jc-end bi <?php echo ($recentnotif['status'] === '1') ? 'bi-envelope-open' : 'bi-envelope-fill'; ?>"></i></button>
+                </form>
+                <div class="fs-notif ">
+              <?php 
+              echo $recentnotif['msg'];
+              ?>
+              
+              <div class="date-notif">
+             
+              
+             <?php 
+                  $formatDate = date('M jS, Y', strtotime($recentnotif['created_at']));                  
+                 // echo $formatDate;
+              ?>
+              
+              <?php 
+              $createdAt = new DateTime($recentnotif['created_at']);
+              //Getting the time difference
+              $now = new DateTime(); // Current date and time
+              $interval = $now->diff($createdAt);
+
+              // Display the time difference as "X mins ago", "X hours ago", "X days ago," etc.
+              $timeDifference = getTimeDifferenceString($interval);
+              echo $timeDifference;
+              ?>
               </div>
-            </li>
+              </div>
+              </li>
+              
+              <li>
+                <hr class="dropdown-divider">
+              </li>
+              <?php endforeach; ?>
+            
+            <!-- Add this JavaScript code in your HTML or in a separate script file -->
+            <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+            <script>
+              function fetchNotifications() {
+                // AJAX request to fetch notifications
+                // Fetch new notifications from the server
+                $.ajax({
+                  url: 'notifications/fetchRealtimeNotifications', // Replace with your server-side URL to fetch new notifications
+                  type: 'GET',
+                  dataType: 'json',
+                  headers: {'X-Requested-With': 'XMLHttpRequest'},
+                  success: function(data) {
+                    // Update the notification dropdown with the new notifications
+                    updateNotifications(data);
+                  },
+                  error: function(error) {
+                    console.error('Error fetching notifications:', error);
+                  }
+                });
+                // Fetch the notification count from the server
+                $.ajax({
+                  url: '/notifications/getNotificationCount', // Replace with your server-side URL to get the notification count
+                  type: 'GET',
+                  dataType: 'json',
+                  headers: {'X-Requested-With': 'XMLHttpRequest'},
+                  success: function(data) {
+                    // Update the notification count on the bell icon
+                    $('#noti-count').text(data.count);
+                  },
+                  error: function(error) {
+                    console.error('Error fetching notification count:', error);
+                  }
+                });
+              }
+
+              
+            </script>
+
 
             <li>
               <hr class="dropdown-divider">
             </li>
 
             <li class="dropdown-footer">
-              <a href="#">Show all notifications</a>
+              <a href="#"></a>
             </li>
 
           </ul><!-- End Notification Dropdown Items -->
@@ -98,11 +211,8 @@
         <li class="nav-item dropdown pe-3">
 
           <a class="nav-link nav-profile d-flex align-items-center pe-0" href="#" data-bs-toggle="dropdown">
-          <?php if (!empty($userdata['photo'])) : ?>
+          
             <img src="<?= base_url('public/uploads/' . $userdata['Photo']) ?>" class="rounded-circle" alt="">
-          <?php else : ?>
-            <img src="public/assets/img/usercon.png" class="rounded-circle">
-          <?php endif; ?>
             <span class="d-none d-md-block dropdown-toggle ps-2"><?= $userdata['FirstName']?> <?= $userdata['LastName']?></span>
           </a><!-- End Profile Iamge Icon -->
 
@@ -135,15 +245,7 @@
               <hr class="dropdown-divider">
             </li>
 
-            <!--li>
-              <a class="dropdown-item d-flex align-items-center" href="#">
-                <i class="bi bi-chat-square"></i>
-                <span>#Support</span>
-              </a>
-            </li>
-            <li>
-              <hr class="dropdown-divider">
-            </li-->
+            
 
             <li>
               <a class="dropdown-item d-flex align-items-center" href="dashboard/logout">
@@ -272,11 +374,11 @@
           <div class="card">
             <div class="card-body profile-card pt-4 d-flex flex-column align-items-center">
 
-            <?php if (!empty($userdata['photo'])) : ?>
+            
               <img src="<?= base_url('public/uploads/' . $userdata['Photo']) ?>" class="rounded-circle" alt="">
-            <?php else : ?>
+            <!--//?php else : ?>
               <img src="public/assets/img/usercon.png" class="rounded-circle">
-            <?php endif; ?>
+            <--?php endif; ?-->
               <h2><?php echo $userdata['FirstName']?> <?php echo $userdata['LastName']?></h2>
               <h3><?php echo $userdata['Company']?></h3>
               <h3><?php echo $userdata['Position']?></h3>
@@ -352,55 +454,32 @@
                 <div class="tab-pane fade profile-edit pt-3" id="profile-edit">
 
                   <!-- Profile Edit Form -->
-                  <form action="http://localhost/UCLF/update" method="post" enctype="multipart/form-data" accept-charset="utf-8">
+                  <form action="http://localhost/UCLF/update" method="post" name="UpdateUserForm" enctype="multipart/form-data" accept-charset="utf-8">
                     <input type="hidden" name="id" value="<?php echo $userdata['user_id']; ?>">
                     <div class="row mb-3">
                       <label for="profileImage" class="col-md-4 col-lg-3 col-form-label">Profile Image</label>
                       <div class="col-md-8 col-lg-9">
                         <div id="image-container">
-                        <?php if (!empty($userdata['photo'])) : ?>
-                          <img id="profile-image" src="<?= base_url('public/uploads/' . $userdata['Photo']) ?>" class="rounded-circle" alt="">
-                          <!--input type="text" name="photo" value="<//?//php echo $userdata['Photo']?>"-->
-                        <?php else : ?>
-                          <img id="profile-image" src="public/assets/img/usercon.png" class="rounded-circle">
-                        <?php endif; ?>
-                          <!--i id="image-placeholder" class="bi bi-person-fill" height='60'></i-->  
-                          <div class="pt-2">
+                        
+                          <img id="profile-image" src="<?= base_url('public/uploads/' . $userdata['Photo']) ?>" class="rounded-circle mx-2" alt="">
+                         
+                          <div class="pt-2 col-md-3 ">
+                            <div class="justify-content-center">
                               <!--Button for image upload -->
-                              <label for="upload-input" class="btn btn-primary btn-sm" title="Upload new profile image">
+                              <label for="upload-input" class="btn btn-primary btn-sm mx-5" title="Upload new profile image">
                                 <i class="bi bi-upload"></i>
                               </label>
-                            <?php if (!empty($userdata['photo'])) : ?>
-                              <input id="upload-input" type="text" name="photo" style="display: none;" value="<?php echo $userdata['Photo']?>">
-                            <?php else : ?>
+                            <?php if (empty($userdata['photo'])) : ?>
                               <input id="upload-input" type="file" name="photo" style="display: none;">
+                             
+                            <?php else : ?>
+                              <input id="upload-input" type="text" name="photo" style="display: none;" value="<?php echo $userdata['Photo']?>">
+                              <input id="upload-input" type="text" name="photo" style="display: none;" value="public/assets/img/usercon.png">
                             <?php endif; ?>
-                              <!--Button to remove image -->
-                              <button class="btn btn-danger btn-sm" title="Remove my profile image" onclick="removeImage()">
-                                <i class="bi bi-trash"></i>
-                              </button>
+                            </div>
                           </div>                        
                         </div>
-
-                        
-                        <script>
-                          function removeImage() 
-                          {
-                            // Get the file input element
-                            var fileInput = document.getElementById("upload-input");
-
-                            // Reset the value of the file input
-                            fileInput.value = "";
-
-                            // Remove the selected image preview (if any)
-                            var imagePreview = document.getElementById("image-preview");
-                            if (imagePreview) 
-                            {
-                              imagePreview.parentNode.removeChild(imagePreview);
-                            }
-                          }
-                        </script>
-
+                       
                         <script>
                           function handleFileInputChange(event) {
                             var fileInput = event.target;
@@ -458,14 +537,14 @@
                     <div class="row mb-3">
                       <label for="company" class="col-md-4 col-lg-3 col-form-label">Company</label>
                       <div class="col-md-8 col-lg-9">
-                        <input name="company" type="text" class="form-control" id="company" value=<?php echo $userdata['Company']?>>
+                        <input name="company" type="text" class="form-control" id="company" value="<?php echo $userdata['Company'];?>">
                       </div>
                     </div>
 
                     <div class="row mb-3">
                       <label for="position" class="col-md-4 col-lg-3 col-form-label">Position</label>
                       <div class="col-md-8 col-lg-9">
-                        <input name="position" type="text" class="form-control" id="position" value=<?php echo $userdata['Position']?>>
+                        <input name="position" type="text" class="form-control" id="position" value=<?php echo $userdata['Position'];?>>
                       </div>
                     </div>
 
@@ -492,8 +571,57 @@
 
                     
                     <div class="text-center">
-                      <button type="submit" class="btn btn-primary">Save Changes</button>
+                      <button type="submit" id="btn_update" class="btn btn-primary">Save Changes</button>
                     </div>
+                                <script>
+                                 $('#btn_update').on('click',function()
+                                  {
+                                    var url = base_url + 'update';
+                                    
+                                    const formData = $('#UpdateUserForm');
+                                    
+                                    $.ajax({
+                                        type: "post",
+                                        url: url,
+                                        dataType: "JSON",
+                                        data: FormData(formData),
+                                        processData: false,
+                                        contentType: false,
+                                        headers: {'X-Requested-With': 'XMLHttpRequest'},
+                                        success: function(data) 
+                                        {
+                                        // Handle the response data here
+                                          if (data.success == true)
+                                          {
+                                            toastr.success('Account information updated successfully.');
+                                          }
+                                          else
+                                          {
+                                            toastr.error('Profile information update failed.');
+                                          }                              
+                                        },
+                                      });
+                                  });
+                                </script>
+                                <!--toastr.options = {
+                                    "closeButton": false,
+                                    "debug": false,
+                                    "newestOnTop": false,
+                                    "progressBar": false,
+                                    "positionClass": "toast-top-right",
+                                    "preventDuplicates": false,
+                                    "onclick": null,
+                                    "showDuration": "300",
+                                    "hideDuration": "1000",
+                                    "timeOut": "5000",
+                                    "extendedTimeOut": "1000",
+                                    "showEasing": "swing",
+                                    "hideEasing": "linear",
+                                    "showMethod": "fadeIn",
+                                    "hideMethod": "fadeOut"
+                                  }
+                                  toastr.success("Account information updated successfully.");
+                                      -->
                   </form><!-- End Profile Edit Form -->
 
                 </div>
@@ -502,7 +630,7 @@
 
                 <div class="tab-pane fade pt-3" id="profile-change-password">
                   <!-- Change Password Form -->
-                  <form action="http://localhost/UCLF/updatePwd" method="post" accept-charset="utf-8">
+                  <form action="http://localhost/UCLF/updatePwd" method="post" name="updatePwd" accept-charset="utf-8">
 
                     <div class="row mb-3">
                       <label for="currentPassword" class="col-md-4 col-lg-3 col-form-label">Old Password</label>
@@ -528,6 +656,39 @@
                     <div class="text-center">
                       <button type="submit" class="btn btn-primary">Change Password</button>
                     </div>
+                    <script>
+                                  function updatePassword()
+                                  {
+                                    var url = base_url + 'updatePwd';
+
+                                    $('#updatePwd').submit(function(event) {
+                                    event.preventDefault();
+                                    const formData = $(this).serialize();
+                                    
+                                    $.ajax({
+                                        type: "post",
+                                        url: url,
+                                        dataType: "JSON",
+                                        data: FormData(formData),
+                                        processData: false,
+                                        contentType: false,
+                                        headers: {'X-Requested-With': 'XMLHttpRequest'},
+                                        success: function(data) 
+                                        {
+                                        // Handle the response data here
+                                          if (data.success == true)
+                                          {
+                                            toastr.success('Account password updated successfully.');
+                                          }                                        
+                                        },
+                                          error: function(error) 
+                                          {
+                                            console.error('Error:', error);
+                                          }
+                                        });
+                                      });
+                                  }
+                                </script>
                   </form><!-- End Change Password Form -->
                   <script>
                   var passwordForm = document.getElementById("passwordForm");

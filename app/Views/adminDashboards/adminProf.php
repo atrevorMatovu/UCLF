@@ -29,6 +29,12 @@
 
   <!-- Template Main CSS File -->
   <link href="public/assets/css/style.css" rel="stylesheet">
+  <!-- Include toastr CSS -->
+  <link href="https://cdn.jsdelivr.net/npm/toastr@2.1.4/dist/toastr.min.css" rel="stylesheet" />
+
+  <!-- Include toastr JS -->
+  <script src="https://cdn.jsdelivr.net/npm/toastr@2.1.4/dist/toastr.min.js"></script>
+
 
   
 </head>

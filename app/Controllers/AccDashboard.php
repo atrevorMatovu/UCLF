@@ -7,7 +7,9 @@ use App\Models\LoginModel;
 use App\Models\adminModel;
 use App\Models\MemberRegModel;
 use App\Models\OnboardModel;
+use App\Models\UnotifyModel;
 use CodeIgniter\HTTP\RequestInterface;
+use CodeIgniter\HTTP\ResponseInterface;
 use CodeIgniter\HTTP\IncomingRequest;
 use CodeIgniter\HTTP\CLIRequest;
 
@@ -16,6 +18,7 @@ class AccDashboard extends BaseController
     public $session;
     public $onboardModel;
     public $loginModel;
+    public $unotifyModel;
     public function __construct(){
         $this->loginModel = new LoginModel();
     }
@@ -23,13 +26,19 @@ class AccDashboard extends BaseController
         {
             $loginModel = new loginModel;
             $onboardModel = new onboardModel;
+            $unotifyModel = new UnotifyModel;
             $loggedInUserid = session()->get('loggedInUser');
+            
             //var_dump( $loggedInUserid);
+            $notif    = $unotifyModel->fetchNotif($loggedInUserid);
+            $notifCount = $unotifyModel->count_unread_notifications($loggedInUserid);
             $userdata = $loginModel->where('user_id',$loggedInUserid)->first();
             
             $data = [
                 'title'     => 'UserDashboard',
                 'userdata'  => $userdata,
+                'notif'     => $notif,
+                'notCount'  => $notifCount
             ];
             return View("dashboard/userDashboard", $data);
         }   
@@ -52,14 +61,15 @@ class AccDashboard extends BaseController
             $account = $adminModel->verifyEmail($loggedInUserid['email']);
             //$memberCounts = $loginModel->getMemberCountsByMembershipType();
             //$members = $loginModel->getTotalMembers();
-            //var_dump($members);     
+            //var_dump($members);
+            $notification = $this->notifyAdmin();     
 
             $data = [
                 'title'     => 'Dashboard',
                 'users'  => $users,
                 'userdata'    => $account,
+                'noty'      => $notification
                 //'memberCounts'=> $memberCounts,
-                //'members ' . $members
             ];
         return view("adminDashboards/adminDashboard", $data);
     }
@@ -83,13 +93,18 @@ class AccDashboard extends BaseController
     {
         $loginModel = new loginModel;
         $memberRegModel = new MemberRegModel;
+        $unotifyModel   = new UnotifyModel;
             $loggedInUserid = session()->get('loggedInUser');
             $userdata = $loginModel->where('user_id',$loggedInUserid)->first();
-            //var_dump($userdata);
+            $notif    = $unotifyModel->fetchNotif($loggedInUserid);
+            $notifCount = $unotifyModel->count_unread_notifications($loggedInUserid);
+            
 
             $data = [
                 'title'     => 'UserProfile',
                 'userdata'  => $userdata,
+                'notif'     => $notif,
+                'notCount'  => $notifCount
             ];     
 
         return view("dashboard/profile", $data);
@@ -98,19 +113,27 @@ class AccDashboard extends BaseController
     public function updateUser()
     {
         $user_id = $this->request->getVar('id');
-        $data['userdata'] = $this->loginModel->verifyUser($user_id);
+        $loginModel = new loginModel();
+        $unotifyModel = new UnotifyModel();
+        $memberRegModel = new MemberRegModel;
+        $userdata = $this->loginModel->verifyUser($user_id);
         //var_dump($data['userdata']);
-        //$vdata = [];
+        $notifCount = $unotifyModel->count_unread_notifications($user_id);
+        $notif    = $unotifyModel->fetchNotif($user_id);
+            
+        $data = [
+            'userdata' => $userdata,
+            'notCount' => $notifCount,
+            'notif'    => $notif
+        ];
         $data['validation'] = null;
 
         $email = \Config\Services::email();
         
-        $loginModel = new loginModel();
-        $memberRegModel = new MemberRegModel;
+        
         $this->session = \Config\Services::session();
         
-        //if($this->request->getPost())
-        //{
+        
             $rules = [
                 'address' =>[
                     'rules'=>'required|alpha_numeric_space',
@@ -120,10 +143,10 @@ class AccDashboard extends BaseController
                     ],
                 ],
                'company' =>[
-                    'rules'=>'required|alpha_numeric_space',
+                    'rules'=>'required',
                     'errors'=> [
                         'required'             => 'Company name is required.',
-                        'alpha_numeric_space'  => 'Company name can only be of alphanumerics and space'
+                        
                     ],
                 ],
                 'position' =>[
@@ -154,8 +177,8 @@ class AccDashboard extends BaseController
                     if ($avatar->isValid() && !$avatar->hasMoved()) {
                         $newName = $avatar->getRandomName();
                         $avatar->move(ROOTPATH . 'public/uploads', $newName);
-                        //$udata['Photo'] = $newName;
-                        $memberRegModel->update($user_id, ['photo' => $newName]);
+                        $data = $newName;
+                        $memberRegModel->updatePhoto($user_id, $data );
                     }
 
                     
@@ -170,35 +193,35 @@ class AccDashboard extends BaseController
                     'Position' => $this->request->getVar('position'),
                     //'Photo' => $avatar,
                 ];
-                // }else{
-                //     $udata = [
-                //         'FirstName' => $this->request->getVar('fname'),
-                //         'LastName' => $this->request->getVar('lname'),
-                //         'Tel' => $this->request->getVar('phone'),
-                //         'Email' => $this->request->getVar('email'),
-                //         'Address' => $this->request->getVar('address'),
-                //         'Company' => $this->request->getVar('company'),
-                //         'Position' => $this->request->getVar('position'),
-                //     ];
-                // }               
                 
-                 
+                $msg = 'Account profile details updated successfully.';
                 
+                $mdata = [
+                    'msg' => $msg,
+                    'user_id' => $user_id
+                ];
+
+
                 // Update user's information in the database
-                $update     = $memberRegModel->updateUser($user_id, $udata);                
-                if($update)
+                $update     = $memberRegModel->updateUser($user_id, $udata); 
+                $notify     = $unotifyModel->saveNotif($mdata);
+               if($update)
                 {
-                    if($this->session->get('loggedInUser'))
+                    if($notify)
                     {
-                        session()->setFlashdata('success', 'User Profile details updated successfully.');
-                        return redirect()->to('userprofile');
+                        if($this->session->get('loggedInUser'))
+                        {
+                        
+                            session()->setFlashdata('success', 'User Profile details updated successfully.');
+                            return redirect()->to('userprofile');
+                        }
                     }
                 } 
                 else
                 {
                     session()->setFlashdata('error', 'Updating user details failed, try again with all required information provided.');
                     return redirect()->to(current_url()); 
-                }                         
+                }                       
             }
             else
             {
@@ -207,13 +230,15 @@ class AccDashboard extends BaseController
         //}
         return view("dashboard/profile",  $data);
     }
-
+    
+     
     public function updatePwd()
     {
         $vdata = [];
         $vdata['validation'] = null;
         $email = \Config\Services::email();
         $memberRegModel = new MemberRegModel;
+        $unotifyModel = new UnotifyModel();
         $this->session = \Config\Services::session();
 
         if($this->request->getPost())
@@ -235,13 +260,25 @@ class AccDashboard extends BaseController
                 $pwd = [
                     'Password' => password_hash($this->request->getVar('newpassword'), PASSWORD_DEFAULT),
                 ];
+
+                $msg = 'Account password updated successfully.';
+                
+                $mdata = [
+                    'msg' => $msg,
+                    'user_id' => $user_id
+                ];
+
                 $updatePwd  = $memberRegModel->updatePassword($user_id, $pwd);
+                $notify     = $unotifyModel->saveNotif($mdata);
                 if($updatePwd)
                 {
-                    if($this->session->get('loggedInUser'))
+                    if($notify)
                     {
-                    $this->session->setFlashdata('success', 'Password updated successfully.');
-                    return redirect()->to('userprofile');
+                        if($this->session->get('loggedInUser'))
+                        {
+                        $this->session->setFlashdata('success', 'Password updated successfully.');
+                        return redirect()->to('userprofile');
+                        }
                     }
                 }
                 else
@@ -256,6 +293,106 @@ class AccDashboard extends BaseController
             }
         }
         return view("dashboard/profile", $vdata);
+    }
+    public function notification()
+    {
+        $loginModel = new loginModel;
+        $memberRegModel = new MemberRegModel;
+        $unotifyModel   = new UnotifyModel;
+            $loggedInUserid = session()->get('loggedInUser');
+            $userdata = $loginModel->where('user_id',$loggedInUserid)->first();
+            $id = $this->request->getVar('statusID');
+            $notif    = $unotifyModel->fetchNotif($loggedInUserid);
+            $notifCount = $unotifyModel->count_unread_notifications($loggedInUserid);
+            $noti = $unotifyModel->updateStati($loggedInUserid, $id);
+            $this->session = \Config\Services::session();
+            $read = $unotifyModel->readAll($loggedInUserid);
+
+            $data = [
+                'title'     => 'UserNotifications',
+                'userdata'  => $userdata,
+                'notif'     => $notif,
+                'notCount'  => $notifCount,
+                //'read'      => $read
+            ];  
+            
+           
+
+        return view("dashboard/usernotifications", $data);   
+    }
+    public function markAsRead()
+    {
+        $unotifyModel = new UnotifyModel;
+        $loginModel = new loginModel;
+        $memberRegModel = new MemberRegModel;
+        $user_id = session()->get('loggedInUser');
+
+        $loggedInUserid = session()->get('loggedInUser');
+            $userdata = $loginModel->where('user_id',$loggedInUserid)->first();
+            $notif    = $unotifyModel->fetchNotif($loggedInUserid);
+            $notifCount = $unotifyModel->count_unread_notifications($loggedInUserid);
+            $this->session = \Config\Services::session();
+       
+            $read = $unotifyModel->readAll($loggedInUserid);
+        
+        $data = [
+            'title'     => 'UserNotifications',
+            'userdata'  => $userdata,
+            'notif'     => $notif,
+            'notCount'  => $notifCount,
+            'read'      => $read
+        ];  
+
+        
+        var_dump($read);
+        if ($read)
+        {
+            session()->setFlashdata('success','All read.');
+        }else{
+            session()->setFlashdata('error', 'Failed');
+        }
+
+        return view("dashboard/usernotifications", $data); 
+
+    }
+    public function updateStatu()
+    {
+        $unotifyModel = new UnotifyModel;
+        $statusID = $this->request->getVar('statusID');
+        $user_id = session()->get('loggedInUser');
+        $unotifyModel->updateStati($user_id, $statusID); 
+        return redirect()->to('userprofile');       
+    }
+    public function markAsUnread()
+    {
+        $unotifyModel = new UnotifyModel;
+        $statusID = $this->request->getVar('statusID');
+        $user_id = session()->get('loggedInUser');
+        $unotifyModel->updateStati($user_id, $statusID); 
+        return redirect()->to('');
+    }
+    public function getNotificationCount()
+    {
+        $unotifyModel = new UnotifyModel;
+        // For example, you can count the number of unread notifications for the current user.
+        $user_id = session()->get('loggedInUser');
+        // You can use CodeIgniter's Model to interact with the database.
+        $notificationCount = $unotifyModel->count_unread_notifications($user_id);
+
+        // Return the notification count as JSON
+        return $this->response->setJSON(['count' => $notificationCount]);
+    }
+    public function fetchRealtimeNotifications()
+    {
+        $unotifyModel = new UnotifyModel;
+        // For example, you can fetch notifications with a creation date greater than the last fetched notification's timestamp.
+        $user_id = session()->get('loggedInUser');
+        $lastStamp = date('Y-m-d H:i:s', strtotime('-48 hours'));
+        // You can use CodeIgniter's Model to interact with the database.
+        $notifications = $unotifyModel->fetchNewNotifications($user_id, $lastStamp);
+
+        // Return the new notifications as JSON
+        return $this->response->setJSON($notifications);
     }
     public function updateAdmin()
     {
@@ -395,7 +532,16 @@ class AccDashboard extends BaseController
         }
         return view("adminDashboards/adminProf", $vdata);
     }
-    
+    public function notifyAdmin()
+    {
+        // Trigger a notification to the admin dashboard
+    $notificationMessage = "New user completed onboarding";
+
+    $this->session->setFlashdata('notification', $notificationMessage);
+        //$this->session->setFlashdata('notification', $notificationMessage);
+        return $this->response->setJSON(['success' => true]);
+    }
+
     public function onboarding()
     {
         $data = [];
@@ -499,14 +645,8 @@ class AccDashboard extends BaseController
                     {
                     $this->session->setFlashdata('success', 'Account setup successful, please await an approval email to log into the system.');
                     return redirect()->to('/');
-                    }
-                    if ($this->request->isAJAX()) {
-                        // Trigger a notification to the admin dashboard
-                        $notificationMessage = "New user account awaiting your approval!";
-                
-                        // using CodeIgniter's session flashdata to store the notification message
-                        $this->session->setFlashdata('notification', $notificationMessage);
-                    }
+                   }
+                    $this->notifyAdmin();
                 } 
                 else
                 {
@@ -573,6 +713,7 @@ class AccDashboard extends BaseController
     {
         $loginModel = new loginModel;
         $onboardModel = new onboardModel;
+        $unotifyModel = new UnotifyModel;
             $loggedInUserid = session()->get('loggedInUser');
             $userdata = $loginModel->where('user_id',$loggedInUserid)->first();
             $account = $loginModel->verifyUser($loggedInUserid);
@@ -583,6 +724,8 @@ class AccDashboard extends BaseController
         
         $membership = 'student';
         $userdata1 = $loginModel->where('Membership_type',$membership)->findAll();
+        $notif    = $unotifyModel->fetchNotif($loggedInUserid);
+        $notifCount = $unotifyModel->count_unread_notifications($loggedInUserid);
         
         $data = [
             'title'     => 'Dashboard',
@@ -590,6 +733,8 @@ class AccDashboard extends BaseController
             'acc_board' => $acc_board,
             'userdata'  => $userdata,
             'userdata1' => $userdata1,
+            'notif'     => $notif,
+            'notCount'  => $notifCount
         ];
         return view("category/student", $data);
     }
@@ -598,6 +743,7 @@ class AccDashboard extends BaseController
     {
         $loginModel = new loginModel;
         $onboardModel = new onboardModel;
+        $unotifyModel = new UnotifyModel;
             $loggedInUserid = session()->get('loggedInUser');
             $userdata = $loginModel->where('user_id',$loggedInUserid)->first();
             $account = $loginModel->verifyUser($loggedInUserid);
@@ -608,7 +754,8 @@ class AccDashboard extends BaseController
         
         $membership = 'individual';
         $userdata1 = $loginModel->where('Membership_type',$membership)->findAll();
-       
+        $notif    = $unotifyModel->fetchNotif($loggedInUserid);
+        $notifCount = $unotifyModel->count_unread_notifications($loggedInUserid);
         
         $data = [
             'title'     => 'Dashboard',
@@ -616,6 +763,8 @@ class AccDashboard extends BaseController
             'acc_board' => $acc_board,
             'userdata'  => $userdata,
             'userdata1' => $userdata1,
+            'notif'     => $notif,
+            'notCount'  => $notifCount
         ];
         return view("category/individual", $data);
     }
@@ -624,6 +773,7 @@ class AccDashboard extends BaseController
     {
         $loginModel = new loginModel;
         $onboardModel = new onboardModel;
+        $unotifyModel = new UnotifyModel;
             $loggedInUserid = session()->get('loggedInUser');
             $userdata = $loginModel->where('user_id',$loggedInUserid)->first();
             $account = $loginModel->verifyUser($loggedInUserid);
@@ -635,6 +785,8 @@ class AccDashboard extends BaseController
         $membership = 'life';
         $userdata1 = $loginModel->where('Membership_type',$membership)->findAll();
         //var_dump($userdata1);
+        $notif    = $unotifyModel->fetchNotif($loggedInUserid);
+        $notifCount = $unotifyModel->count_unread_notifications($loggedInUserid);
         //$otherdata = $onboardModel->where('user_id',$onboarding_completed)->find('Position');
         
         
@@ -644,6 +796,8 @@ class AccDashboard extends BaseController
             'acc_board' => $acc_board,
             'userdata'  => $userdata,
             'userdata1' => $userdata1,
+            'notif'     => $notif,
+            'notCount'  => $notifCount
         ];
         return view("category/life", $data);
     }
@@ -652,6 +806,7 @@ class AccDashboard extends BaseController
     {
         $loginModel = new loginModel;
         $onboardModel = new onboardModel;
+        $unotifyModel = new UnotifyModel;
             $loggedInUserid = session()->get('loggedInUser');
             $userdata = $loginModel->where('user_id',$loggedInUserid)->first();
             $account = $loginModel->verifyUser($loggedInUserid);
@@ -662,14 +817,16 @@ class AccDashboard extends BaseController
         
         $membership = 'law-fellowship';
         $userdata1 = $loginModel->where('Membership_type',$membership)->findAll();
-        //var_dump($userdata1);
+        $notif    = $unotifyModel->fetchNotif($loggedInUserid);
+        $notifCount = $unotifyModel->count_unread_notifications($loggedInUserid);//var_dump($userdata1);
         //$otherdata = $onboardModel->where('user_id',$onboarding_completed)->find('Position');        
         $data = [
             'title'     => 'Dashboard',
-            //'otherdata'  => $otherdata,
             'acc_board' => $acc_board,
             'userdata'  => $userdata,
             'userdata1' => $userdata1,
+            'notif'     => $notif,
+            'notCount'  => $notifCount
         ];
         return view("category/fship", $data);
     }
@@ -678,6 +835,7 @@ class AccDashboard extends BaseController
     {
         $loginModel = new loginModel;
         $onboardModel = new onboardModel;
+        $unotifyModel = new UnotifyModel;
             $loggedInUserid = session()->get('loggedInUser');
             $userdata = $loginModel->where('user_id',$loggedInUserid)->first();
             $account = $loginModel->verifyUser($loggedInUserid);
@@ -688,16 +846,18 @@ class AccDashboard extends BaseController
         
         $membership = 'institutional';
         $userdata1 = $loginModel->where('Membership_type',$membership)->findAll();
-        //var_dump($userdata1);
+        $notif    = $unotifyModel->fetchNotif($loggedInUserid);
+        $notifCount = $unotifyModel->count_unread_notifications($loggedInUserid);//var_dump($userdata1);
         //$otherdata = $onboardModel->where('user_id',$onboarding_completed)->find('Position');
         
         
         $data = [
             'title'     => 'Dashboard',
-            //'otherdata'  => $otherdata,
             'acc_board' => $acc_board,
             'userdata'  => $userdata,
             'userdata1' => $userdata1,
+            'notif'     => $notif,
+            'notCount'  => $notifCount
         ];
         return view("category/institutional", $data);
     }

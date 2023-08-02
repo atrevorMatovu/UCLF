@@ -34,6 +34,12 @@
 
   <!-- Include Chosen CSS -->
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/chosen/1.8.7/chosen.min.css">
+  <!-- Include toastr CSS -->
+  <link href="https://cdn.jsdelivr.net/npm/toastr@2.1.4/dist/toastr.min.css" rel="stylesheet" />
+
+  <!-- Include toastr JS -->
+  <script src="https://cdn.jsdelivr.net/npm/toastr@2.1.4/dist/toastr.min.js"></script>
+
 
   <!-- Include Chosen JavaScript -->
   <script src="https://cdnjs.cloudflare.com/ajax/libs/chosen/1.8.7/chosen.jquery.min.js"></script>
@@ -121,7 +127,7 @@
                      
                     
                     <!--FORMS-->
-                    <form action="http://localhost/UCLF/onboard" method="post" enctype="multipart/form-data" accept-charset="utf-8">
+                    <form action="http://localhost/UCLF/onboard" method="post" name="OnboardForm" enctype="multipart/form-data" accept-charset="utf-8">
                       <div vlass="row g-3">
                               <div class="pull-right">
                             
@@ -227,7 +233,40 @@
                                 <div class="col-12 pt-2 btn-fr">
                                   <input type="submit" class="btn btn-primary w-100 " value = "Continue">
                                 </div>
-                                </div>
+                                <script>
+                                  function notifyAdmin()
+                                  {
+                                    var url = base_url + 'onboard';
+
+                                    $('#OnboardForm').submit(function(event) {
+                                    event.preventDefault();
+                                    const formData = $(this).serialize();
+                                    
+                                    $.ajax({
+                                        type: "post",
+                                        url: url,
+                                        dataType: "JSON",
+                                        data: FormData(formData),
+                                        processData: false,
+                                        contentType: false,
+                                        headers: {'X-Requested-With': 'XMLHttpRequest'},
+                                        success: function(data) 
+                                        {
+                                        // Handle the response data here
+                                          if (data.success == true)
+                                          {
+                                            toastr.success('New user completed onboarding');
+                                          }                                        
+                                        },
+                                          error: function(error) 
+                                          {
+                                            console.error('Error:', error);
+                                          }
+                                        });
+                                      });
+                                  }
+                                </script>
+                              </div>
                                
                             </div>
                         </div>

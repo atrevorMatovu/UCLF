@@ -49,22 +49,97 @@
       <ul class="d-flex align-items-center">
           
       <li class="nav-item dropdown">
-          <a class="nav-link nav-icon" href="#" data-bs-toggle="dropdown">
+
+          <a class="nav-link nav-icon" href="#" data-bs-toggle="dropdown" id="notify-comet">
             <i class="bi bi-bell"></i>
-            <span class="badge bg-primary badge-number">4</span>
+            <span class="badge bg-primary badge-number" id="noti-count"><?php
+            
+            echo $notCount;?></span>
           </a><!-- End Notification Icon -->
 
           <ul class="dropdown-menu dropdown-menu-end dropdown-menu-arrow notifications">
             <li class="dropdown-header">
-              You have 4 new notifications
-              <a href="#"><span class="badge rounded-pill bg-primary p-2 ms-2">View all</span></a>
+            <!--div class="inbox fw-wrap">                
+                <h3 class="flex--item js-inbox-header-all">Inbox (all)</h3>
+                <form action="http://localhost/UCLF/updateNoti" method="post" name="UpdateNotiForm" enctype="multipart/form-data" accept-charset="utf-8"> 
+                  <input type="hidden" name="user_id" value="</?php echo $userdata['user_id'];?>">                  
+                <span><button type="submit" class="btn fs-notif jc-end" >Mark all as read</button></span>  
+                <form>             
+            </div-->
+              New notifications here!
+              <a href="notify"><span class="badge rounded-pill bg-primary p-2 ms-2">View all</span></a>
             </li>
             <li>
               <hr class="dropdown-divider">
             </li>
 
+           
+              <?php 
+              //$notifications = array_slice($notif, 0 , 5);
+              $recentnoti = array_reverse($notif);
+              $recentnotifications = array_slice($recentnoti, 0 , 5);
+              function getTimeDifferenceString($interval) {
+                if ($interval->y > 0) {
+                    return $interval->y . ' year' . ($interval->y > 1 ? 's' : '') . ' ago';
+                } elseif ($interval->m > 0) {
+                    return $interval->m . ' month' . ($interval->m > 1 ? 's' : '') . ' ago';
+                } elseif ($interval->d > 0) {
+                    return $interval->d . ' day' . ($interval->d > 1 ? 's' : '') . ' ago';
+                } elseif ($interval->h > 0) {
+                    return $interval->h . ' hour' . ($interval->h > 1 ? 's' : '') . ' ago';
+                } elseif ($interval->i > 0) {
+                    return $interval->i . ' minute' . ($interval->i > 1 ? 's' : '') . ' ago';
+                } else {
+                    return 'Just now';
+                }
+              }   
+              foreach ($recentnotifications as $recentnotif): 
+              ?>
+               <li class="notification-item">
+              
+               <form action="http://localhost/UCLF/noti" method="post" name="UpdateNotifications" enctype="multipart/form-data" accept-charset="utf-8"> 
+                  <input type="hidden" name="statusID" value="<?php echo $recentnotif['id'] ;?>">             
+                  <button class="btn" type="submit"><i class="jc-end bi <?php echo ($recentnotif['status'] === '1') ? 'bi-envelope-open' : 'bi-envelope-fill'; ?>"></i></button>
+                </form>
+                <div class="fs-notif ">
+              <?php 
+              echo $recentnotif['msg'];
+              ?>
+              
+              <div class="date-notif">
+             
+              
+             <?php 
+                  $formatDate = date('M jS, Y', strtotime($recentnotif['created_at']));                  
+                 // echo $formatDate;
+              ?>
+              
+              <?php 
+              $createdAt = new DateTime($recentnotif['created_at']);
+              //Getting the time difference
+              $now = new DateTime(); // Current date and time
+              $interval = $now->diff($createdAt);
+
+              // Display the time difference as "X mins ago", "X hours ago", "X days ago," etc.
+              $timeDifference = getTimeDifferenceString($interval);
+              echo $timeDifference;
+              ?>
+              </div>
+              </div>
+              </li>
+              
+              <li>
+                <hr class="dropdown-divider">
+              </li>
+              <?php endforeach; ?>
+            
+            
+            <li>
+              <hr class="dropdown-divider">
+            </li>
+
             <li class="dropdown-footer">
-              <a href="#">Show all notifications</a>
+              <a href="#"></a>
             </li>
 
           </ul><!-- End Notification Dropdown Items -->
