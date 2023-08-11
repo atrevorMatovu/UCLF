@@ -8,6 +8,7 @@ use App\Models\adminModel;
 use App\Models\MemberRegModel;
 use App\Models\OnboardModel;
 use App\Models\UnotifyModel;
+use App\Models\AdminNotifyModel;
 use CodeIgniter\HTTP\RequestInterface;
 use CodeIgniter\HTTP\ResponseInterface;
 use CodeIgniter\HTTP\IncomingRequest;
@@ -59,8 +60,8 @@ class AccDashboard extends BaseController
             $loggedInUserid = session()->get('loggedInUser');
             $users = $loginModel->findAll();
             $account = $adminModel->verifyEmail($loggedInUserid['email']);
-            //$memberCounts = $loginModel->getMemberCountsByMembershipType();
-            //$members = $loginModel->getTotalMembers();
+            $memberCounts = $loginModel->getMemberCountsByMembershipType();
+            $members = $loginModel->getTotalMembers();
             //var_dump($members);
             $notification = $this->notifyAdmin();     
 
@@ -68,8 +69,9 @@ class AccDashboard extends BaseController
                 'title'     => 'Dashboard',
                 'users'  => $users,
                 'userdata'    => $account,
-                'noty'      => $notification
-                //'memberCounts'=> $memberCounts,
+                'noty'      => $notification,
+                'members'   => $members,
+                'membCount' => $memberCounts
             ];
         return view("adminDashboards/adminDashboard", $data);
     }
@@ -79,12 +81,14 @@ class AccDashboard extends BaseController
         $loginModel = new loginModel;
             $loggedInUserid = session()->get('loggedInUser');
            $account = $adminModel->verifyEmail($loggedInUserid['email']);
-            //$memberCounts = $loginModel->getMemberCountsByMembershipType();
-            //$members = $loginModel->getTotalMembers();        
+            $memberCounts = $loginModel->getMemberCountsByMembershipType();
+            $members = $loginModel->getTotalMembers();        
 
             $data = [
                 'title'     => 'Dashboard',
-                'userdata'    => $account
+                'userdata'  => $account,
+                'members'   => $members,
+                'membCount' => $memberCounts
             ];
         return view('adminDashboards/adminProf', $data);
     }
@@ -361,7 +365,8 @@ class AccDashboard extends BaseController
         $statusID = $this->request->getVar('statusID');
         $user_id = session()->get('loggedInUser');
         $unotifyModel->updateStati($user_id, $statusID); 
-        return redirect()->to('userprofile');       
+        $response = array('success' => true); // You can customize this response as needed
+         echo json_encode($response);
     }
     public function markAsUnread()
     {
@@ -537,7 +542,7 @@ class AccDashboard extends BaseController
         // Trigger a notification to the admin dashboard
     $notificationMessage = "New user completed onboarding";
 
-    $this->session->setFlashdata('notification', $notificationMessage);
+    //$this->session->setFlashdata('notification', $notificationMessage);
         //$this->session->setFlashdata('notification', $notificationMessage);
         return $this->response->setJSON(['success' => true]);
     }
@@ -636,7 +641,15 @@ class AccDashboard extends BaseController
                     //'user_id' => $user_id,
                     //'activation_date' => date("Y-m-d h:i:s")
                 ];
-                //var_dump($user);                
+                $adnotifyModel = new AdminNotifyModel();
+                $type = 'Account Registration';
+                $mssg = 'New User completed onboarding.';
+                $message = [
+                    'msg'       => $mssg,
+                    'user_id'   => $user_id,
+                    'type'      => $type
+                ];
+                                
                 // Save user's onboarding information in the database
                 if($this->onboardModel->updateUserInfo($user_id, $user))
                 {
@@ -644,9 +657,9 @@ class AccDashboard extends BaseController
                     if($this->session->get('pending'))
                     {
                     $this->session->setFlashdata('success', 'Account setup successful, please await an approval email to log into the system.');
-                    return redirect()->to('/');
+                    return redirect()->to('/');                    
                    }
-                    $this->notifyAdmin();
+                   $adnotifyModel->saveNotif($message);
                 } 
                 else
                 {

@@ -175,9 +175,9 @@
             </li>
 
             <li>
-              <a class="dropdown-item d-flex align-items-center" href="#">
-                <i class="bi bi-stickies"></i>
-                <span>#Forum</span>
+              <a class="dropdown-item d-flex align-items-center" href="forum">
+                <i class="bi bi-chat-quote"></i>
+                <span>Forum</span>
               </a>
             </li>
             <li>
@@ -258,21 +258,22 @@
       </li><!-- End Profile Page Nav -->
       
       <li class="nav-item">
-        <a class="nav-link collapsed" href="#">
-          <i class="bi bi-stickies"></i>
-          <span>Forum</span>
+        <a class="nav-link collapsed" data-bs-target="#forms-nav" data-bs-toggle="collapse" href="#">
+          <i class="bi bi-chat-quote"></i><span>Forum</span><i class="bi bi-chevron-down ms-auto"></i>
         </a>
-      </li><!-- End Forum Page Nav -->
-
-      
-      
-
-      <!--li class="nav-item">
-        <a class="nav-link collapsed" href="#">
-          <i class="bi bi-chat-square"></i>
-          <span>Support</span>
-        </a>
-      </li--><!-- End Contact Page Nav -->
+        <ul id="forms-nav" class="nav-content collapse " data-bs-parent="#sidebar-nav">
+          <li>
+            <a href="forum">
+              <i class="bi bi-circle"></i><span>Start Discussion</span>
+            </a>
+          </li>
+          <li>
+            <a href="viewTopic">
+              <i class="bi bi-circle"></i><span>Discussion Categories</span>
+            </a>
+          </li>          
+        </ul>
+      </li><!-- End Forum Nav -->  
 
     </ul>
 

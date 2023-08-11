@@ -27,28 +27,19 @@
   <link href="public/assets/vendor/simple-datatables/style.css" rel="stylesheet">
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css" integrity="sha384-rbsA2VBKQhggwzxH7pPCaAqO46MgnOM80zW1RWuH61DGLwZJEdK2Kadq2F9CUG65" crossorigin="anonymous">
 
+   <!-- Add this JavaScript code in your HTML or in a separate script file -->
+   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.4/jquery.min.js"></script>
+  <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script> 
+  <script src="<?php echo base_url()?>assets/plugins/toastr/toastr.min.js"></script>
+
   <!-- Template Main CSS File -->
   <link href="public/assets/css/style.css" rel="stylesheet">
+  <link href="<?php echo base_url()?>assets/plugins/toastr/toastr.min.css" rel="stylesheet">
+  <link href="<?php echo base_url()?>assets/plugins/toastr/toastr.css" rel="stylesheet">
 
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.css">
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js"></script>
-
-  <link rel="stylesheet" href="public/assets/plugins/toastr/toastr.min.css">
-  <script src="public/assets/plugins/toastr/toastr.min.js"></script>
-  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.4/jquery.min.js"></script>
-
-  <!-- Include toastr CSS -->
-  <link href="https://cdn.jsdelivr.net/npm/toastr@2.1.4/dist/toastr.min.css" rel="stylesheet" />
-
-  <!-- Include toastr JS -->
-  <script src="https://cdn.jsdelivr.net/npm/toastr@2.1.4/dist/toastr.min.js"></script>
-
-
-  
 </head>
 
 <body>
-
   <!-- ======= Header ======= -->
   <header id="header" class="header fixed-top d-flex align-items-center">
 
@@ -81,13 +72,6 @@
 
           <ul class="dropdown-menu dropdown-menu-end dropdown-menu-arrow notifications">
             <li class="dropdown-header">
-            <!--div class="inbox fw-wrap">                
-                <h3 class="flex--item js-inbox-header-all">Inbox (all)</h3>
-                <form action="http://localhost/UCLF/updateNoti" method="post" name="UpdateNotiForm" enctype="multipart/form-data" accept-charset="utf-8"> 
-                  <input type="hidden" name="user_id" value="</?php echo $userdata['user_id'];?>">                  
-                <span><button type="submit" class="btn fs-notif jc-end" >Mark all as read</button></span>  
-                <form>             
-            </div-->
               New notifications here!
               <a href="notify"><span class="badge rounded-pill bg-primary p-2 ms-2">View all</span></a>
             </li>
@@ -119,9 +103,9 @@
               ?>
                <li class="notification-item">
               
-               <form action="http://localhost/UCLF/noti" method="post" name="UpdateNotifications" enctype="multipart/form-data" accept-charset="utf-8"> 
+               <form action="http://localhost/UCLF/noti" method="post" id="UpdateNotifications" enctype="multipart/form-data" accept-charset="utf-8"> 
                   <input type="hidden" name="statusID" value="<?php echo $recentnotif['id'] ;?>">             
-                  <button class="btn" type="submit"><i class="jc-end bi <?php echo ($recentnotif['status'] === '1') ? 'bi-envelope-open' : 'bi-envelope-fill'; ?>"></i></button>
+                  <button class="btn" id="btn_noti" type="submit"><i class="jc-end bi <?php echo ($recentnotif['status'] === '1') ? 'bi-envelope-open' : 'bi-envelope-fill'; ?>"></i></button>
                 </form>
                 <div class="fs-notif ">
               <?php 
@@ -129,9 +113,8 @@
               ?>
               
               <div class="date-notif">
-             
               
-             <?php 
+              <?php 
                   $formatDate = date('M jS, Y', strtotime($recentnotif['created_at']));                  
                  // echo $formatDate;
               ?>
@@ -155,44 +138,56 @@
               </li>
               <?php endforeach; ?>
             
-            <!-- Add this JavaScript code in your HTML or in a separate script file -->
-            <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-            <script>
-              function fetchNotifications() {
-                // AJAX request to fetch notifications
-                // Fetch new notifications from the server
-                $.ajax({
-                  url: 'notifications/fetchRealtimeNotifications', // Replace with your server-side URL to fetch new notifications
-                  type: 'GET',
-                  dataType: 'json',
-                  headers: {'X-Requested-With': 'XMLHttpRequest'},
-                  success: function(data) {
-                    // Update the notification dropdown with the new notifications
-                    updateNotifications(data);
-                  },
-                  error: function(error) {
-                    console.error('Error fetching notifications:', error);
-                  }
+              <script src="https://code.jquery.com/jquery-3.7.0.min.js" ></script> 
+             <script>
+                $(document).on("click","#btn_noti",function()
+                {                  
+                  var url = base_url + 'noti';
+                  var formData = new FormData($('#UpdateNotifications')[0]);
+                  toastr.options = {
+                                    "closeButton": false,
+                                    "debug": false,
+                                    "newestOnTop": false,
+                                    "progressBar": false,
+                                    "positionClass": "toast-top-right",
+                                    "preventDuplicates": false,
+                                    "onclick": null,
+                                    "showDuration": "300",
+                                    "hideDuration": "1000",
+                                    "timeOut": "5000",
+                                    "extendedTimeOut": "1000",
+                                    "showEasing": "swing",
+                                    "hideEasing": "linear",
+                                    "showMethod": "fadeIn",
+                                    "hideMethod": "fadeOut"
+                                  };  
+                                  toastr.success("Account information updated successfully.");            
+                  $.ajax({
+                    type: "post",
+                    url: url,
+                    dataType: "JSON",
+                    data: formData,
+                    processData: false,
+                    contentType: false,
+                    headers: {'X-Requested-With': 'XMLHttpRequest'},
+                    success: function(data) 
+                    {// Handle the response data here
+                      if (data.success == true)
+                      {
+                       toastr.info('Notification marked read.');
+                      }
+                      else
+                      {
+                       toastr.error('Notification not marked read.');
+                      }                              
+                    },
+                    error: function(error) {
+                       console.error('Error:', error);
+                    }
+                  });
+                  toastr.info('Processing...');
                 });
-                // Fetch the notification count from the server
-                $.ajax({
-                  url: '/notifications/getNotificationCount', // Replace with your server-side URL to get the notification count
-                  type: 'GET',
-                  dataType: 'json',
-                  headers: {'X-Requested-With': 'XMLHttpRequest'},
-                  success: function(data) {
-                    // Update the notification count on the bell icon
-                    $('#noti-count').text(data.count);
-                  },
-                  error: function(error) {
-                    console.error('Error fetching notification count:', error);
-                  }
-                });
-              }
-
-              
-            </script>
-
+              </script>
 
             <li>
               <hr class="dropdown-divider">
@@ -205,8 +200,6 @@
           </ul><!-- End Notification Dropdown Items -->
 
         </li><!-- End Notification Nav -->
-
-        
 
         <li class="nav-item dropdown pe-3">
 
@@ -236,8 +229,8 @@
             </li>
 
             <li>
-              <a class="dropdown-item d-flex align-items-center" href="#">
-                <i class="bi bi-stickies"></i>
+              <a class="dropdown-item d-flex align-items-center" href="forum">
+                <i class="bi bi-chat-quote"></i>
                 <span>Forum</span>
               </a>
             </li>
@@ -315,21 +308,26 @@
         </a>
       </li><!-- End Profile Page Nav -->
       
-      <li class="nav-item">
-        <a class="nav-link collapsed" href="#">
-          <i class="bi bi-stickies"></i>
-          <span>Forum</span>
-        </a>
-      </li><!-- End Forum Page Nav -->     
       
-
-      <!--li class="nav-item">
-        <a class="nav-link collapsed" href="#">
-          <i class="bi bi-chat-square"></i>
-          <span>#Support</span>
+      <li class="nav-item">
+        <a class="nav-link collapsed" data-bs-target="#forms-nav" data-bs-toggle="collapse" href="#">
+          <i class="bi bi-chat-quote"></i><span>Forum</span><i class="bi bi-chevron-down ms-auto"></i>
         </a>
-      </li--><!-- End Contact Page Nav -->   
+        <ul id="forms-nav" class="nav-content collapse " data-bs-parent="#sidebar-nav">
+          <li>
+            <a href="forum">
+              <i class="bi bi-circle"></i><span>Start Discussion</span>
+            </a>
+          </li>
+          <li>
+            <a href="viewTopic">
+              <i class="bi bi-circle"></i><span>Discussion Categories</span>
+            </a>
+          </li>          
+        </ul>
+      </li><!-- End Forum Nav -->  
 
+     
     </ul>
 
   </aside><!-- End Sidebar-->
@@ -573,7 +571,7 @@
                     <div class="text-center">
                       <button type="submit" id="btn_update" class="btn btn-primary">Save Changes</button>
                     </div>
-                                <script>
+                                <!-- <script>
                                  $('#btn_update').on('click',function()
                                   {
                                     var url = base_url + 'update';
@@ -602,7 +600,7 @@
                                         },
                                       });
                                   });
-                                </script>
+                                </script> -->
                                 <!--toastr.options = {
                                     "closeButton": false,
                                     "debug": false,
@@ -656,39 +654,6 @@
                     <div class="text-center">
                       <button type="submit" class="btn btn-primary">Change Password</button>
                     </div>
-                    <script>
-                                  function updatePassword()
-                                  {
-                                    var url = base_url + 'updatePwd';
-
-                                    $('#updatePwd').submit(function(event) {
-                                    event.preventDefault();
-                                    const formData = $(this).serialize();
-                                    
-                                    $.ajax({
-                                        type: "post",
-                                        url: url,
-                                        dataType: "JSON",
-                                        data: FormData(formData),
-                                        processData: false,
-                                        contentType: false,
-                                        headers: {'X-Requested-With': 'XMLHttpRequest'},
-                                        success: function(data) 
-                                        {
-                                        // Handle the response data here
-                                          if (data.success == true)
-                                          {
-                                            toastr.success('Account password updated successfully.');
-                                          }                                        
-                                        },
-                                          error: function(error) 
-                                          {
-                                            console.error('Error:', error);
-                                          }
-                                        });
-                                      });
-                                  }
-                                </script>
                   </form><!-- End Change Password Form -->
                   <script>
                   var passwordForm = document.getElementById("passwordForm");

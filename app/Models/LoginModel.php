@@ -18,13 +18,7 @@ class LoginModel extends Model
     protected $createdField  = 'created_at';
     protected $updatedField  = 'updated_at';
     protected $deletedField  = 'deleted_at';
-    public function getAccountStatus($id)
-    {
-        $builder = $this->db->table('members');
-        $query = $builder->select('Account_status')->where('user_id', $id)->get();
-        return $query->getRow('Account_status');
-    }
-
+    
     public function getMemberCountsByMembershipType()
     {
         $builder = $this->db->table('members');
@@ -33,9 +27,9 @@ class LoginModel extends Model
         $builder->groupBy('Membership_type');
         $builder->whereIn('Membership_type', ['individual', 'student', 'life', 'institutional', 'law-fellowship']);
 
-        $query = $builder->get();
+        $query = $builder->countAllResults();
 
-        return $query->getResult();
+        return $query;
     }
 
     public function getTotalMembers()
@@ -44,11 +38,9 @@ class LoginModel extends Model
 
         $builder->selectCount('* as total_members');
 
-        $query = $builder->get();
+        $query = $builder->countAllResults();
 
-        $result = $query->getRow();
-
-        return $result->total_members;
+        return $query;
     }
     public function verifyUserid($id) 
     {

@@ -75,6 +75,13 @@ $routes->group('', ['filter'=>'isLoggedIn'],function($routes)
     $routes->post('updateNoti', 'AccDashboard::notification');
     $routes->post('update', 'AccDashboard::updateUser');
     $routes->post('updatePwd', 'AccDashboard::updatePwd');
+    $routes->get('forum', 'ForumResponses::forum');
+    $routes->get('viewTopic', 'ForumResponses::forumTopic');
+    $routes->get('myQuestions', 'ForumResponses::myQuestion');
+    $routes->post('updateForum', 'ForumResponses::updateform');
+    $routes->get('discuss', 'ForumResponses::discussion');
+    $routes->post('discuss', 'ForumResponses::discussion');
+    $routes->post('del', 'ForumResponses::qnDel');
     $routes->get('Studirectory', 'AccDashboard::student');
     $routes->get('Indirectory', 'AccDashboard::individual');
     $routes->get('Instidirectory', 'AccDashboard::institutional');
