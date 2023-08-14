@@ -58,6 +58,14 @@ class ForumModel extends Model
         $result = $builder->get()->getResultArray();
         return $result; 
       }
+      public function fetchQN($qn_id)
+      {
+        $builder = $this->db->table('forums');
+        $builder->select('*');
+        $builder->where('qn_id',$qn_id,);
+        $result = $builder->get()->getRowArray();
+        return $result; 
+      }
       public function topicQNs($user_id)
       {
         $builder = $this->db->table('forums');

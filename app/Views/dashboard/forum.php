@@ -311,7 +311,7 @@
       </li><!-- End Profile Page Nav -->
       
       <li class="nav-item">
-        <a class="nav-link collapsed" data-bs-target="#forms-nav" data-bs-toggle="collapse" href="#">
+        <a class="nav-link collapsed" data-bs-target="#forms-nav" data-bs-toggle="collapse" href="viewTopic">
           <i class="bi bi-chat-quote"></i><span>Forum</span><i class="bi bi-chevron-down ms-auto"></i>
         </a>
         <ul id="forms-nav" class="nav-content collapse " data-bs-parent="#sidebar-nav">
@@ -384,6 +384,7 @@
                         <!--input  class="form-control" name="category" type="text" -->
                           <select class="custom-input form-select" name="category" id="category" required="" style="border: 1px solid #ccc; border-radius: 5px; padding: 8px; font-size: 14px; color: #333; background-color: #f9f9f9;">
                                     <option value="">Choose a category for your discussion</option>
+                                    <option value="General Discussion">General Discussion(s)</option>
                                     <option value="Announcement">Announcement</option>
                                     <option value="Aviation Law">Aviation Law</option>
                                     <option value="Construction Law">Construction Law</option>

@@ -81,6 +81,9 @@ $routes->group('', ['filter'=>'isLoggedIn'],function($routes)
     $routes->post('updateForum', 'ForumResponses::updateform');
     $routes->get('discuss', 'ForumResponses::discussion');
     $routes->post('discuss', 'ForumResponses::discussion');
+    $routes->get('Queryreview', 'ForumResponses::reviewQN');
+    $routes->post('Queryreview', 'ForumResponses::reviewQN');
+    $routes->post('comment', 'ForumResponses::makeComment');
     $routes->post('del', 'ForumResponses::qnDel');
     $routes->get('Studirectory', 'AccDashboard::student');
     $routes->get('Indirectory', 'AccDashboard::individual');

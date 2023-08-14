@@ -259,6 +259,9 @@ lable {
 .xtreme {
   float: right;
 }
+.pl-10 {
+  padding-left: 10px;
+}
 .qn {
   color: white;
   font-size: 18px;
@@ -274,9 +277,13 @@ lable {
 }
 .descr {
 color:grey ;
+
 }
 .catImg {
   max-width: 45px;
+}
+.qnImg {
+  max-width: 101px;
 }
 .shadow-sm {
   box-shadow: 0 .125rem .25rem rgba(0,0,0,.075)!important;
@@ -338,11 +345,45 @@ color:grey ;
 .fw-pal {
   font-weight: 177!important;
 }
-
+.qn-pal {
+  font-weight: 600!important;
+  font-size: 1.3rem!important;
+}
+.bg-query {
+  background-color: #082f74;
+}
 .fs-pill {
   font-size: 1.2rem!important;
 }
-
+b, strong {
+  font-weight: bolder;
+}
+.profile-image {
+  width: 74px;
+    height: 50px; /* Adjust as needed */
+  font-size: 36px; /* Adjust as needed */
+  background-color: #0e0f3a; /* Choose your desired background color */
+  color: #ffffff; /* Choose text color that contrasts with the background */
+  display: flex;  
+  border-radius: 50%;
+  overflow: hidden;
+  float: right;
+}
+.bg-success {
+  --bs-bg-opacity: 1;
+  background-color: rgba(var(--bs-success-rgb),var(--bs-bg-opacity))!important;
+}
+.elip {
+overflow: hidden;
+text-overflow: ellipsis;
+display: -webkit-box;
+-webkit-line-clamp: 2;
+line-clamp: 2;
+-webkit-box-orient: vertical;
+}
+.badge-no {
+  color:#1a3359;
+}
 .container-forum {
   width: 100%;
   padding-right: 15px;
@@ -430,6 +471,11 @@ textarea.form-control {
 
 .bg-success-light {
   background-color: #d1e7dd;
+  border-color: #d1e7dd;
+}
+
+.bg-light {
+  background-color: #ffffff;
   border-color: #d1e7dd;
 }
 

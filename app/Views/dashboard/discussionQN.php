@@ -305,7 +305,8 @@
         <ol class="breadcrumb">
           <li class="breadcrumb-item"><a href="Dashboard">Home</a></li>
           <li class="breadcrumb-item">Users</li>
-          <li class="breadcrumb-item active">Forum</li>
+          <li class="breadcrumb-item active"><a href="viewTopic">Forum</a></li>
+          <li class="breadcrumb-item active"><?php echo $cat?></li>
         </ol>
       </nav>
     </div><!-- End Page Title -->
@@ -341,11 +342,12 @@
                         <div class="forcard-body">
                             <div class="row">
                             <div class="col-md-5 pt-2">
-                            <a style="color: white; font-size: 18px;  cursor: pointer;" href="#"><span class="badge bg-success badge-number" ><?php    
+                            <a style="color: white; font-size: 18px;  cursor: pointer;" href="#">
+                            <span class="badge bg-light badge-no" ><?php    
                                 echo $qnc;?></span>Queries</a>
                             </div>
                             <div class="col-md-7">
-                                <h4><a class="btn btn-primary xtreme" title="Create New forumTopic" href="forum"><i class="fa fa-plus" aria-hidden="true"></i>Start Discussion!</a></h4>
+                                <h4 style="color:#1a3359;"><a class="btn bg-light xtreme" title="Create New Query/Announcement" href="forum">Start Discussion!</a></h4>
                             </div>
                             </div>
                         </div>
@@ -358,20 +360,40 @@
                             <div class="carddisc shadow-sm mb-3">
                                 <div class="card-disc text-dark">
                                 <?php foreach($qn as $q):?>
-                                <div class="row border-top border-bottom gx-2 py-2">
+                                    <div class="row border-top border-bottom gx-2 py-2">
                                     <div class="col-lg-7">
                                         <div class="row">
                                             <div class="col-lg-1 align-self-center">
                                             <img class="rounded-circle profile-thumbnail" src="<?= base_url('public/uploads/' . $q['photo'])?>">
                                             </div> 
                                             <div class="col-lg-11 align-self-center">
-                                                <a href="#"><h5><?php echo $q['topic']?></h5></a>
+                                                <form method="POST" action="http://localhost/UCLF/Queryreview">
+                                                    <input type="hidden" name="qn_id" value="<?php echo $q['qn_id'];?>">
+                                                <button type="submit"class="styled-link-button"><h5 style="text-align: left;"><?php echo $q['topic']?></h5></button></form>
                                                 <p class="a_details mb-1">Asked By: <?php echo $q['askedby']?><i class="at"></i> | Created: <i class="at"><?php $dat=date("d/M/Y h:i A", strtotime($q['created_at'])); echo $dat?></i> </p>
-                                            </div>
+                                            </div>                                            
                                         </div>
                                     </div>
-                                    <div class="col-lg-5"></div>
+                                    <div class="col-lg-5">
+                                    <b class="badge bg-query rounded-pill fw-pal fs-pill">
+                                    <?php $foundComms = false; ?> <!-- Initialize flag -->
+                                        <?php foreach($comms as $c):?>                                
+                                            <?php if ($c['qn_id'] == $q['qn_id']):?>
+                                            <small style="font-size: 0.7rem!important;"><?php echo $c['comment_count']?>                                            <span>Comments</span>    
+                                            <?php $foundComms = true; ?> <!-- Set the flag -->
+                                            </small>
+                                            <?php endif; ?>
+                                        <?php endforeach; ?>
+
+                                        <?php if (!$foundComms): ?>
+                                        <!-- If comments was not found, display 0 -->
+                                        <small style="font-size: 0.7rem!important;">0 Comments</small>
+                                    <?php endif; ?>
+                                        </b>
+                                            
+                                    </div>
 				                </div>
+                                
                                 <?php endforeach; ?>
                                 </div>
                             </div>

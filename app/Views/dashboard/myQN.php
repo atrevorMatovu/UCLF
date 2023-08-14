@@ -341,7 +341,7 @@
         <ol class="breadcrumb">
           <li class="breadcrumb-item"><a href="Dashboard">Home</a></li>
           <li class="breadcrumb-item">Users</li>
-          <li class="breadcrumb-item active">Forum</li>
+          <li class="breadcrumb-item active"><a href="viewTopic">Forum</a></li>
         </ol>
       </nav>
     </div><!-- End Page Title -->
@@ -377,12 +377,13 @@
                         <div class="forcard-body">
                             <div class="row">
                             <div class="col-md-5 pt-2">
-                            <a style="color: white; font-size: 18px;  cursor: pointer;" href="myQuestions"><!--i class="bi bi-question-octagon"></i--><span class="badge bg-success badge-number"><?php    
+                            
+                            <a style="color: white; font-size: 18px;  cursor: pointer;" href="myQuestions"><!--i class="bi bi-question-octagon"></i--><span class="badge bg-light badge-no" ><?php    
                                 echo $qnc;?></span>Questions</a>
                             </div>
                             <div class="col-md-7">
-                                <h4><a class="btn btn-primary xtreme" title="Create New forumTopic" href="forum"><i class="fa fa-plus" aria-hidden="true"></i> Add New</a></h4>
-                            </div>
+                                    <h4 style="color:#1a3359;"><a class="btn bg-light xtreme" title="Create New Query/Announcement" href="forum">Start Discussion!</a></h4>
+                                </div>
                             </div>
                         </div>
                     </div> 

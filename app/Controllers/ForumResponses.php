@@ -218,6 +218,7 @@ class ForumResponses extends BaseController
             $loginModel = new loginModel;
             $unotifyModel = new UnotifyModel;
             $fModel = new ForumModel;
+            $respModel = new ResponseModel;
             $loggedInUserid = session()->get('loggedInUser');
             
             //Notification logic
@@ -231,7 +232,9 @@ class ForumResponses extends BaseController
             $cat = $this->request->getVar('category');
             $question = $fModel->topicQNs($cat);
             $catCount = $fModel->topicCount($cat);
-            
+
+            $comms = $respModel->getComQnCount();
+            //var_dump($comms);
             $qn = $fModel->fetchQNs($loggedInUserid);
             $qnCount = $fModel->countQNs($loggedInUserid);
 
@@ -242,9 +245,90 @@ class ForumResponses extends BaseController
                 'notCount'  => $notifCount,
                 'cat'       => $cat,
                 'qn'        => $question,
-                'qnc'       => $catCount
+                'qnc'       => $catCount,
+                'comms'     => $comms
             ];
             return view("dashboard/discussionQN", $data);
+        }
+        public function reviewQN()
+        {
+            $loginModel = new loginModel;
+            $unotifyModel = new UnotifyModel;
+            $fModel = new ForumModel;
+            $respModel = new ResponseModel;
+            $loggedInUserid = session()->get('loggedInUser');
+            
+            
+            //Notification logic
+            $notif    = $unotifyModel->fetchNotif($loggedInUserid);
+            $notifCount = $unotifyModel->count_unread_notifications($loggedInUserid);
+            
+            //Fetching user account data
+            $userdata = $loginModel->where('user_id',$loggedInUserid)->first();
+            
+            //Questions logic(FORUM DISCUSSIONQNPAGE)
+            $cat = $this->request->getVar('category');
+            $question = $fModel->topicQNs($cat);
+            $catCount = $fModel->topicCount($cat);
+            
+            //For the Specific Question
+            $qn_id = $this->request->getVar('qn_id');
+            $qn = $fModel->fetchQN($qn_id);
+            
+            //$qnCount = $fModel->countQNs($loggedInUserid);
+
+            //For the Comments on said Question
+            $com = $respModel->fetchResponse($qn_id);
+            $comCount = $respModel->countResponses($qn_id);
+
+            $data = [
+                'title'     => 'Question Review',
+                'userdata'  => $userdata,
+                'notif'     => $notif,
+                'notCount'  => $notifCount,
+                'cat'       => $cat,
+                'qn'        => $qn,
+                'com'       => $com,
+                'comCount'  => $comCount                
+            ];
+            return view("dashboard/readQN", $data);
+        }
+        public function makeComment()
+        {
+            $fModel = new ForumModel();
+            $respModel = new ResponseModel;
+            $loggedInUserid = session()->get('loggedInUser');
+            $this->session = \Config\Services::session();
+        
+            if($this->request->getPost())
+            {        
+                $comment_id = md5(str_shuffle('comment'.time()));
+                $qn_id  = $this->request->getVar('qn_id');
+                $user_id = $loggedInUserid; 
+                $data = [
+                    'qn_id'     => $qn_id,
+                    'user_id'   => $user_id,
+                    'comment'   => $this->request->getVar('comment'),
+                    'comment_id'=> $comment_id,
+                    'commentedBy'=> $this->request->getVar('commentedBy'),
+                    'photo'     => $this->request->getVar('photo'),
+                ];
+                // Save user's comment to a forum question in the database
+                $comm = $respModel->saveResponse($data);
+                if($comm)
+                {
+                    if($this->session->get('loggedInUser'))
+                    {
+                        session()->setFlashdata('success', 'Comment saved succesfully.');
+                        return redirect()->to('Queryreview');  
+                    }                 
+                } 
+                else
+                {
+                    session()->setFlashdata('error', 'Failed to save comment, try again.');
+                    return redirect()->to(current_url());
+                }   
+            }   
         }
         public function qnDel()
         {

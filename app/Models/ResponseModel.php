@@ -15,7 +15,7 @@ class ResponseModel extends Model
     protected $returnType     = 'array';
     protected $useSoftDeletes = true;
 
-    protected $allowedFields = ['response','qn_id','photo'];
+    protected $allowedFields = ['response','qn_id','photo','user_id', 'commentedBy'];
 
     protected $useTimestamps = false;
     protected $dateFormat    = 'datetime';
@@ -51,6 +51,13 @@ class ResponseModel extends Model
         $builder->where('qn_id', $qn_id);
         $query = $builder->countAllResults();
         return $query;
+      }
+      public function getComQnCount()//Comment Question count in new tabulated
+      {
+          return $this->select('qn_id, COUNT(*) as comment_count')
+                      ->groupBy('qn_id')
+                      ->get()
+                      ->getResultArray();
       }
       
     

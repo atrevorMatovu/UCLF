@@ -341,7 +341,7 @@
         <ol class="breadcrumb">
           <li class="breadcrumb-item"><a href="Dashboard">Home</a></li>
           <li class="breadcrumb-item">Users</li>
-          <li class="breadcrumb-item active">Forum</li>
+          <li class="breadcrumb-item active"><a href="viewTopic">Forum</a></li>
         </ol>
       </nav>
     </div><!-- End Page Title -->
@@ -377,11 +377,12 @@
                         <div class="forcard-body">
                             <div class="row">
                             <div class="col-md-5 pt-2">
-                            <a style="color: white; font-size: 18px;  cursor: pointer;" href="#"><span class="badge bg-success badge-number" ><?php    
+                            <a style="color: white; font-size: 18px;  cursor: pointer;" href="#">
+                            <span class="badge bg-light badge-no" ><?php    
                                 echo $qnc;?></span>Queries</a>
                             </div>
                             <div class="col-md-7">
-                                <h4><a class="btn btn-primary xtreme" title="Create New forumTopic" href="forum"><i class="fa fa-plus" aria-hidden="true"></i> Start Discussion!</a></h4>
+                            <h4 style="color:#1a3359;"><a class="btn bg-light xtreme" title="Create New Query/Announcement" href="forum">Start Discussion!</a></h4>
                             </div>
                             </div>
                         </div>
@@ -393,7 +394,7 @@
                         <?php foreach($category as $c):?>
                         <div class="col-md-4">
                             <div class="card">
-                                <div class="card-body">
+                                <div class="card-body " style="min-height: 200px;">
                                 <div class="row gx-2 py-2">
                                     <div class="col-lg-12">
                                         <div class="row">
@@ -408,22 +409,29 @@
                                 <form method="POST" action="http://localhost/UCLF/discuss">
                                 <input type="hidden" name="category" value="<?php echo $c['category'];?>">
                                 <span><button type="submit" id="cat-button" class="styled-link-button"><h5 class="pt-2" style="font-weight:600;text-align:left;"><?php echo $c['category'];?></h5></button></span></form>
-                                <p class="descr"><?php echo $c['descr'];?></p>
+                                <p class="descr elip"><?php echo $c['descr'];?></p>
                                 <div class="row">
-                                    <small> 
+                                    <small > 
                                     <div class="col-md-3 align-items-center">                                
-                                        <b class="badge bg-success rounded-pill fw-pal fs-pill clickable" id="cat-button" onclick="submitForm('<?php echo $c['category']; ?>')">
+                                        <b class="badge bg-query rounded-pill fw-pal fs-pill clickable" id="cat-button" onclick="submitForm('<?php echo $c['category']; ?>')">
+                                        <?php $foundCategory = false; ?>
                                         <?php foreach ($qnCountperTopic as $categ): ?>
                                             <?php if ($c['category'] == $categ['category']):?>
-                                            <small><?php echo $categ['question_count']?>
+                                            <small style="font-size: 0.7rem!important;"><?php echo $categ['question_count']?>
                                                 <?php if ($categ['category'] == 'Announcement'):?>
                                                     <span> Announcements</span>
                                                 <?php else: ?>
                                                     <span> Queries</span>
                                                 <?php endif;?>
+                                                <?php $foundCategory = true; ?>
                                             </small>
                                             <?php endif; ?>
                                         <?php endforeach; ?>
+
+                                        <?php if (!$foundCategory): ?>
+                                        <!-- If category was not found, display 0 -->
+                                        <small style="font-size: 0.7rem!important;">0 Queries</small>
+                                    <?php endif; ?>
                                         </b>
                                         <script>
                                             function submitForm(category) {
