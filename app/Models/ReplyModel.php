@@ -4,10 +4,9 @@ namespace App\Models;
 use CodeIgniter\Model;
 
 
-class ResponseModel extends Model
-
+class ReplyModel extends Model
 {
-    protected $table      = 'responses';
+    protected $table      = 'reply';
     protected $primaryKey = 'id';
 
     protected $useAutoIncrement = true;
@@ -15,7 +14,7 @@ class ResponseModel extends Model
     protected $returnType     = 'array';
     protected $useSoftDeletes = true;
 
-    protected $allowedFields = ['reply','repliedBy','reply_id','qn_id','photo','user_id','comment', 'comment_id','commentedBy'];
+    protected $allowedFields = ['reply','repliedBy','reply_id','qn_id','photo','user_id'];
 
     protected $useTimestamps = false;
     protected $dateFormat    = 'datetime';
@@ -23,11 +22,11 @@ class ResponseModel extends Model
     protected $updatedField  = 'updated_at';
     protected $deletedField  = 'deleted_at';
 
-    public function saveResponse($data)
+    public function saveReply($data)
     {
         $rModel = new ResponseModel();
         $builder = $rModel->builder();
-        $builder = $this->db->table('responses');
+        $builder = $this->db->table('reply');
         $res = $builder->insert($data);
        if($this->db->affectedRows()==1)
         {
@@ -36,30 +35,16 @@ class ResponseModel extends Model
             return false;
         }
     }    
-      public function fetchResponse($qn_id)
+      public function getReply($qn_id)
       {
-        $builder = $this->db->table('responses');
+        $builder = $this->db->table('reply');
         $builder->select('*');
         $builder->where('qn_id',$qn_id,);
         $result = $builder->get()->getResultArray();
         return $result; 
       }
-      public function countResponses($qn_id)
-      {
-        $builder = $this->db->table('responses');
-        $builder->select('*');
-        $builder->where('qn_id', $qn_id);
-        $query = $builder->countAllResults();
-        return $query;
-      }
-      public function getComQnCount()//Comment Question count in new tabulated
-      {
-          return $this->select('qn_id, COUNT(*) as comment_count')
-                      ->groupBy('qn_id')
-                      ->get()
-                      ->getResultArray();
-      }
-      public function fetchReply()//Replies data to comment & count in new tabulated
+      
+      public function fetchReplyCount()//Replies data to comment & count in new tabulated
       {
           return $this->select('reply_id, COUNT(*) as replies')
                       ->groupBy('reply_id')

@@ -82,8 +82,11 @@ $routes->group('', ['filter'=>'isLoggedIn'],function($routes)
     $routes->get('discuss', 'ForumResponses::discussion');
     $routes->post('discuss', 'ForumResponses::discussion');
     $routes->get('Queryreview', 'ForumResponses::reviewQN');
+    $routes->get('Queryreview/(:any)', 'ForumResponses::reviewQN/$1');
     $routes->post('Queryreview', 'ForumResponses::reviewQN');
     $routes->post('comment', 'ForumResponses::makeComment');
+    $routes->post('makeComment', 'ForumResponses::makeCommentAjax');
+    $routes->post('reply', 'ForumResponses::makeReplyAjax');
     $routes->post('del', 'ForumResponses::qnDel');
     $routes->get('Studirectory', 'AccDashboard::student');
     $routes->get('Indirectory', 'AccDashboard::individual');

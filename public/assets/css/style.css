@@ -232,6 +232,7 @@ lable {
 .clickable {
   cursor: pointer;
 }
+
 .fl1 {
   flex: 1 auto !important;
 }
@@ -383,6 +384,14 @@ line-clamp: 2;
 }
 .badge-no {
   color:#1a3359;
+}
+.btnUCLF {
+  
+    top:50%;
+    background-color:#012970;
+    color: #fff;
+    border:none;
+    border-radius:10px;
 }
 .container-forum {
   width: 100%;

@@ -416,7 +416,7 @@
                     <input type="hidden" class="form-control" name="askedby" value="<?php echo $userdata['FirstName']?> <?php echo $userdata['LastName']?>">                   
                     
                     <div class="form-group pt-3 float-end">
-                        <button class="btn btn-success" type="submit">
+                        <button class="btn btnUCLF" type="submit">
                             <i class="bi bi-reply float-end"></i> Post</button>
                     </div>
 

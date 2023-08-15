@@ -375,7 +375,7 @@
                                         </div>
                                     </div>
                                     <div class="col-lg-5">
-                                    <b class="badge bg-query rounded-pill fw-pal fs-pill">
+                                    <b class="badge bg-query rounded-pill fw-pal fs-pill align-self-center">
                                     <?php $foundComms = false; ?> <!-- Initialize flag -->
                                         <?php foreach($comms as $c):?>                                
                                             <?php if ($c['qn_id'] == $q['qn_id']):?>
