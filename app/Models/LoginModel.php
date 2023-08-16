@@ -135,7 +135,13 @@ class LoginModel extends Model
         $result = $builder->get()->getRowArray();
         return $result;        
     }
-    
+    public function getUsersPN()
+    {
+        return $this->select('user_id, FirstName, LastName, Photo')
+                    ->groupBy('user_id')
+                    ->get()
+                    ->getResultArray();
+    }
     // Validation
     protected $validationRules      = [];
     protected $validationMessages   = [];

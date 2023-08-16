@@ -272,6 +272,9 @@ class ForumResponses extends BaseController
             $cat = $this->request->getVar('category');
             $question = $fModel->topicQNs($cat);
             $catCount = $fModel->topicCount($cat);
+
+            //user photos grouped by id
+            $userPN = $loginModel->getUsersPN();
             
             //For the Specific Question
             $qn_id = $this->request->getVar('qn_id');
@@ -297,7 +300,8 @@ class ForumResponses extends BaseController
                 'com'       => $com,
                 'comCount'  => $comCount ,
                 'reply'     => $reply,
-                'replyCount'=> $replyCount               
+                'replyCount'=> $replyCount,
+                'userPN'    => $userPN               
             ];
             return view("dashboard/readQN", $data);
         }
@@ -334,6 +338,44 @@ class ForumResponses extends BaseController
                 else
                 {
                     session()->setFlashdata('error', 'Failed to save comment, try again.');
+                    return redirect()->to(current_url());
+                }   
+            }   
+        }
+        public function makeReply()
+        {
+            $fModel = new ForumModel();
+            $repModel = new ReplyModel();
+            $loggedInUserid = session()->get('loggedInUser');
+            $this->session = \Config\Services::session();
+        
+            if($this->request->getPost())
+            {        
+                $resp_id = $this->request->getVar('comment_id');
+                $qn_id = $this->request->getVar('qn_id');
+                $user_id = $loggedInUserid;
+                
+                $data = [
+                    'qn_id' => $qn_id,
+                    'user_id' => $user_id,
+                    'reply' => $this->request->getVar('reply'),
+                    'reply_id' => $resp_id,
+                    'repliedBy'=> $this->request->getVar('repliedBy'),
+                    'photo'     => $this->request->getVar('photo'),
+                ];
+                // Save user's reply to a forum comment in the database
+                $reply = $repModel->saveReply($data);
+                if($reply)
+                {
+                    if($this->session->get('loggedInUser'))
+                    {
+                        session()->setFlashdata('success', 'Reply saved succesfully.');
+                        return redirect()->to('Queryreview' );  
+                    }                 
+                } 
+                else
+                {
+                    session()->setFlashdata('error', 'Failed to save Reply, try again.');
                     return redirect()->to(current_url());
                 }   
             }   
@@ -430,6 +472,11 @@ class ForumResponses extends BaseController
                     return redirect()->to(current_url());
                 }   
             }                    
+        }
+        public function rtest()
+        {
+           
+            return view("adminDashboards/test");
         }
     }
     

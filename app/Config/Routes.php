@@ -61,6 +61,7 @@ $routes->post('pwdReset/(:any)', 'Password_reset::index/$1');
 $routes->get('onboard', 'AccDashboard::onboarding');
 $routes->post('onboard', 'AccDashboard::onboarding');
 $routes->add('onboard', 'AccDashboard::onboarding');
+$routes->get('test', 'ForumResponses::rtest');
 
 //DASHBOARDS
 $routes->group('', ['filter'=>'isLoggedIn'],function($routes)
@@ -85,8 +86,9 @@ $routes->group('', ['filter'=>'isLoggedIn'],function($routes)
     $routes->get('Queryreview/(:any)', 'ForumResponses::reviewQN/$1');
     $routes->post('Queryreview', 'ForumResponses::reviewQN');
     $routes->post('comment', 'ForumResponses::makeComment');
+    $routes->post('reply', 'ForumResponses::makeReply');
     $routes->post('makeComment', 'ForumResponses::makeCommentAjax');
-    $routes->post('reply', 'ForumResponses::makeReplyAjax');
+    $routes->post('makereply', 'ForumResponses::makeReplyAjax');
     $routes->post('del', 'ForumResponses::qnDel');
     $routes->get('Studirectory', 'AccDashboard::student');
     $routes->get('Indirectory', 'AccDashboard::individual');

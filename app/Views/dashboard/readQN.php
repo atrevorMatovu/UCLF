@@ -379,8 +379,8 @@
                                             <h5><b> <i class="bi bi-chat-text"></i> Comments</b></h5>
                                         </div>
                                         <div class="">
-                                        <?php $comment = array_reverse($com);
-                                        foreach($comment as $com):?>                                                   
+                                        <?php 
+                                        foreach($com as $com):?>                                                   
                                             <div class="row g-0">
                                                 <div class="col-md-2">
                                                 <?php if (!empty($com['photo'])):?>
@@ -396,34 +396,27 @@
                                                     <?php if (!empty($com)):?>
                                                         <p class="card-text" id="new-comment"><?php echo $com['comment']?></p>
                                                         <p class="card-text ">By: <h7 style="color: #113f98;"><small><?php echo$com['commentedBy'] ?></small> <i><small class="text-dark"><?php $dat=date("d/M/Y h:i A", strtotime($com['created_at'])); echo $dat?></small></i></h7>
-                                                        <small><span class="badge bg-primary text-white ml-2"><i class="fa fa-comments"></i><?php $replies = 0;echo $replies?> Replies</span></small>
+                                                         <small><span class="badge bg-primary text-white ml-2"><i class="fa fa-comments"></i><?php $replies = 0;echo $replies?> Replies</span></small>
                                                         <small style="padding-left:5px;"><h7 class="badge bg-query text-white reply-button clickable"><i class="bi bi-reply"></i>Reply</h7></small>
-                                                        </p>
+                                                         </p>
 
                                                         <!-- REply Display-->
-                                                        <p>
-                                                            <hr>
-                                                            
-                                                            
-                                                        </p>
-                                                        <div class="reply-input" style="display: none;">
+                                                        <p></p>
+                                                         <div class="reply-input" style="display: none;">
                                                         <form action="http://localhost/UCLF/reply" enctype="multipart/form-data" method="post" accept-charset="utf-8">
                                                             <input type="hidden" name="qn_id" id="qn_id" value="<?php echo $qn['qn_id']?>">
                                                             <input type="hidden" name="comment_id" id="reply_id" value="<?php echo $com['comment_id']?>">
                                                             <input type="hidden" name="repliedBy" value="<?php echo $userdata['FirstName']?> <?php echo $userdata['LastName']?>">
                                                             <input type="hidden" name="photo" value="<?php echo $userdata['Photo']?>">
                                                             <input type="text" name="reply" class="form-control" placeholder="Your reply..." required>
-                                                            <button class="btn bg-query text-white btn-sm mt-2 reply-submit" type="submit">Submit Reply</button>
+                                                            <button class="btn bg-query text-white btn-sm mt-2 " id="reply-submit" type="submit">Submit Reply</button>
                                                         </form>
                                                         </div>
-                                                        <hr>
+                                                         <hr>
                                                     <?php else:?>
                                                         <p>You're Welcome to share your opinion below.</p>
-                                                    <?php endif;?>                                                   
-                                                </div>                                               
-                                            </div> <?php endforeach;?>
-                                            
-                                             <!-- Making Replies to Comments-->
+                                                    <?php endif;?> 
+                                                    <!-- Making Replies to Comments-->
                                              <script src="public/assets/plugins/toastr/toastr.min.js"></script>
                                                 <script>
                                                     $(document).ready(function() {
@@ -436,19 +429,18 @@
                                                         });
 
                                                         // Additional JavaScript for submitting replies (similar to your AJAX function)
-                                                        $(".reply-submit").click(function() {
-                                                            //e.preventDefault();
+                                                        $("#reply-submit").click(function(e) {
+                                                            e.preventDefault();
                                                             var parentDiv = $(this).closest(".col-md-10");                                                            
                                                             var commentId = parentDiv.find(".reply-button").data("comment-id");
-                                                            var reply = parentDiv.find("input").val();
+                                                            var reply = $('[name="reply"]').val();//parentDiv.find("input").val();
                                                             var photo = $('[name="photo"]').val();
                                                             var repliedBy = $('[name="repliedBy"]').val();
                                                             var comment_id = $('#comment_id').val();
                                                             var qn_id = $('#qn_id').val();
                                                             // Perform AJAX request to submit the reply
-                                                            // ...
                                                             $.ajax({
-                                                                    url: 'http://localhost/UCLF/reply', // Replace with your controller method
+                                                                    url: 'http://localhost/UCLF/makereply', // Replace with your controller method
                                                                     type: 'POST',
                                                                     data: {
                                                                         reply: reply,
@@ -478,7 +470,11 @@
                                                             });
                                                         });
                                                 </script>
+                                                  
+                                                </div>                                               
+                                            </div> <?php endforeach;?>
 
+                                             
 
                                             <!-- Making Comments-->
                                             <div class="row" style="background-color: #d9d9d9;">
@@ -508,6 +504,11 @@
                                                                 e.preventDefault();
                                                                 
                                                                 var comment = $('#floatingTextarea').val();
+                                                                if (comment.trim() === '') {
+                                                                    toastr.error('Please enter a comment.');
+                                                                    return; // Don't proceed if the textarea is empty
+                                                                }
+
                                                                 var qn_id = $('#qn_id').val();
                                                                 var userReplyid = $('#userReplyid').val();
                                                                 var commentedBy = $('[name="commentedBy"]').val();
@@ -531,6 +532,10 @@
                                                                             // Clear the textarea after successful submission
                                                                             $('#floatingTextarea').val('');
                                                                             location.reload();
+                                                                            var nearestComment = $('#new-comment').closest('.col-lg-11');
+                                                                            if (nearestComment.length > 0) {
+                                                                                nearestComment[0].scrollIntoView({ behavior: 'smooth', block: 'center' });
+                                                                            }
                                                                         }else{
                                                                             toastr.error(response.message);
                                                                         }
@@ -542,12 +547,12 @@
                                                                 });
                                                             });
 
-                                                            $(document).ready(function() {
-                                                                // Scroll to the new comment element after page load
-                                                                var newCommentElement = document.getElementById('new-comment');
-                                                                if (newCommentElement) {
-                                                                    newCommentElement.scrollIntoView({ behavior: 'smooth', block: 'center' });
-                                                                }
+                                                             $(document).ready(function() {
+                                                                 // Scroll to the new comment element after page load
+                                                                 var nearestComment = $('.col-lg-11').first(); // You can use .last() if you want the last one
+                                                                  if (nearestComment.length > 0) {
+                                                                      nearestComment[0].scrollIntoView({ behavior: 'smooth', block: 'center' });
+                                                                  }
                                                             });
                                                         });
                                                     </script>				

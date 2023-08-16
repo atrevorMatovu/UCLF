@@ -42,11 +42,17 @@ class ReplyModel extends Model
         $builder->where('qn_id',$qn_id,);
         $result = $builder->get()->getResultArray();
         return $result; 
-      }
-      
+      }      
       public function fetchReplyCount()//Replies data to comment & count in new tabulated
       {
           return $this->select('reply_id, COUNT(*) as replies')
+                      ->groupBy('reply_id')
+                      ->get()
+                      ->getResultArray();
+      }
+      public function getReplyQNCOm()
+      {
+          return $this->select('reply_id, qn_id, reply')
                       ->groupBy('reply_id')
                       ->get()
                       ->getResultArray();

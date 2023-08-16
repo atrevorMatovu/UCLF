@@ -128,6 +128,14 @@ class MemberRegModel extends Model
         $result = $builder->get()->getRow();
         return $result; 
       }
+      //USeR PHOTOS AND NAMES
+      public function getUsersPN()
+      {
+          return $this->select('user_id, FirstName, LastName')
+                      ->groupBy('user_id')
+                      ->get()
+                      ->getResultArray();
+      }
 
     public function getStatus($user_id)
       {
