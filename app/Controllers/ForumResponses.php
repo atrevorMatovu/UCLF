@@ -12,6 +12,7 @@ use App\Models\UnotifyModel;
 use App\Models\AdminNotifyModel;
 use App\Models\ResponseModel;
 use App\Models\ReplyModel;
+use App\Controllers\route;
 use CodeIgniter\HTTP\RequestInterface;
 use CodeIgniter\HTTP\ResponseInterface;
 use CodeIgniter\HTTP\IncomingRequest;
@@ -131,7 +132,7 @@ class ForumResponses extends BaseController
                     if($this->session->get('loggedInUser'))
                     {
                         session()->setFlashdata('success', 'Question saved succesfully.');
-                        return redirect()->to('myQuestions');  
+                        return redirect()->to('viewTopic');  
                     }                 
                 } 
                 else
@@ -166,13 +167,12 @@ class ForumResponses extends BaseController
             //Questions logic(FORUM PAGE)
             $qn = $fModel->fetchQNs($loggedInUserid);
             $qnCount = $fModel->countQNs($loggedInUserid);
+            $allQN = $fModel->AllcountQNs();
 
             //Category Logic
             $category = $catModel->getAll();
 
-            //Questions logic(FORUM DISCUSSIONQNPAGE)
-            $cat = $this->request->getVar('category');
-            $question = $fModel->topicQNs($cat);
+           
             $qnCountperTopic = $fModel->getCategoryQuestionCount();
             //var_dump($category);
             $data = [
@@ -181,7 +181,7 @@ class ForumResponses extends BaseController
                 'notif'     => $notif,
                 'notCount'  => $notifCount,
                 'category'  => $category,
-                'qnc'       => $qnCount,
+                'qnc'       => $allQN,
                 'qnCountperTopic'=>$qnCountperTopic
             ];
            return view("dashboard/forumQN", $data);
@@ -230,7 +230,7 @@ class ForumResponses extends BaseController
             $userdata = $loginModel->where('user_id',$loggedInUserid)->first();
             
             //Questions logic(FORUM DISCUSSIONQNPAGE)
-            $cat = $this->request->getVar('category');
+            $cat = session()->get('category');
             $question = $fModel->topicQNs($cat);
             $catCount = $fModel->topicCount($cat);
 
@@ -249,7 +249,17 @@ class ForumResponses extends BaseController
                 'qnc'       => $catCount,
                 'comms'     => $comms
             ];
+            
             return view("dashboard/discussionQN", $data);
+        }
+        public function discussTopic($id = null){   
+            $id = $this->request->getVar('category');
+            //var_dump($id);
+            if (!empty($id))
+            {
+                session()->set('category', $id);
+                return redirect()->to(base_url('discuss' ));    
+            }
         }
         public function reviewQN()
         {
@@ -268,34 +278,28 @@ class ForumResponses extends BaseController
             //Fetching user account data
             $userdata = $loginModel->where('user_id',$loggedInUserid)->first();
             
-            //Questions logic(FORUM DISCUSSIONQNPAGE)
-            $cat = $this->request->getVar('category');
-            $question = $fModel->topicQNs($cat);
-            $catCount = $fModel->topicCount($cat);
-
+            
             //user photos grouped by id
             $userPN = $loginModel->getUsersPN();
             
             //For the Specific Question
-            $qn_id = $this->request->getVar('qn_id');
-            $qn = $fModel->fetchQN($qn_id);
+            $qn_id = session()->get('qnRead');
+            $qn = $fModel->fetchQN($qn_id);            
             
-            //$qnCount = $fModel->countQNs($loggedInUserid);
-
             //For the Comments & replies on said Question
             $com = $respModel->fetchResponse($qn_id);
             $comCount = $respModel->countResponses($qn_id);
-
-            //Fetching the replies
+            $comment = $respModel->fetchSingle($qn_id);
+                       
+           //Fetching the replies
             $reply = $repModel->getReply($qn_id);
-            $replyCount = $repModel->fetchReplyCount();
+            $replyCount = $repModel->fetchReplyCount();           
 
             $data = [
                 'title'     => 'Question Review',
                 'userdata'  => $userdata,
                 'notif'     => $notif,
                 'notCount'  => $notifCount,
-                'cat'       => $cat,
                 'qn'        => $qn,
                 'com'       => $com,
                 'comCount'  => $comCount ,
@@ -304,6 +308,42 @@ class ForumResponses extends BaseController
                 'userPN'    => $userPN               
             ];
             return view("dashboard/readQN", $data);
+        }
+        public function readQuestion($qn_id = null)
+        {
+            $qn_id = $this->request->getVar('qn_id');
+            $loginModel = new loginModel;
+            $unotifyModel = new UnotifyModel;
+            $fModel = new ForumModel;
+            $respModel = new ResponseModel;
+            $repModel = new ReplyModel;
+            $loggedInUserid = session()->get('loggedInUser');
+            
+            if (!empty($qn_id))
+            {
+                session()->set('qnRead', $qn_id);
+                //session()->setFlashdata('success', '.');
+                return redirect()->to('Queryreview');
+            }               
+        }
+        public function QNRevealed($id)
+        {
+            $loginModel = new loginModel;
+            $unotifyModel = new UnotifyModel;
+            $fModel = new ForumModel;
+            $respModel = new ResponseModel;
+            $repModel = new ReplyModel;
+            $loggedInUserid = session()->get('loggedInUser');
+
+            if (!empty($id)) {
+                //$qdata = $fModel->fetchQN($id);
+             } 
+            else 
+            {
+                $this->session->setFlashdata('error', 'Sorry! something wrong with navigating to desired view. Please contact support!');
+                return redirect()->to(current_url());
+            }
+    
         }
         public function makeComment()
         {
@@ -359,9 +399,7 @@ class ForumResponses extends BaseController
                     'qn_id' => $qn_id,
                     'user_id' => $user_id,
                     'reply' => $this->request->getVar('reply'),
-                    'reply_id' => $resp_id,
-                    'repliedBy'=> $this->request->getVar('repliedBy'),
-                    'photo'     => $this->request->getVar('photo'),
+                    'comment_id' => $resp_id
                 ];
                 // Save user's reply to a forum comment in the database
                 $reply = $repModel->saveReply($data);
@@ -370,7 +408,7 @@ class ForumResponses extends BaseController
                     if($this->session->get('loggedInUser'))
                     {
                         session()->setFlashdata('success', 'Reply saved succesfully.');
-                        return redirect()->to('Queryreview' );  
+                        return redirect()->to(current_url());  
                     }                 
                 } 
                 else
@@ -418,29 +456,24 @@ class ForumResponses extends BaseController
             $repModel = new ReplyModel();
             
             $loggedInUserid = session()->get('loggedInUser');
+            //var_dump($this->request->getVar('qn_id'));
             
             if ($this->request->isAJAX()) {
-                $resp_id = $this->request->getVar('comment_id');
-                $qn_id = $this->request->getVar('qn_id');
-                $user_id = $loggedInUserid;
                 
                 $data = [
-                    'qn_id' => $qn_id,
-                    'user_id' => $user_id,
+                    'qn_id' => $this->request->getVar('qn_id'),
+                    'user_id' => $loggedInUserid,
                     'reply' => $this->request->getVar('reply'),
-                    'reply_id' => $resp_id,
-                    'repliedBy'=> $this->request->getVar('repliedBy'),
-                    'photo'     => $this->request->getVar('photo'),
+                    'comment_id' => $this->request->getVar('comment_id')
                 ];
-                
+                //var_dump($data);
                 $reply = $repModel->saveReply($data);
                 
                 if ($reply) {
                     $response = ['status' => 'success', 'message' => 'Reply saved successfully.'];
                 } else {
                     $response = ['status' => 'error', 'message' => 'Failed to save Reply, try again.'];
-                }
-                
+                }                
                 return $this->response->setJSON($response);
             }
         }
@@ -473,11 +506,7 @@ class ForumResponses extends BaseController
                 }   
             }                    
         }
-        public function rtest()
-        {
-           
-            return view("adminDashboards/test");
-        }
+        
     }
     
 

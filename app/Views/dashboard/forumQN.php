@@ -406,7 +406,7 @@
                                 <?php endif; ?>
                                             </div>
                                             <div class="col-lg-10 align-self-center">
-                                <form method="POST" action="http://localhost/UCLF/discuss">
+                                <form method="POST" action="<?= base_url('discuss/' . url_title($c['category'], '-', true)) ?>">
                                 <input type="hidden" name="category" value="<?php echo $c['category'];?>">
                                 <span><button type="submit" id="cat-button" class="styled-link-button"><h5 class="pt-2" style="font-weight:600;text-align:left;"><?php echo $c['category'];?></h5></button></span></form>
                                 <p class="descr elip"><?php echo $c['descr'];?></p>
@@ -426,29 +426,16 @@
                                                 <?php $foundCategory = true; ?>
                                             </small>
                                             <?php endif; ?>
+                                                 
                                         <?php endforeach; ?>
 
                                         <?php if (!$foundCategory): ?>
                                         <!-- If category was not found, display 0 -->
                                         <small style="font-size: 0.7rem!important;">0 Queries</small>
                                     <?php endif; ?>
+                                    
                                         </b>
-                                        <script>
-                                            function submitForm(category) {
-                                                var form = document.createElement('form');
-                                                form.method = 'POST';
-                                                form.action = 'http://localhost/UCLF/discuss';
-                                                
-                                                var input = document.createElement('input');
-                                                input.type = 'hidden';
-                                                input.name = 'category';
-                                                input.value = category;
-                                                form.appendChild(input);
-                                                
-                                                document.body.appendChild(form);
-                                                form.submit();
-                                            }
-                                        </script>                                      
+                                                                    
                                     </div>
                                     </small>
                                 </div>

@@ -55,18 +55,21 @@ $routes->add('forgotpwd', 'Login::forgotPwd');
 $routes->get('pood', 'Login::pood');
 $routes->post('forgotpwd', 'Login::forgotPwd');
 $routes->get('pwdReset/(:any)', 'Password_reset::index/$1');
-$routes->post('pwdReset/(:any)', 'Password_reset::index/$1');
+$routes->post('pwdReset', 'Password_reset::index');
 
 //ONBOARD
 $routes->get('onboard', 'AccDashboard::onboarding');
 $routes->post('onboard', 'AccDashboard::onboarding');
 $routes->add('onboard', 'AccDashboard::onboarding');
-$routes->get('test', 'ForumResponses::rtest');
+
+
+$routes->get('temp', 'AccDashboard::approv');
 
 //DASHBOARDS
 $routes->group('', ['filter'=>'isLoggedIn'],function($routes)
 {
     $routes->get('dashboard', 'AccDashboard::userdash');
+    $routes->get('eventsLoad', 'AccDashboard::eventLoad');
     $routes->get('dashboard/logout', 'AccDashboard::logout');
     $routes->get('userprofile', 'AccDashboard::profDash');
     $routes->get('notify', 'AccDashboard::notification');
@@ -78,17 +81,22 @@ $routes->group('', ['filter'=>'isLoggedIn'],function($routes)
     $routes->post('updatePwd', 'AccDashboard::updatePwd');
     $routes->get('forum', 'ForumResponses::forum');
     $routes->get('viewTopic', 'ForumResponses::forumTopic');
-    $routes->get('myQuestions', 'ForumResponses::myQuestion');
     $routes->post('updateForum', 'ForumResponses::updateform');
     $routes->get('discuss', 'ForumResponses::discussion');
-    $routes->post('discuss', 'ForumResponses::discussion');
+    $routes->get('discuss/(:any)', 'ForumResponses::discussion/$1');
+    $routes->post('discuss/(:any)', 'ForumResponses::discussTopic/$1');
+
     $routes->get('Queryreview', 'ForumResponses::reviewQN');
-    $routes->get('Queryreview/(:any)', 'ForumResponses::reviewQN/$1');
-    $routes->post('Queryreview', 'ForumResponses::reviewQN');
+    $routes->post('Queryreview/(:any)', 'ForumResponses::readQuestion/$1');
+    //$routes->post('Queryreview/(:any)', 'ForumResponses::readQuestion/$1');
+    //$routes->post('Queryreview/(:any)', 'ForumResponses::reviewQN/$1');
+
     $routes->post('comment', 'ForumResponses::makeComment');
     $routes->post('reply', 'ForumResponses::makeReply');
-    $routes->post('makeComment', 'ForumResponses::makeCommentAjax');
-    $routes->post('makereply', 'ForumResponses::makeReplyAjax');
+
+    $routes->post('makeComment', 'ForumResponses::makeCommentAjax');//works
+    $routes->post('makereplyAjax', 'ForumResponses::makeReplyAjax');
+    
     $routes->post('del', 'ForumResponses::qnDel');
     $routes->get('Studirectory', 'AccDashboard::student');
     $routes->get('Indirectory', 'AccDashboard::individual');
@@ -103,11 +111,23 @@ $routes->group('', ['filter'=>'isAdmin'],function($routes)
     $routes->post('users/status_update', 'AccDashboard::statusToggle');    
     $routes->get('users', 'AccDashboard::userMgt');
     $routes->get('userRequest', 'AccDashboard::userReq');
+    $routes->post('userRequest', 'AccDashboard::userReview');
     $routes->get('newMember', 'AccDashboard::addMember'); 
     $routes->get('adminProfile', 'AccDashboard::adminProf');
     $routes->post('updatePwd', 'AccDashboard::adminupdatePwd');
     $routes->post('updateAdmin', 'AccDashboard::updateAdmin'); 
     $routes->get('newStaff', 'AccDashboard::addStaff');  
+    $routes->get('viewUser', 'AccDashboard::getUserDetails');
+    $routes->get('reviewComment', 'AccDashboard::ReviewComment');
+    //$routes->get('reviewComm/(:any)', 'AccDashboard::CommReview/$1');
+    $routes->post('reviewComm/(:any)', 'AccDashboard::CommReview/$1');
+    $routes->post('reviewComment', 'AccDashboard::ReviewComment');
+    //AJAX ROUTES
+    $routes->post('statusUpdate', 'AccDashboard::statusApproval');
+    $routes->post('statusSus', 'AccDashboard::statusReject');
+    //NORMAL ROUTES FOR FORMS ON USER REQUEST
+    $routes->post('Updatestatus', 'AccDashboard::statApproval');
+    $routes->post('Susstatus', 'AccDashboard::statReject');
 });
 /*
  * --------------------------------------------------------------------

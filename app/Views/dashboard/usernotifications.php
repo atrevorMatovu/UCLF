@@ -5,7 +5,7 @@
   <meta charset="utf-8">
   <meta content="width=device-width, initial-scale=1.0" name="viewport">
 
-  <title>UserProfile - UCLF</title>
+  <title>Notifications - UCLF</title>
   <meta content="" name="description">
   <meta content="" name="keywords">
 
@@ -50,44 +50,33 @@
 <body>
 
   <!-- ======= Header ======= -->
-  <header id="header" class="header fixed-top d-flex align-items-center">
+  <header id="header" class="header fixed-top d-flex align-items-center" style="
+    background-color: #01296f;">
 
-  <div class="d-flex align-items-center justify-content-between">
-      <a href="dashboard" class="logo2 d-flex align-items-center">
-        <img src="public/assets/img/logo-rmbg.png" alt="">
-        <span class="d-none d-lg-block">UCLF-MiS</span>
+    <div class="d-flex align-items-center justify-content-between">
+      <a href="dashboard" class="logo2 d-flex align-items-center" >
+        <img src="public/assets/img/logo-rmbg.png" alt="" style="
+    filter: brightness(0) invert(1);">
+        <span class="d-none d-lg-block text-white">UCLF-MiS</span>
       </a>
-      <i class="bi bi-list toggle-sidebar-btn"></i>
+      <i class="bi bi-list toggle-sidebar-btn text-white"></i>
     </div><!-- End Logo -->
 
-   
     <nav class="header-nav ms-auto">
       <ul class="d-flex align-items-center">
+          
+      <li class="nav-item dropdown">
 
-        <li class="nav-item d-block d-lg-none">
-          <a class="nav-link nav-icon search-bar-toggle " href="#">
-            <i class="bi bi-search"></i>
-          </a>
-        </li><!-- End Search Icon-->
-
-        <li class="nav-item dropdown">
-
-          <a class="nav-link nav-icon" href="#" data-bs-toggle="dropdown">
-            <i class="bi bi-bell"></i>
-            <span class="badge bg-primary badge-number" id="noti_number"><?php
+          <a class="nav-link nav-icon" href="#" data-bs-toggle="dropdown" id="notify-comet">
+            <i class="bi bi-bell text-white"></i>
+            <span class="badge bg-primary badge-number" id="noti-count"><?php
             
             echo $notCount;?></span>
           </a><!-- End Notification Icon -->
 
           <ul class="dropdown-menu dropdown-menu-end dropdown-menu-arrow notifications">
             <li class="dropdown-header">
-            <!--div class="inbox fw-wrap">                
-                <h3 class="flex--item js-inbox-header-all">Inbox (all)</h3>
-                <form action="http://localhost/UCLF/updateNoti" method="post" name="UpdateNotiForm" enctype="multipart/form-data" accept-charset="utf-8"> 
-                  <input type="hidden" name="user_id" value="</?php echo $userdata['user_id'];?>">                  
-                <span><button type="submit" class="btn fs-notif jc-end" >Mark all as read</button></span>  
-                <form>             
-            </div-->
+            
               New notifications here!
               <a href="notify"><span class="badge rounded-pill bg-primary p-2 ms-2">View all</span></a>
             </li>
@@ -118,7 +107,8 @@
               foreach ($recentnotifications as $recentnotif): 
               ?>
                <li class="notification-item">
-                <form action="http://localhost/UCLF/noti" method="post" name="UpdateNotifications" enctype="multipart/form-data" accept-charset="utf-8"> 
+              
+               <form action="http://localhost/UCLF/noti" method="post" name="UpdateNotifications" enctype="multipart/form-data" accept-charset="utf-8"> 
                   <input type="hidden" name="statusID" value="<?php echo $recentnotif['id'] ;?>">             
                   <button class="btn" type="submit"><i class="jc-end bi <?php echo ($recentnotif['status'] === '1') ? 'bi-envelope-open' : 'bi-envelope-fill'; ?>"></i></button>
                 </form>
@@ -132,7 +122,7 @@
               
              <?php 
                   $formatDate = date('M jS, Y', strtotime($recentnotif['created_at']));                  
-                  //echo $formatDate;
+                 // echo $formatDate;
               ?>
               
               <?php 
@@ -155,8 +145,6 @@
               <?php endforeach; ?>
             
             
-
-
             <li>
               <hr class="dropdown-divider">
             </li>
@@ -169,20 +157,21 @@
 
         </li><!-- End Notification Nav -->
 
-        
-
+       
+    
         <li class="nav-item dropdown pe-3">
-
-          <a class="nav-link nav-profile d-flex align-items-center pe-0" href="#" data-bs-toggle="dropdown">
-          
-            <img src="<?= base_url('public/uploads/' . $userdata['Photo']) ?>" class="rounded-circle" alt="">
-            <span class="d-none d-md-block dropdown-toggle ps-2"><?= $userdata['FirstName']?> <?= $userdata['LastName']?></span>
-          </a><!-- End Profile Iamge Icon -->
+        <a class="nav-link nav-profile d-flex align-items-center pe-0" href="#" data-bs-toggle="dropdown">
+            <img src="<?= base_url('public/uploads/' . $userdata['Photo']) ?>" alt="Profile" class="rounded-circle">
+            <span class="d-none d-md-block dropdown-toggle ps-2 text-white"><?php echo $userdata['FirstName']?> <?php echo $userdata['LastName']?></span>
+        </a>
+        <!-- End Profile Iamge Icon -->
 
           <ul class="dropdown-menu dropdown-menu-end dropdown-menu-arrow profile">
             <li class="dropdown-header">
-              <h6><?php echo $userdata['FirstName']?> <?php echo $userdata['LastName']?></h6>
-              <span><?php echo $userdata['Position']?></span>
+            <div class="icon">
+              <img src="<?= base_url('public/uploads/' . $userdata['Photo']) ?>"  class="rounded-circle" height="30">
+            </div>
+              <span><?php echo $userdata['FirstName']?> <?php echo $userdata['LastName']?></span>
             </li>
             <li>
               <hr class="dropdown-divider">
@@ -190,7 +179,7 @@
 
             <li>
               <a class="dropdown-item d-flex align-items-center" href="userprofile">
-                <i class="bi bi-person-circle"></i>
+                <i class="bi bi-person"></i>
                 <span>My Profile</span>
               </a>
             </li>
@@ -199,8 +188,8 @@
             </li>
 
             <li>
-              <a class="dropdown-item d-flex align-items-center" href="#">
-                <i class="bi bi-stickies"></i>
+              <a class="dropdown-item d-flex align-items-center" href="userprofile">
+                <i class="bi bi-chat-quote"></i>
                 <span>Forum</span>
               </a>
             </li>
@@ -208,18 +197,13 @@
               <hr class="dropdown-divider">
             </li>
 
-            <!--li>
-              <a class="dropdown-item d-flex align-items-center" href="#">
-                <i class="bi bi-chat-square"></i>
-                <span>#Support</span>
-              </a>
-            </li>
+            
             <li>
               <hr class="dropdown-divider">
-            </li-->
+            </li>
 
             <li>
-              <a class="dropdown-item d-flex align-items-center" href="dashboard/logout">
+              <a class="dropdown-item d-flex align-items-center" href='dashboard/logout'>
                 <i class="bi bi-box-arrow-right"></i>
                 <span>Sign Out</span>
               </a>
@@ -305,7 +289,7 @@
       </li><!-- End Forum Nav -->    
 
     </ul>
-
+  
   </aside><!-- End Sidebar-->
 
   <main id="main" class="main">
@@ -446,45 +430,8 @@
                                 <?php endforeach; ?>
                                                          
                             </li>
-                            <div class="pagination">
-                            <button class="btn1" onclick="backBtn()"><i class="bi bi-arrow-left-short"></i>prev</button>
-                            <ul class="pag">
-                              <li class="pag link active" onclick="activeLink" value="1">1</li>
-                              <li class="pag link" onclick="activeLink" value="2">2</li>
-                              <li class="pag link" onclick="activeLink" value="3">3</li>
-                              <li class="pag link" onclick="activeLink" value="4">4</li>
-                            </ul> 
-                            <button class="btn1" onclick="nextBtn()">next<i class="bi bi-arrow-right-short"></i></button>
-                          </div>
-                            <script>
-                                let link = document.getElementsByClassName("link");
-                                let currentValue = 1;
-                                function activeLink(){
-                                  for(l of link){
-                                    l.classList.remove("active");
-                                  }
-                                  event.target.classList.add("active");
-                                  currentValue = event.target.value;
-                                }
-                                function backBtn(){
-                                  if (currentValue > 1){
-                                    for(l of link){
-                                    l.classList.remove("active");
-                                  }
-                                }
-                                  currentValue--;
-                                  link[currentValue-1].classList.add("active");
-                                }
-                                function nextBtn(){
-                                  if (currentValue > 4){
-                                    for(l of link){
-                                    l.classList.remove("active");
-                                  }
-                                }
-                                  currentValue++;
-                                  link[currentValue+1].classList.add("active");
-                                }
-                              </script>            
+                            
+                                       
               </div>         
 
             </div><!-- End Notification List -->

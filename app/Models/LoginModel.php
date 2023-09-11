@@ -33,15 +33,26 @@ class LoginModel extends Model
     }
 
     public function getTotalMembers()
-    {
+    {        
         $builder = $this->db->table('members');
-
-        $builder->selectCount('* as total_members');
-
+        $builder->select('*');
+        //$builder->where('qn_id', $qn_id);
         $query = $builder->countAllResults();
-
-        return $query;
+        return $query;      
     }
+    public function fetchMT()//Membership count in new tabulated
+      {
+          $result =  $this->select('Membership_type as name, COUNT(*) as value')
+                      ->groupBy('name')
+                      ->get()
+                      ->getResultArray();
+
+        foreach ($result as &$row) {
+        $row['name'] = ucfirst($row['name']); // Capitalize the first letter
+        }
+                
+        return $result;
+      }
     public function verifyUserid($id) 
     {
         $builder = $this->db->table('members');
@@ -62,7 +73,7 @@ class LoginModel extends Model
     public function verifyUser($id)
     {
         $builder = $this->db->table('members');
-        $builder->select("user_id, Email, FirstName, LastName, Membership_type, Tel, Account_status, Region, State, City, Address, Company, Position, Practice_area, Photo");
+        $builder->select("id, user_id, Email, FirstName, LastName, Membership_type, Tel, Account_status, Region, State, City, Address, Company, Position, Practice_area, Photo");
         $builder->where('user_id', $id);
         $result = $builder->get()->getRowArray();
         return $result;           
@@ -132,7 +143,7 @@ class LoginModel extends Model
         $builder = $this->db->table('members');
         $builder->where('user_id', $userId);
         $builder->update($data);
-        $result = $builder->get()->getRowArray();
+        $result = $builder->get()->getRow();
         return $result;        
     }
     public function getUsersPN()

@@ -76,7 +76,7 @@ class Login extends BaseController
                     $pwd = $this->adminModel->verifyPassword($Password);
                     if ($pwd)
                     {
-                        $this->session->set('loggedInUser', $admin);
+                        $this->session->set('loggedInUser', $Email);
                         session()->setFlashdata('success', 'Welcome our esteemed UCLF Administrator, ' . $admin['username']);
                         return redirect()->to('admin');
 
@@ -107,16 +107,16 @@ class Login extends BaseController
                             if ($rememberMe) 
                             {
                                 // Generate a remember token
-                                $rememberToken = bin2hex(random_bytes(32));
-            
+                                $rememberToken = bin2hex(random_bytes(32));            
                                 // Set the remember token in the user's browser cookie
                                 $this->response->setCookie('rememberToken', $rememberToken, 2592000); // Expires in 30 days
-            
-                                // Save the remember token in the user's data or database
-                                // Example: $this->userModel->saveRememberToken($userdata['id'], $rememberToken);
                             }
                         }
-                        else{
+                        else if ($userdata['Account_status'] == 'Pending'){
+                            session()->setFlashdata('error', 'Account not yet approved by Admin, Please wait!');
+                            return redirect()->to(current_url());
+                        }
+                        else {
                             session()->setFlashdata('error', 'Please activate your account. Contact Admin');
                             return redirect()->to(current_url());
                         }
@@ -139,7 +139,6 @@ class Login extends BaseController
                 // Validation failed, redirect to login page with errors
                 $data['validation'] = $this->validator;
             }
-            
         }
         return View("auth/login", $data);
     }

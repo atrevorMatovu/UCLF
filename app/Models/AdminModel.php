@@ -33,7 +33,7 @@ class AdminModel extends Model
     public function getEmail($email)
     {
         $builder = $this->db->table('admins');
-        $builder->select("email, password, username");
+        $builder->select("id, email, password, username");
         $builder->where('email', $email);
         $res = $builder->get()->getRow();
         return $res;   

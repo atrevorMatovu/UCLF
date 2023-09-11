@@ -29,11 +29,11 @@
   <!-- Template Main CSS File -->
   <link href="public/assets/css/style.css" rel="stylesheet">
 
-  <!-- Include toastr CSS -->
-  <link href="https://cdn.jsdelivr.net/npm/toastr@2.1.4/dist/toastr.min.css" rel="stylesheet" />
-
-  <!-- Include toastr JS -->
-  <script src="https://cdn.jsdelivr.net/npm/toastr@2.1.4/dist/toastr.min.js"></script>
+  <link href="public/assets/plugins/toastr/toastr.min.css" rel="stylesheet" >
+  <script src="public/assets/plugins/toastr/toastr.min.js"></script>
+  
+  <!-- Add this JavaScript code in your HTML or in a separate script file -->
+  <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 
 
 </head>
@@ -44,7 +44,7 @@
   <header id="header" class="header fixed-top d-flex align-items-center">
 
     <div class="d-flex align-items-center justify-content-between">
-      <a href="admin" class="logo2 d-flex align-items-center">
+      <a href="dashboard" class="logo2 d-flex align-items-center">
         <img src="public/assets/img/logo-rmbg.png" alt="">
         <span class="d-none d-lg-block">UCLF-MiS</span>
       </a>
@@ -68,15 +68,7 @@
               <hr class="dropdown-divider">
             </li>
 
-            <?php if (session()->getFlashdata('notification')) : ?> 
-            <li class="notification-item">
-              <i class="bi bi-exclamation-circle text-warning"></i>
-              <div class='alert alert-success'>
-              <?= session()->getFlashdata('notification');?>
-              </div>
-            </li>
-            <?php endif; ?>          
-
+           
             <li>
               <hr class="dropdown-divider">
             </li>
@@ -85,32 +77,43 @@
 
         </li><!-- End Notification Nav -->
 
+        
     
         <li class="nav-item dropdown pe-3">
 
+        
+
           <a class="nav-link nav-profile d-flex align-items-center pe-0" href="bi bi-person-circle" data-bs-toggle="dropdown">
-          <div class="icon">
-          <!-- <i class="bi bi-person-circle"></i> -->
-            <img src= alt="bi bi-person-circle" class="rounded-circle">
+          <img src="http://localhost/UCLF/public/uploads/1687989944_f8bfdc4f94d47574e0b7.jpeg" alt="Profile" class="rounded-circle align-self-center" style="max-width: 63px;">
+             
             <div class="label">
                 <span class="d-none d-md-block dropdown-toggle ps-2"><?php echo $userdata->username?></span>
             </div>
-          </div>
           </a><!-- End Profile Iamge Icon -->
 
           <ul class="dropdown-menu dropdown-menu-end dropdown-menu-arrow profile">
             <li class="dropdown-header">
               <h6><?php echo $userdata->username?></h6>
-              <span>Admin</span>
+              <span><?php echo ("Admin")?></span>
             </li>
             <li>
               <hr class="dropdown-divider">
             </li>
 
             <li>
-              <a class="dropdown-item d-flex align-items-center" href="#">
+              <a class="dropdown-item d-flex align-items-center" href="adminProfile">
                 <i class="bi bi-person-square"></i>
                 <span>My Profile</span>
+              </a>
+            </li>
+            <li>
+              <hr class="dropdown-divider">
+            </li>
+
+            <li>
+              <a class="dropdown-item d-flex align-items-center" href="users">
+                <i class="bi bi-people"></i>
+                <span>User Accounts</span>
               </a>
             </li>
             <li>
@@ -127,16 +130,7 @@
               <hr class="dropdown-divider">
             </li>
 
-            <li>
-              <a class="dropdown-item d-flex align-items-center" href="#">
-                <i class="bi bi-question-circle"></i>
-                <span>Events</span>
-              </a>
-            </li>
-            <li>
-              <hr class="dropdown-divider">
-            </li>
-
+            
             <li>
               <a class="dropdown-item d-flex align-items-center" href='dashboard/logout'>
                 <i class="bi bi-box-arrow-right"></i>
@@ -246,11 +240,11 @@
       <div class="row">    
          
                   <?php if(session()->getTempdata('success')): ?>
-                  <div class='alert alert-success'><?= session()->getTempdata('success');?></div>
+                  <div class='alert alert-succs'><?= session()->getTempdata('success');?></div>
                   <?php endif; ?> 
 
                   <?php if(session()->getFlashdata('success')): ?>
-                  <div class='alert alert-success'><?= session()->getFlashdata('success');?></div>
+                  <div class='alert alert-succs'><?= session()->getFlashdata('success');?></div>
                   <?php endif; ?>
 
                   <?php if(session()->getFlashdata('error')): ?>
@@ -265,7 +259,7 @@
                   <?php endif;?>  
                 
 
-            <!-- Events -->
+            <!-- Users Accounts -->
             <div class="col-12">
               <div class="card recent-sales overflow-auto">
                 <div class="card-body">
@@ -275,148 +269,264 @@
                     
 
                   <div class="card-body">
-                    <table class="table table-borderless datatable">
+                    <table class="table  datatable">
                     <thead>
                       <tr>
                         <th scope="col">#</th>
                         <th scope="col">Fullname</th>
-                        <th scope="col">Photo</th>
+                        <!--th scope="col">Photo</th-->
                         <th scope="col">Action</th>                       
                         <th scope="col">Email</th>  
                         <th scope="col">Membership</th>
                         <th scope="col">Contact</th>
-                        <th scope="col">Gender</th>                      
                         <th scope="col">AccountStatus</th> 
                       </tr>
                     </thead>
                     <tbody>
-                    <?php foreach ($users as $user) : ?>
+                    <?php 
+                    $count = 0;
+                    foreach ($users as $user) :
+                    $count++ 
+                    ?>
                       <tr>
-                        <th scope="row"><a href="#"><?php echo $user['id'];?></a></th>
+                        <th scope="row"><?php echo $count;?></th>
                         <!--td> </td-->
-                        <td><input type="hidden" name="user_id" value="<?php echo $user['user_id']; ?>"><a href="userRequest" class="text-primary"><?php echo $user['FirstName'];?> <?php echo $user['LastName'];?></a></td>
-                        <td><img src="<?= base_url('public/uploads/' . $user['Photo']) ?>" class="rounded-circle align-items-center" style="max-width:20%"></td>
-                        <td><button id="openPopup" class="btn" title="View user information"><i class="bi bi-question-diamond"style="font-size: 1rem; color: #a6efb9";></i></button></td>
+                        <td>
+                        <form method="POST" action="https://localhost/UCLF/userRequest">
+                          <input type="hidden" name="user_id" value="<?php echo $user['user_id']; ?>">
+                          <button type="submit" class="text-primary styled-link-button"><?php echo $user['FirstName'];?> <?php echo $user['LastName'];?></button>
+                        </form>
+                        </td>
+                        <td><button id="openPopup" class="btn rev" data-bs-toggle="modal" data-bs-target="#staticBackdrop<?php echo $user['id'];?>" title="View user information"><i class="bi bi-question-circle-fill"></i></button></td>
                         <td><?php echo $user['Email'];?></td>
                         <td><?php echo ucfirst($user['Membership_type']);?></td>
-                        <td><span class="badge bg-success">0<?php echo $user['Tel'];?></span></td>
-                        <td><?php echo $user['Gender'];?></td>
+                        <td><span class="badge bg-query"><?php echo $user['Tel'];?></span></td>
                         <td><?php echo $user['Account_status'];?></td> 
+                  
+                  <div class="modal fade" id="staticBackdrop<?php echo $user['id'];?>" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+                    <div class="modal-dialog">
+                      <div class="modal-content">
+                        <div class="modal-header">
+                          <div class="align-self-center">
+                            <h5 class="modal-title" id="staticBackdropLabel">User Account Details</h5>
+                          </div>
+                          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                        </div>
+
+                        <div class="modal-body" >
+                          <div class="modal-img">
+                          <?php if (!empty($user['Photo'])): ?>
+                            <img src="<?= base_url('public/uploads/' . $user['Photo']) ?>"  class="mb-1 modal-img" >
+                          <?php else: ?>
+                            <img src="<?= base_url('public/assets/img/usercon.png') ?>"  class="mb-1 modal-img" >
+                          <?php endif; ?>
+
+                          </div> 
+                          <div class="m-body table-striped">            
+                              <div class="row spacing striped-row">
+                                  <div class="col-lg-4 col-md-5 text-dark "><h3>Full Name</h3></div>
+                                  <div class="col-lg-8 col-md-8 text-dark"><?php echo $user['FirstName'];?> <?php echo $user['LastName'];?></div>
+                              </div>
+
+                              <div class="row spacing striped-row">
+                                  <div class="col-lg-4 col-md-5 text-dark"><h3>Email</h3></div>
+                                  <div class="col-lg-8 col-md-8 text-dark"><?php echo $user['Email'];?></div>
+                              </div>
+
+                              <div class="row spacing striped-row">
+                                  <div class="col-lg-4 col-md-5 text-dark"><h3>Company</h3></div>
+                                  <div class="col-lg-8 col-md-8 text-dark"><?php echo $user['Company'];?></div>
+                              </div>
+
+                              <div class="row spacing striped-row">
+                                  <div class="col-lg-4 col-md-5 text-dark"><h3>Position</h3></div>
+                                  <div class="col-lg-8 col-md-8 text-dark"><?php echo ucfirst($user['Position']);?></div>
+                              </div>
+
+                              <div class="row spacing striped-row">
+                                  <div class="col-lg-4 col-md-5 text-dark"><h3>Membership</h3></div>
+                                  <div class="col-lg-8 col-md-8 text-dark"><?php echo ucfirst($user['Membership_type']);?></div>
+                              </div>
+
+                              <div class="row spacing striped-row">
+                                  <div class="col-lg-4 col-md-5 text-dark"><h3>Practice Areas</h3></div>
+                                  <div class="col-lg-8 col-md-8 text-dark"><?php echo ucfirst($user['Practice_area']);?></div>
+                              </div>
+
+                              <div class="row spacing striped-row">
+                                  <div class="col-lg-4 col-md-5 text-dark"><h3>District</h3></div>
+                                  <div class="col-lg-8 col-md-8 text-dark"><?php echo ucfirst($user['State']);?></div>
+                              </div>
+                              <div class="row spacing striped-row">
+                                  <div class="col-lg-4 col-md-5 text-dark"><h3>City</h3></div>
+                                  <div class="col-lg-8 col-md-8 text-dark"><?php echo ucfirst($user['City']);?></div>
+                              </div>
+                              <div class="row spacing striped-row">
+                                  <div class="col-lg-4 col-md-5 text-dark"><h3>Address</h3></div>
+                                  <div class="col-lg-8 col-md-8 text-dark"><?php echo ucfirst($user['Address']);?></div>
+                              </div>
+                          </div>
+                        </div>
+
+                            <div class="modal-footer">
+                          <!-- <h3>Pop-up Form</h3> -->
+                          <form method="POST" id="reviewForm"  action="http://localhost/UCLF/reviewComm/<?php echo $user['id']?>">
+                            <!-- Form fields go here -->
+                            <input type="hidden" id="user_id<?php echo $user['id']?>" value="<?php echo $user['user_id']?>">
+                            <input type="hidden" id="admin" value="<?php echo $userdata->id?>" >
+                            <label for="comment" ><strong>Comments:</strong></label><br>
+                            <textarea id="comment<?php echo $user['id']?>" class="form-control pt-2" name="comment" placeholder="Information review comment is necessary." rows="2" required></textarea><br>
+                            <button class="btn btn-primary w-100 pb-2" type="submit" id="submitRemark<?php echo $user['id']?>" >Submit</button>
+                            </form>
+                            <p class="font-italic">
+                              <i>**Review Comments**</i>
+                            </p>  
+                            <hr>
+                            <div id="commentDisplay<?php echo $user['id']?>"class="text-dark commentDisplay" style="display: none;"></div>
+                            <div class="row pt-2 ">
+                              <div class="col-md-6">
+                                <form method="POST" style="display: none;" action="<?= base_url()?>/statusUpdate">
+                                <input type="hidden" id="userId<?php echo $user['id']?>" value="<?php echo $user['user_id']?>">
+                                <button  class="btn btn-primary"  id="approveBtn<?php echo $user['id']?>" type="submit" style="margin-left: 60%; display: none;" >Approve</button>
+                                </form>
+                              </div>
+                            <div class="col-md-6">
+                              <form method="POST"  action="<?= base_url()?>/statusSus">
+                              <input type="hidden" id="userId<?php echo $user['id']?>" value="<?php echo $user['user_id']?>">
+                              <button  class="btn btn-danger " id="rejectBtn<?php echo $user['id']?>"type="submit" style="display: none;" >Reject</button>
+                              </form>
+                            </div>
+                            </div>
+                            <script src="public/assets/plugins/toastr/toastr.min.js"></script>
+                                                    <script>
+                                                        $(document).ready(function() {
+                                                            $('#submitRemark<?php echo $user['id']?>').on('click', function(e) {
+                                                                e.preventDefault();
+                                                                //var form = $('#reviewForm')[0].reset();
+                                                                var comment = $('#comment<?php echo $user['id']?>').val();
+                                                                var user_id = $('#user_id<?php echo $user['id']?>').val();
+                                                                var admin = $('#admin').val();
+                                                                console.log(comment);
+                                                                if (comment.trim() === '') {
+                                                                     toastr.error('Please enter an approval remark.');
+                                                                     return; // Don't proceed if the textarea is empty
+                                                                }                                                              
+                                                                                                                                
+                                                                $.ajax({
+                                                                    url: 'http://localhost/UCLF/reviewComment', // Replace with your controller method
+                                                                    type: 'POST',
+                                                                    data: {
+                                                                        comment: comment,
+                                                                        user_id: user_id,
+                                                                        admin: admin                               
+                                                                    },
+                                                                    success: function(response) {
+                                                                        // Handle success response 
+                                                                        if (response.status === 'success') {                                                                                                                                              
+                                                                            // Clear the textarea after successful submission
+                                                                             // Display comment in the designated <div> section
+                                                                              $('#commentDisplay<?php echo $user['id']?>').html(comment).show();
+                                                                              
+                                                                              // Clear the input field after successful submission
+                                                                              $('[name="comment"]').val('');
+                                                                              
+                                                                              // Show "Approve" and "Reject" buttons
+                                                                              $('#approveBtn<?php echo $user['id']?>').show();
+                                                                              $('#rejectBtn<?php echo $user['id']?>').show();
+                                                                            //$('#comment').val('');
+                                                                            toastr.info(response.message);                                                                            
+                                                                        }else{
+                                                                            toastr.error(response.message);
+                                                                        }
+                                                                    },
+                                                                    error: function(response) {
+                                                                        // Handle error response 
+                                                                        toastr('Error: ' + response.responseText);
+                                                                    }
+                                                                });
+                                                            });
+                                                            
+                                                        });
+                                                    </script>	
+                            <script>
+                            $(document).ready(function() {
+                            // AJAX function for updating status when "Approve" button is clicked
+                            $('#approveBtn<?php echo $user['id']?>').on('click', function(e) {
+                              e.preventDefault();
+                                                            
+                              var user_id = $('#userId<?php echo $user['id']?>').val();
+                              console.log(user_id);
+                                                            
+                              // Perform AJAX request for updating status
+                              $.ajax({
+                              url: '<?= base_url()?>/statusUpdate', 
+                              type: 'POST',
+                               data: {
+                                  user_id: user_id,
+                                },
+                              success: function(response) {
+                               // Handle success response 
+                              if (response.status === 'success') {
+                              // display success message
+                                  toastr.success(response.message);
+                                  location.reload();
+                                } else {
+                                  toastr.error(response.message);
+                                }
+                              },
+                              error: function(response) {
+                              // Handle error response 
+                              toastr.error('Error: ' + response.responseText);
+                                  }
+                               });
+                              });
+
+                              // Similar AJAX function can be created for the "Reject" button if needed
+                              $('#rejectBtn<?php echo $user['id']?>').on('click', function(e) {
+                              e.preventDefault();  
+                              
+                              var user_id = $('#userId<?php echo $user['id']?>').val();
+                              console.log(user_id);
+                                                            
+                              // Perform AJAX request for updating status
+                              $.ajax({
+                              url: '<?= base_url()?>/statusSus', 
+                              type: 'POST',
+                               data: {
+                                  user_id: user_id,
+                                },
+                              success: function(response) {
+                               // Handle success response 
+                              if (response.status === 'success') {
+                              // display success message
+                                  toastr.success(response.message);
+                                  location.reload();
+                                } else {
+                                  toastr.error(response.message);
+                                }
+                              },
+                              error: function(response) {
+                              // Handle error response 
+                              toastr.error('Error: ' + response.responseText);
+                                  }
+                               });
+                              });
+                            });
+                            </script>
+                                                    
+                            </div>
+
+                            
+                          </div>
+                        </div>
+                      </div>
                         <?php endforeach; ?>
                       </tr>
                      </tbody>
                   </table>
                   </div>
               
-                  <div id="popupForm" class="popup">
-                    <div class="popup-content">
-                      <span class="close">&times;</span>
-                      <div class="card">
-                        <div class="card-body profile-card pt-4  flex-column align-items-center">
-                          <h5 class="card-title align-middle pb-1" style="font-size: larger;">User Account Details</h5>
-                          <img src="#" style="max-width:50%" class="mb-1 rounded-circle">             
-                              <div class="row mb-1">
-                                  <div class="col-lg-3 col-md-5 text-dark ">Full Name</div>
-                                  <div class="col-lg-9 col-md-8 text-dark"></div>
-                              </div>
-
-                              <div class="row mb-1">
-                                  <div class="col-lg-3 col-md-5 text-dark">Email</div>
-                                  <div class="col-lg-9 col-md-8 text-dark"></div>
-                              </div>
-
-                              <div class="row mb-1">
-                                  <div class="col-lg-3 col-md-5 text-dark">Company</div>
-                                  <div class="col-lg-9 col-md-8 text-dark"></div>
-                              </div>
-
-                              <div class="row mb-1">
-                                  <div class="col-lg-3 col-md-5 text-dark">Position</div>
-                                  <div class="col-lg-9 col-md-8 text-dark"></div>
-                              </div>
-
-                              <div class="row mb-1">
-                                  <div class="col-lg-4 col-md-5 text-dark">Membership</div>
-                                  <div class="col-lg-9 col-md-8 text-dark"></div>
-                              </div>
-
-                              <div class="row mb-1">
-                                  <div class="col-lg-3 col-md-5 text-dark">District</div>
-                                  <div class="col-lg-9 col-md-8 text-dark"></div>
-                              </div>
-                              <div class="row mb-1">
-                                  <div class="col-lg-3 col-md-5 text-dark">City</div>
-                                  <div class="col-lg-9 col-md-8 text-dark"></div>
-                              </div>
-                      <h3>Pop-up Form</h3>
-                      <form>
-                        <!-- Form fields go here -->
-                        <label for="comment" >Comments:</label><br>
-                          <input type="textbox" id="comment" class="form-control pt-2" name="comment" placeholder="Information review comment is necessary."><br>
-                        <button type="button" class="btn btn-primary w-100 pb-2" onclick="displayComments()">Submit</button>
-                        <p class="font-italic">
-                          <i>**Review Comments**</i>
-                        </p>  
-                        <div id="commentDisplay"class="text-dark" style="display: none;"></div>
-                        <input type="hidden" id="userId" value="">
-                        <button id="approveBtn"class="btn btn-primary align-middle" style="display: none;" onclick="approveUser()">Approve</button>
-
-                        <button id="rejectBtn" class="btn btn-danger align-middle" style="display: none;" onclick="rejectUser()">Reject</button>
-
-                      </form>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                  <script>
-                  function displayComments() {
-                      var comment = document.getElementById("comment").value;
-                      var commentDisplay = document.getElementById("commentDisplay");
-                      var approveBtn = document.getElementById("approveBtn");
-                      var rejectBtn = document.getElementById("rejectBtn");
-                      
-                      if (comment.trim() !== "") 
-                      {
-                        commentDisplay.innerHTML = comment;
-                        commentDisplay.style.display = "block";
-                        approveBtn.style.display = "inline-block";
-                        rejectBtn.style.display = "inline-block";
-                        document.getElementById("comment").value = "";
-                      }
-
-                      function approveUser() {
-                        var userId = document.getElementById("userId").value;
-
-                          $.ajax({
-                              url: "approve_user.php",
-                              type: "POST",
-                              data: { userId: userId },
-                              success: function(response) {
-                                  alert("User approved!");
-                              },
-                              error: function(xhr, status, error) {
-                                  alert("Error approving user: " + error);
-                              }
-                          });
-                      }
-
-                      function rejectUser() {
-                          var userId = document.getElementById("userId").value;
-
-                          $.ajax({
-                              url: "suspend_user.php",
-                              type: "POST",
-                              data: { userId: userId },
-                              success: function(response) {
-                                  alert("User suspended!");
-                              },
-                              error: function(xhr, status, error) {
-                                  alert("Error suspending user: " + error);
-                              }
-                          });
-                        }
-                  }
-              </script>
+                  
 
                   <script>
                     document.getElementById("openPopup").addEventListener("click", function() {

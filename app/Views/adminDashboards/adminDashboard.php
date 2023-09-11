@@ -94,17 +94,16 @@
           <a class="nav-link nav-profile d-flex align-items-center pe-0" href="bi bi-person-circle" data-bs-toggle="dropdown">
           <div class="icon">
           <!--i class="bi bi-person-circle"></i--> 
-            <img src="<?= base_url('public/uploads/' . $userdata['photo']) ?>" class="rounded-circle">
             <div class="label">
-                <span class="d-none d-md-block dropdown-toggle ps-2"><?php echo $userdata['username']?></span>
+                <span class="d-none d-md-block dropdown-toggle ps-2">username</span>
             </div>
           </div>
           </a><!-- End Profile Iamge Icon -->
 
           <ul class="dropdown-menu dropdown-menu-end dropdown-menu-arrow profile">
             <li class="dropdown-header">
-              <h6><?php echo $userdata['username']?></h6>
-              <span><?php echo $userdata['position']?></span>
+              <h6>username</h6>
+              <span>position</span>
             </li>
             <li>
               <hr class="dropdown-divider">

@@ -79,10 +79,9 @@ class Reg extends BaseController
                     ],
                 ], 
                 'telephone' => [
-                    'rules'=>'required|numeric|min_length[10]',
+                    'rules'=>'required|min_length[10]',
                     'errors'=>[
                         'required'=>'User contact is necessary',
-                        'numeric'=>'Contact should be numeric',
                         'min_length'=>'Contact strictly of 10 digits',
                     ],
                 ],
@@ -119,12 +118,12 @@ class Reg extends BaseController
                     $email->setTo($userdata['Email']);
                     $email->setFrom('matovu@lwegatech.info');
                     $email->setSubject('UCLF-MIS: Account Activation Link');
-                    $email->setMessage('<img src="cid:company_logo" alt="Company Logo"><br>Hi '.' '.$userdata['FirstName'].' '.$userdata['LastName']."<br><br>Thanks, Your account has been created successfully. Please click the link below to activate it<br><br>"."<a href='".base_url()."/register/activate/".$user_id."'>Activate Now</a><br><br><p>Regards!<br>UCLF-Support</br></p>");
+                    $email->setMessage('Hi '.' '.$userdata['FirstName'].' '.$userdata['LastName']."<br><br>Thanks, Your account has been created successfully. Please click the link below to activate it<br><br>"."<a href='".base_url()."/register/activate/".$user_id."'>Activate Now</a><br><br><p>Regards!<br>UCLF-Support</br></p>");
                     $filepath = 'public/assets/img/logo-rmbg.png';
                     $email->attach($logo_path, 'inline', 'company_logo', 'image/png');
-                    //$email->send();
+                    $sent = $this->email->send();
                   
-                    if($email->send())
+                    if($sent)
                     {
                         $this->session->setTempdata('success','Account creation successsful. Please activate the account via your email address within the next 24hours!', 2);
                         return redirect()->to('/');
@@ -149,6 +148,12 @@ class Reg extends BaseController
         return view("auth/registration", $data);
     }
 
+    public function useracti()
+    {
+        $acti = session()->get('pending');
+        $pending_user = $this->memberRegModel->verifyUserid($acti);
+        return view('auth/activation', $pending_user);
+    }
 
     public function activate($user_id = null)
     {

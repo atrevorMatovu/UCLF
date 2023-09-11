@@ -51,7 +51,7 @@ class Password_reset extends BaseController
             if ($this->validate($rules)) 
             {
                 $newpassword    = $this->request->getVar('newpassword');
-                //$renewpassword  = $this->request->getVar('renewpassword');
+                
                
                 if (!empty($user_id)) 
                 {
@@ -67,7 +67,7 @@ class Password_reset extends BaseController
                     }
                     else
                     {
-                        $this->session->setFlashdata('error', 'Account not yet activated, please ensure to activate first.');
+                        $this->session->setFlashdata('error', 'Failed to save new password.');
                         return redirect()->to(current_url());
                     }
                 }
@@ -77,10 +77,8 @@ class Password_reset extends BaseController
                         return redirect()->to(current_url());
                 }
                 $data['validation'] = $this->validator;
-            }
-         
+            }         
         }   
         return view('auth/passwordReset', $data);
-    }
-   
+    }   
 }

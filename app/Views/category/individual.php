@@ -324,7 +324,7 @@
                   <<div class="row">
                     <?php foreach ($userdata1 as $user): ?> 
                         <div class="col-xl-4">
-                        <div class="card clickable" id="openPopupBtn" title="About Me!">
+                        <div class="card clickable" id="openPopupBtn<?php echo $user['id']?>" title="About Me!">
                             <div class="card-body profile-card pt-4 d-flex flex-column align-items-center">
                               <?php if (!empty($user['Photo'] )) : ?>
                                   <!-- Display the user's photo -->
@@ -336,7 +336,7 @@
                               <h3 class="text-align-left"><strong><?php echo $user['FirstName']?> <?php echo $user['LastName']?></strong></h3><!--/a-->                              
                               <h3><?php echo $user['Email']?></h3>
                               <h3>0<?php echo $user['Tel']?></h3>
-                              <button id="openPopupBtn" class="btn btn-info btn-sm" title="About Me!"><i class="bi bi-info-circle"></i></button>
+                              <button id="openPopupBtn<?php echo $user['id']?>" class="btn btn-info btn-sm" title="About Me!"><i class="bi bi-info-circle"></i></button>
                             </div>
                         </div>
                         </div>

@@ -410,7 +410,7 @@
                           </select>   
                     </div>
                     <div class="form-group pt-3">
-                            <textarea class="form-control" id="tiny" rows="8" cols="50" name="question"></textarea>
+                            <textarea class="tinymce-editor" id="tiny" rows="8" cols="50" name="question"></textarea>
                     </div>
                     <input type="hidden" class="form-control" name="photo" value="<?php echo $userdata['Photo']?>">    
                     <input type="hidden" class="form-control" name="askedby" value="<?php echo $userdata['FirstName']?> <?php echo $userdata['LastName']?>">                   
@@ -421,14 +421,7 @@
                     </div>
 
                   </form>
-            <script src="public/assets/vendor/tinymce/tinymce.min.js"></script>
-                <script>
-                // Initialize TinyMCE
-                tinymce.init({
-                    selector: '#iny', // Replace all textareas with TinyMCE editor
-                });
-                </script>
-
+           
                
                   </div>
                   <div class="col-xl-3">

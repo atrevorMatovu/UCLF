@@ -99,6 +99,15 @@ class ForumModel extends Model
         $query = $builder->countAllResults();
         return $query;
       }
+      public function AllcountQNs()
+      {
+        $builder = $this->db->table('forums');
+        $builder->select('*');
+        //$builder->where('user_id', $user_id);
+        //$builder->where('status', '0');
+        $query = $builder->countAllResults();
+        return $query;
+      }
       public function qnDelete($user_id, $qn_id)
       {
         $builder = $this->db->table('forums');

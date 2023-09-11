@@ -367,7 +367,7 @@
                                             <img class="rounded-circle profile-thumbnail" src="<?= base_url('public/uploads/' . $q['photo'])?>">
                                             </div> 
                                             <div class="col-lg-11 align-self-center">
-                                                <form method="POST" action="http://localhost/UCLF/Queryreview">
+                                                <form method="POST" action="http://localhost/UCLF/Queryreview/<?php echo $q['id'];?>">
                                                     <input type="hidden" name="qn_id" value="<?php echo $q['qn_id'];?>">
                                                 <button type="submit"class="styled-link-button"><h5 style="text-align: left;"><?php echo $q['topic']?></h5></button></form>
                                                 <p class="a_details mb-1">Asked By: <?php echo $q['askedby']?><i class="at"></i> | Created: <i class="at"><?php $dat=date("d/M/Y h:i A", strtotime($q['created_at'])); echo $dat?></i> </p>

@@ -35,7 +35,16 @@ class ResponseModel extends Model
         }else{
             return false;
         }
-    }    
+    }  
+    public function fetchSingle($qn_id)
+      {
+        $builder = $this->db->table('responses');
+        $builder->select('*');
+        $builder->where('qn_id',$qn_id,);
+        $builder->where('id', '36');
+        $result = $builder->get()->getResultArray();
+        return $result; 
+      }  
       public function fetchResponse($qn_id)
       {
         $builder = $this->db->table('responses');
@@ -59,7 +68,7 @@ class ResponseModel extends Model
                       ->get()
                       ->getResultArray();
       }
-      public function fetchReply()//Replies data to comment & count in new tabulated
+      public function fetchReply()//Reply data 4 comments & count in new tabulated
       {
           return $this->select('reply_id, COUNT(*) as replies')
                       ->groupBy('reply_id')

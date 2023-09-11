@@ -72,12 +72,6 @@ class MemberRegModel extends Model
         $builder->update();
         $result = $builder->get()->getRow();
         return $result;    
-        // if($this->db->affectedRows()==1)
-        // {
-        //     return true;
-        // }else{
-        //     return false;
-        // }
     }
     public function updatePhoto($id, $data)
     {
@@ -97,7 +91,7 @@ class MemberRegModel extends Model
         $builder = $this->db->table('members');
         $builder->set('Photo' ,$data);
         $builder->where('user_id', $id);
-        $builder->update();
+        $builder->delete();
         $result = $builder->get()->getRow();
         return $result;    
     }
@@ -119,6 +113,36 @@ class MemberRegModel extends Model
         $result = $builder->get()->getRow();
         return $result; 
       }
+
+      public function approveStatus($user_id)
+      {
+        $builder = $this->db->table('members');
+        $builder->where('user_id',$user_id,);
+        $builder->update(['Account_status' => 'Approved']);
+        $result = $builder->get()->getRow();
+        return $result; 
+      }
+      public function rejectStatus($user_id)
+      {
+        $builder = $this->db->table('members');
+        $builder->where('user_id',$user_id,);
+        $builder->update(['Account_status' => 'Suspended']);
+        $result = $builder->get()->getRow();
+        return $result; 
+      }
+      public function updateAccountStatus($userId, $status)
+      {
+        $data = [
+            'Account_status' => $status,
+            'updated_at' => date('Y-m-d H:i:s')
+        ];
+    
+        $builder = $this->db->table('members');
+        $builder->where('user_id', $userId);
+        $builder->update($data);
+        $result = $builder->get()->getRow();
+        return $result;        
+    }
 
     public function getUserID($user_id)
       {

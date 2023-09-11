@@ -66,11 +66,18 @@ class AdminNotifyModel extends Model
         $result = $builder->get()->getResultArray();
         return $result; 
       }
+      public function getAllNoti()
+      {
+          return $this->select('*')
+                      ->groupBy('id')
+                      ->get()
+                      ->getResultArray();
+      }
       public function count_unread_notifications($user_id)
       {
         $builder = $this->db->table('adminnotified');
         $builder->select('*');
-        $builder->where('user_id', $user_id);
+        //$builder->where('user_id', $user_id);
         $builder->where('status', '0');
         $query = $builder->countAllResults();
         return $query;

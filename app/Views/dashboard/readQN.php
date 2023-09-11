@@ -397,20 +397,29 @@
                                                         <p class="card-text" id="new-comment"><?php echo $com['comment']?></p>
                                                         <p class="card-text ">By: <h7 style="color: #113f98;"><small><?php echo$com['commentedBy'] ?></small> <i><small class="text-dark"><?php $dat=date("d/M/Y h:i A", strtotime($com['created_at'])); echo $dat?></small></i></h7>
                                                          <small><span class="badge bg-primary text-white ml-2"><i class="fa fa-comments"></i><?php $replies = 0;echo $replies?> Replies</span></small>
-                                                        <small style="padding-left:5px;"><h7 class="badge bg-query text-white reply-button clickable"><i class="bi bi-reply"></i>Reply</h7></small>
+                                                         <nav>
+                                                          <div class="nav nav-tabs" id="nav-tab" role="tablist">
+                                                          <small style="padding-left:5px;">
+                                                          <a href="#" class="nav-link"  id="nav-comment-tab" data-bs-toggle="tab" data-bs-target="#nav-comment<?= '-'.$com['comment_id']; ?>"  role="tab" aria-controls="nav-comment" aria-selected="">
+                                                          <h7 class="badge bg-query text-white reply-button">
+                                                            <i class="bi bi-reply"></i>Reply
+                                                          </h7>
+                                                          </a>
+                                                          </small>
+                                                          </div>
+                                                         </nav>
                                                          </p>
 
-                                                        <!-- REply Display-->
-                                                        <p></p>
-                                                         <div class="reply-input" style="display: none;">
-                                                        <form action="http://localhost/UCLF/reply" enctype="multipart/form-data" method="post" accept-charset="utf-8">
-                                                            <input type="hidden" name="qn_id" id="qn_id" value="<?php echo $qn['qn_id']?>">
-                                                            <input type="hidden" name="comment_id" id="reply_id" value="<?php echo $com['comment_id']?>">
-                                                            <input type="hidden" name="repliedBy" value="<?php echo $userdata['FirstName']?> <?php echo $userdata['LastName']?>">
-                                                            <input type="hidden" name="photo" value="<?php echo $userdata['Photo']?>">
-                                                            <input type="text" name="reply" class="form-control" placeholder="Your reply..." required>
-                                                            <button class="btn bg-query text-white btn-sm mt-2 " id="reply-submit" type="submit">Submit Reply</button>
+                                                        <!-- Reply Form -->
+                                                        <div class="tab-content" id="nav-tabContent">
+                                                         <div class="tab-pane fade show" id="nav-comment<?= '-'.$com['comment_id']; ?>" role="tabpanel" aria-labelledby="nav-comment-tab">
+                                                         <form method="POST" id="replyForm" enctype="multipart/form-data" >
+                                                            <input type="hidden" name="qn_id" value="<?php echo $com['qn_id']?>">
+                                                            <input type="hidden" name="comment_id"  value="<?php echo $com['comment_id']?>">
+                                                            <input type="text" name="reply"  class="form-control" placeholder="Your reply..." required>
+                                                            <button type="button" class="btn bg-query text-white btn-sm mt-2"  onclick="replySubmit()" >Submit Reply</button>
                                                         </form>
+                                                        </div>
                                                         </div>
                                                          <hr>
                                                     <?php else:?>
@@ -419,45 +428,23 @@
                                                     <!-- Making Replies to Comments-->
                                              <script src="public/assets/plugins/toastr/toastr.min.js"></script>
                                                 <script>
-                                                    $(document).ready(function() {
-                                                        $(".reply-button").click(function() {
-                                                            // Find the parent div of the clicked "Reply" button
-                                                            var parentDiv = $(this).closest(".col-md-10");
-
-                                                            // Toggle the visibility of the reply input field within the parent div
-                                                            parentDiv.find(".reply-input").toggle();
-                                                        });
-
-                                                        // Additional JavaScript for submitting replies (similar to your AJAX function)
-                                                        $("#reply-submit").click(function(e) {
-                                                            e.preventDefault();
-                                                            var parentDiv = $(this).closest(".col-md-10");                                                            
-                                                            var commentId = parentDiv.find(".reply-button").data("comment-id");
-                                                            var reply = $('[name="reply"]').val();//parentDiv.find("input").val();
-                                                            var photo = $('[name="photo"]').val();
-                                                            var repliedBy = $('[name="repliedBy"]').val();
-                                                            var comment_id = $('#comment_id').val();
-                                                            var qn_id = $('#qn_id').val();
-                                                            // Perform AJAX request to submit the reply
+                                                    function replySubmit() {
+                                                            var form = $('#replyForm')[0].reset();
+                                                         
                                                             $.ajax({
-                                                                    url: 'http://localhost/UCLF/makereply', // Replace with your controller method
+                                                                    url: '<?=base_url()?>/makereplyAjax', // Replace with your controller method
                                                                     type: 'POST',
-                                                                    data: {
-                                                                        reply: reply,
-                                                                        qn_id: qn_id,
-                                                                        comment_id: comment_id,
-                                                                        repliedBy: repliedBy,
-                                                                        photo: photo
-                                                                    },
+                                                                    dataType: 'JSON',
+                                                                    data: new FormData(form),
+                                                                    processData: false,
+                                                                    contentType: false,
+                                                                    headers: {'X-Requested-With': 'XMLHttpRequest'},
                                                                     success: function(response) {
-                                                                        // Handle success response (e.g., show a success message)
+                                                                        // Handle success response 
+                                                                       // console.log(response)
                                                                         if (response.status === 'success') {                                                                     
-                                                                            //toastr.success(response.message);
-
-                                                                            // Clear the input field and hide the input section
-                                                                            parentDiv.find("input").val("");
-                                                                            parentDiv.find(".reply-input").hide();
-                                                                            location.reload();
+                                                                            toastr.success(response.message);
+                                                                           //location.reload();
                                                                         }else{
                                                                             toastr.error(response.message);
                                                                         }
@@ -467,10 +454,12 @@
                                                                         toastr('Error: ' + response.responseText);
                                                                     }
                                                                 });
-                                                            });
-                                                        });
+                                                              
+                                                            }
+                                                        
                                                 </script>
-                                                  
+                                                
+                                                    
                                                 </div>                                               
                                             </div> <?php endforeach;?>
 
@@ -491,9 +480,10 @@
                                                     <input type="hidden" name="commentedBy" value="<?php echo $userdata['FirstName']?> <?php echo $userdata['LastName']?>">
                                                     <input type="hidden" name="photo" value="<?php echo $userdata['Photo']?>">
                                                     <div class="form-floating">
-                                                    <textarea class="form-control" name="comment" id="floatingTextarea"  style="height:76px;overflow-y:hidden;" required></textarea>
+                                                    <textarea class="tinymce-editor" name="comment" id="floatingTextarea"  style="height:76px;overflow-y:hidden;" required></textarea>
                                                     <label for="floatingTextarea" class="text-muted">Add Comment</label>
-                                                    </div>
+                                                    
+                                                  </div>
                                                     <button type="submit" id="submitComment" class="btn btn-primary btn-sm mt-2 float-end">Comment</button>
                                                     </div>
                                                    </form>
@@ -549,7 +539,7 @@
 
                                                              $(document).ready(function() {
                                                                  // Scroll to the new comment element after page load
-                                                                 var nearestComment = $('.col-lg-11').first(); // You can use .last() if you want the last one
+                                                                 var nearestComment = $('.col-lg-11').last(); // You can use .last() if you want the last one
                                                                   if (nearestComment.length > 0) {
                                                                       nearestComment[0].scrollIntoView({ behavior: 'smooth', block: 'center' });
                                                                   }

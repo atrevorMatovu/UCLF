@@ -25,6 +25,33 @@
   <link href="public/assets/vendor/quill/quill.bubble.css" rel="stylesheet">
   <link href="public/assets/vendor/remixicon/remixicon.css" rel="stylesheet">
   <link href="public/assets/vendor/simple-datatables/style.css" rel="stylesheet">
+
+  <script type='importmap'>
+      {
+        "imports": {
+          "@fullcalendar/core": "https://cdn.skypack.dev/@fullcalendar/core@6.1.8",
+          "@fullcalendar/daygrid": "https://cdn.skypack.dev/@fullcalendar/daygrid@6.1.8"
+        }
+      }
+    </script>
+    <script type='module'>
+      import { Calendar } from '@fullcalendar/core'
+      import dayGridPlugin from '@fullcalendar/daygrid'
+      
+      document.addEventListener('DOMContentLoaded', function() {
+        const calendarEl = document.getElementById('fullcalendar')
+        const calendar = new Calendar(calendarEl, {
+          plugins: [dayGridPlugin],
+          headerToolbar: {
+            left: 'prev,next today',
+            center: 'title',
+            right: 'dayGridMonth,listWeek'
+          },
+          events: <?php echo $EV; ?>,
+        })
+        calendar.render()
+      })
+    </script>
   
 
   <!-- Template Main CSS File -->
@@ -35,14 +62,16 @@
 <body>
 
   <!-- ======= Header ======= -->
-  <header id="header" class="header fixed-top d-flex align-items-center">
+  <header id="header" class="header fixed-top d-flex align-items-center" style="
+    background-color: #01296f;">
 
     <div class="d-flex align-items-center justify-content-between">
-      <a href="dashboard" class="logo2 d-flex align-items-center">
-        <img src="public/assets/img/logo-rmbg.png" alt="">
-        <span class="d-none d-lg-block">UCLF-MiS</span>
+      <a href="dashboard" class="logo2 d-flex align-items-center" >
+        <img src="public/assets/img/logo-rmbg.png" alt="" style="
+    filter: brightness(0) invert(1);">
+        <span class="d-none d-lg-block text-white">UCLF-MiS</span>
       </a>
-      <i class="bi bi-list toggle-sidebar-btn"></i>
+      <i class="bi bi-list toggle-sidebar-btn text-white"></i>
     </div><!-- End Logo -->
 
     <nav class="header-nav ms-auto">
@@ -51,7 +80,7 @@
       <li class="nav-item dropdown">
 
           <a class="nav-link nav-icon" href="#" data-bs-toggle="dropdown" id="notify-comet">
-            <i class="bi bi-bell"></i>
+            <i class="bi bi-bell text-white"></i>
             <span class="badge bg-primary badge-number" id="noti-count"><?php
             
             echo $notCount;?></span>
@@ -59,13 +88,7 @@
 
           <ul class="dropdown-menu dropdown-menu-end dropdown-menu-arrow notifications">
             <li class="dropdown-header">
-            <!--div class="inbox fw-wrap">                
-                <h3 class="flex--item js-inbox-header-all">Inbox (all)</h3>
-                <form action="http://localhost/UCLF/updateNoti" method="post" name="UpdateNotiForm" enctype="multipart/form-data" accept-charset="utf-8"> 
-                  <input type="hidden" name="user_id" value="</?php echo $userdata['user_id'];?>">                  
-                <span><button type="submit" class="btn fs-notif jc-end" >Mark all as read</button></span>  
-                <form>             
-            </div-->
+            
               New notifications here!
               <a href="notify"><span class="badge rounded-pill bg-primary p-2 ms-2">View all</span></a>
             </li>
@@ -151,7 +174,7 @@
         <li class="nav-item dropdown pe-3">
         <a class="nav-link nav-profile d-flex align-items-center pe-0" href="#" data-bs-toggle="dropdown">
             <img src="<?= base_url('public/uploads/' . $userdata['Photo']) ?>" alt="Profile" class="rounded-circle">
-            <span class="d-none d-md-block dropdown-toggle ps-2"><?php echo $userdata['FirstName']?> <?php echo $userdata['LastName']?></span>
+            <span class="d-none d-md-block dropdown-toggle ps-2 text-white"><?php echo $userdata['FirstName']?> <?php echo $userdata['LastName']?></span>
         </a>
         <!-- End Profile Iamge Icon -->
 
@@ -295,10 +318,7 @@
     <section class="section dashboard">
       <div class="row">
 
-        <!-- Left side columns -->
-        <div class="col-lg-8">
-          <div class="row">
-                  <?php if(session()->getTempdata('success')): ?>
+      <?php if(session()->getTempdata('success')): ?>
                   <div class='alert alert-success'><?= session()->getTempdata('success');?></div>
                   <?php endif; ?> 
 
@@ -318,7 +338,77 @@
                       <div class="alert alert-danger"><?= $validation->listErrors();?></div>
                   <?php endif;?> 
 
-           <!-- Revenue Card -->
+        <!-- Left side columns -->
+        <div class="col-lg-8">
+          <div class="row">                
+           
+            
+            <!-- Calendar -->
+            <div class="col-12">
+              <div class="card">
+
+                <!-- <div class="filter">
+                  <a class="icon" href="#" data-bs-toggle="dropdown"><i class="bi bi-three-dots"></i></a>
+                  <ul class="dropdown-menu dropdown-menu-end dropdown-menu-arrow">
+                    <li class="dropdown-header text-start">
+                      <h6>Filter</h6>
+                    </li>
+
+                    <li><a class="dropdown-item" href="#">Today</a></li>
+                    <li><a class="dropdown-item" href="#">This Month</a></li>
+                    <li><a class="dropdown-item" href="#">This Year</a></li>
+                  </ul>
+                </div> -->
+
+                <div class="card-body">
+                  <h5 class="card-title">Events |<span> Calendar</span></h5>
+                  <div id="fullcalendar"></div>
+
+                  
+
+                </div>
+
+              </div>
+            </div><!-- End Calendar -->
+            
+          </div>
+        </div><!-- End Left side columns -->
+
+        <!-- Right side columns -->
+        <div class="col-lg-4">
+          <!-- User Info -->
+          <div class="col-xxl-4 col-xl-12">
+          <div class="row">
+          <div class="card pb-4 mb-2" style="color: #012970;">
+                <h5 class="card-title text-center border-bottom">User Details</h5>
+                
+                  <div class="row d-flex">
+                    <div class="col-lg-5 col-md-4  ">Full Name:</div>
+                    <div class="col-lg-6 col-md-10"><?php echo $userdata['FirstName']?> <?php echo $userdata['LastName']?></div>
+                  </div>
+                    <hr>
+                  <div class="row d-flex">
+                    <div class="col-lg-5 col-md-4 ">Membership:</div>
+                    <div class="col-lg-6 col-md-8 "><?php echo ucfirst($userdata['Membership_type'])?></div>
+                  </div>
+                  <hr>
+                  <div class="row d-flex">
+                    <div class="col-lg-5 col-md-4 ">Company:</div>
+                    <div class="col-lg-6 col-md-8"><?php echo $userdata['Company']?></div>
+                  </div>
+                  <hr>
+                  <div class="row d-flex">
+                    <div class="col-lg-5 col-md-4 ">Position:</div>
+                    <div class="col-lg-6 col-md-8"><?php echo $userdata['Position']?></div>
+                  </div>
+                
+                  
+          </div>
+          </div>
+          
+            <!-- End User Info -->
+
+            <!-- Upcoming Events Card -->
             <div class="col-xxl-4 col-xl-12">
               <div class="card info-card revenue-card">
               <div class="card-body">
@@ -336,75 +426,10 @@
                   </div>
 
               </div>
-            </div><!-- End Revenue Card -->
-            
-            <!-- Reports -->
-            <div class="col-12">
-              <div class="card">
-
-                <div class="filter">
-                  <a class="icon" href="#" data-bs-toggle="dropdown"><i class="bi bi-three-dots"></i></a>
-                  <ul class="dropdown-menu dropdown-menu-end dropdown-menu-arrow">
-                    <li class="dropdown-header text-start">
-                      <h6>Filter</h6>
-                    </li>
-
-                    <li><a class="dropdown-item" href="#">Today</a></li>
-                    <li><a class="dropdown-item" href="#">This Month</a></li>
-                    <li><a class="dropdown-item" href="#">This Year</a></li>
-                  </ul>
-                </div>
-
-                <div class="card-body">
-                  <h5 class="card-title">Timeline <span></span></h5>
-
-                  
-
-                </div>
-
-              </div>
-            </div><!-- End Reports -->
-
-            
-            
-
-          </div>
-        </div><!-- End Left side columns -->
-
-        <!-- Right side columns -->
-        <div class="col-lg-4">
-          <!-- User Info -->
-          <div class="row">
-          <div class="card-dash pb-4 mb-2">
-                <h5 class="card-title text-center border-bottom">User Details</h5>
-                
-                  <div class="row d-flex">
-                    <div class="col-lg-5 col-md-4  ">Full Name:</div>
-                    <div class="col-lg-6 col-md-10"><?php echo $userdata['FirstName']?> <?php echo $userdata['LastName']?></div>
-                  </div>
-
-                  <div class="row d-flex">
-                    <div class="col-lg-5 col-md-4 ">Membership:</div>
-                    <div class="col-lg-6 col-md-8 "><?php echo ucfirst($userdata['Membership_type'])?></div>
-                  </div>
-
-                  <div class="row d-flex">
-                    <div class="col-lg-5 col-md-4 ">Company:</div>
-                    <div class="col-lg-6 col-md-8"><?php echo $userdata['Company']?></div>
-                  </div>
-
-                  <div class="row d-flex">
-                    <div class="col-lg-5 col-md-4 ">Position:</div>
-                    <div class="col-lg-6 col-md-8"><?php echo $userdata['Position']?></div>
-                  </div>
-                
-                  
-          </div>
-          
-            <!-- End User Info -->
+            </div><!-- End Upcoming Events Card -->
 
           <!-- Calendar -->
-            <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.13.0/css/all.min.css" rel="stylesheet" >
+            <!-- <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.13.0/css/all.min.css" rel="stylesheet" >
               <div class="softcard">
                 <h5 class="calendar-title fs-4 text-center pt-1">Calendar </h5>
                   <div class="calendar-bar">
@@ -423,13 +448,13 @@
                       <div class="days-name">Su</div>
                     </div>
                     <div class="calendar-days"></div>
-                  </div>
+                  </div> -->
                   <!--div class="goto-buttons">
                     <button type="button" class="btn1 prev-year">Prev Year</button>
                     <button type="button" class="btn1 today">Today</button>
                     <button type="button" class="btn1 next-year">Next Year</button>
-                  </div-->
-              </div>
+                  </div>
+              </div-->
             <!-- End Calendar -->           
 
           </div><!-- End Right side columns -->
@@ -444,14 +469,8 @@
     <div class="copyright">
       &copy; Copyright <strong><span>UCLF-MIS</span></strong>. All Rights Reserved
     </div>
-    <!--div class="credits">
-      <! All the links in the footer should remain intact. -->
-      <!-- You can delete the links only if you purchased the pro version. -->
-      <!-- Licensing information: https://bootstrapmade.com/license/ -->
-      <!-- Purchase the pro version with working PHP/AJAX contact form: https://bootstrapmade.com/nice-admin-bootstrap-admin-html-template/ >
-      Designed by <a href="https://bootstrapmade.com/">BootstrapMade</a>
-    </div>
-  </footer--><!-- End Footer -->
+   
+  </footer><!-- End Footer -->
 
   <a href="#" class="back-to-top d-flex align-items-center justify-content-center"><i class="bi bi-arrow-up-short"></i></a>
 

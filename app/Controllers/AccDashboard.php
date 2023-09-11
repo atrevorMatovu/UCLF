@@ -3,12 +3,15 @@
 namespace App\Controllers;
 
 use App\Controllers\BaseController;
+use App\Models\EventModel;
 use App\Models\LoginModel;
 use App\Models\adminModel;
 use App\Models\MemberRegModel;
 use App\Models\OnboardModel;
 use App\Models\UnotifyModel;
 use App\Models\AdminNotifyModel;
+use App\Models\ReviewModel;
+use CodeIgniter\View\View;
 use CodeIgniter\HTTP\RequestInterface;
 use CodeIgniter\HTTP\ResponseInterface;
 use CodeIgniter\HTTP\IncomingRequest;
@@ -22,27 +25,64 @@ class AccDashboard extends BaseController
     public $unotifyModel;
     public function __construct(){
         $this->loginModel = new LoginModel();
+        $email = \Config\Services::email();       
     }
     public function userdash()
         {
             $loginModel = new loginModel;
             $onboardModel = new onboardModel;
             $unotifyModel = new UnotifyModel;
+            $eModel = new EventModel;
             $loggedInUserid = session()->get('loggedInUser');
             
             //var_dump( $loggedInUserid);
             $notif    = $unotifyModel->fetchNotif($loggedInUserid);
             $notifCount = $unotifyModel->count_unread_notifications($loggedInUserid);
             $userdata = $loginModel->where('user_id',$loggedInUserid)->first();
+
+            $event_data = $eModel->fetchEvents();
+            foreach($event_data as $row)
+            {
+                $formattedStartTime = $row['date'] . ' ' . $row['startTime'];
+                $formattedEndTime = $row['date'] . ' ' . $row['endTime'];
+                $data[] = array(
+                    'id' => $row['id'],
+                    'title' => $row['eventName'],
+                    'start' =>  $formattedStartTime,
+                    'end' => $formattedEndTime,
+                    'venue' => $row['venue']
+                );
+            }
+            $EV = (json_encode($data));
             
             $data = [
                 'title'     => 'UserDashboard',
                 'userdata'  => $userdata,
                 'notif'     => $notif,
-                'notCount'  => $notifCount
+                'notCount'  => $notifCount,
+                'EV'        => $EV
             ];
             return View("dashboard/userDashboard", $data);
         }   
+    public function eventLoad()
+    {
+        $eModel = new EventModel;
+        //$formattedEvents = $eModel->fetchEvents();
+        $event_data = $eModel->fetchEvents();
+        foreach($event_data as $row)
+        {
+            $formattedStartTime = $row['date'] . ' ' . $row['startTime'];
+            $formattedEndTime = $row['date'] . ' ' . $row['endTime'];
+        $data[] = array(
+            'id' => $row['id'],
+            'title' => $row['eventName'],
+            'start' =>  $formattedStartTime,
+            'end' => $formattedEndTime,
+            'venue' => $row['venue']
+        );
+        }
+        echo json_encode($data);
+    }
     public function logout()
     {
     // Destroy session data to log out user
@@ -57,30 +97,33 @@ class AccDashboard extends BaseController
         $adminModel = new adminModel;
         $loginModel = new loginModel;
         $onboardModel = new OnboardModel;
+        $adnotifyModel = new AdminNotifyModel;
             $loggedInUserid = session()->get('loggedInUser');
             $users = $loginModel->findAll();
-            $account = $adminModel->verifyEmail($loggedInUserid['email']);
-            $memberCounts = $loginModel->getMemberCountsByMembershipType();
+            $account = $adminModel->verifyEmail($loggedInUserid);
             $members = $loginModel->getTotalMembers();
-            //var_dump($members);
-            $notification = $this->notifyAdmin();     
+            $mt = $loginModel->fetchMT();
 
+            $notif    = $adnotifyModel->getAllNoti();
+            $notifCount = $adnotifyModel->count_unread_notifications($loggedInUserid);
+            
             $data = [
                 'title'     => 'Dashboard',
-                'users'  => $users,
-                'userdata'    => $account,
-                'noty'      => $notification,
+                'users'     => $users,
+                'userdata'  => $account,
                 'members'   => $members,
-                'membCount' => $memberCounts
+                'mt'        => $mt ,
+                'notif'     => $notif,
+                'notCount'  => $notifCount,               
             ];
-        return view("adminDashboards/adminDashboard", $data);
+        return view("adminDashboards/adminDash", $data);
     }
     public function adminProf()
     {
         $adminModel = new adminModel;
         $loginModel = new loginModel;
             $loggedInUserid = session()->get('loggedInUser');
-           $account = $adminModel->verifyEmail($loggedInUserid['email']);
+           $account = $adminModel->verifyEmail($loggedInUserid);
             $memberCounts = $loginModel->getMemberCountsByMembershipType();
             $members = $loginModel->getTotalMembers();        
 
@@ -444,7 +487,7 @@ class AccDashboard extends BaseController
             if($this->validate($rules))
             {
                 $user_id = $this->session->get('loggedInUser');
-                $email = $user_id['email'];
+                $email = $user_id;
                 $avatar = $this->request->getFile('photo');
                 //var_dump($user_id);
                 if ($avatar) {
@@ -508,7 +551,7 @@ class AccDashboard extends BaseController
             if($this->validate($rules))
             {
                 $user_id = $this->session->get('loggedInUser');
-                $email = $user_id['email'];
+                $email = $user_id;
             
                 $pwd = [
                     'password' => password_hash($this->request->getVar('newpassword'), PASSWORD_DEFAULT),
@@ -649,17 +692,19 @@ class AccDashboard extends BaseController
                     'user_id'   => $user_id,
                     'type'      => $type
                 ];
-                                
+                  $adminNoti = $adnotifyModel->saveNotif($message);              
                 // Save user's onboarding information in the database
                 if($this->onboardModel->updateUserInfo($user_id, $user))
                 {
-                    $this->session->set('onboarding_completed', $user_id);
-                    if($this->session->get('pending'))
+                    if($adminNoti)
                     {
-                    $this->session->setFlashdata('success', 'Account setup successful, please await an approval email to log into the system.');
-                    return redirect()->to('/');                    
-                   }
-                   $adnotifyModel->saveNotif($message);
+                        $this->session->set('onboarding_completed', $user_id);
+                        if($this->session->get('pending'))
+                        {
+                            $this->session->setFlashdata('success', 'Account setup successful, please await an email granting access to log into the system. (Email is sent in the next 12-24hrs after admin reviews your bio-information.)');
+                            return redirect()->to('/');                    
+                        }
+                    }                   
                 } 
                 else
                 {
@@ -675,7 +720,9 @@ class AccDashboard extends BaseController
 
         return view("auth/onboarding", $data);
     }
-
+    public function approv(){
+        return View("emailTemplates/forgotPW");
+    }
     public function userMgt()
     {
         $adminModel = new adminModel;
@@ -684,8 +731,9 @@ class AccDashboard extends BaseController
     $account = null;
     $users = null;
     $singleUser = null;
+    $view = \Config\Services::renderer();
      if (!empty($loggedInUserid)) {
-        $account = $adminModel->getEmail($loggedInUserid['email']);
+        $account = $adminModel->getEmail($loggedInUserid);
     }
         $user_id = $this->request->getPost('user_id');
     if (!empty($user_id)) {
@@ -700,28 +748,224 @@ class AccDashboard extends BaseController
         ];
         return view("adminDashboards/adminUserMgt", $data);
     }
+    public function CommReview()
+    {
+        if ($this->request->getPost())
+        {
+            $data = [
+                'comment' => $this->request->getVar('comment'),
+                'admin'   => $this->request->getVar('admin'),
+                'user_id' => $this->request->getVar('user_id')
+                ];
+//var_dump($data);
+                $rModel = new ReviewModel();
+
+            // Process and save the comment        
+            $result = $rModel->saveResponse($data);
+            if($result)
+            {
+                
+                    session()->setFlashdata('success', 'Comment Review successfully saved');
+                    return redirect()->to('userRequest');
+                
+            }
+            else
+            {
+                session()->setFlashdata('error', 'Failed to save Comment Review');
+                return redirect()->to(current_url());
+            }
+        }
+    }
+    public function ReviewComment()
+    {
+        if ($this->request->isAJAX()) {
+        $user_id = $this->request->getVar('user_id');
+        $admin = $this->request->getVar('admin');
+        $comment = $this->request->getVar('comment');
+        $data = [
+            'user_id' => $user_id,
+            'admin'   => $admin,
+            'comment' => $comment        
+        ];
+
+        $rModel = new ReviewModel();
+
+        // Process and save the comment        
+        $result = $rModel->save($data);
+
+        // Return a JSON response
+        if ($result) {
+            return $this->response->setJSON(['status' => 'success', 'message' => 'Comment saved successfully']);
+        } else {
+            return $this->response->setJSON(['status' => 'error', 'message' => 'Failed to save comment']);
+        }
+    }
+    }
     /**USER REQUESTS FUNCTION THAT SHOWS USER INFO TO ADMIN FOR APPROVAL **/
     public function userReq()
     {
         $adminModel = new adminModel;
         $loginModel = new loginModel;
+        $revModel = new ReviewModel;
         $loggedInUserid = session()->get('loggedInUser');
-        $account = $adminModel->getEmail($loggedInUserid['email']);
+        $account = $adminModel->getEmail($loggedInUserid);
         $users  = $loginModel->findAll();
 
-        $user_id = $this->request->getVar('user_id');
-        var_dump($user_id);
-        $singleUser = $loginModel->verifyUser($user_id);
-        var_dump($singleUser);
-        
-        $data = [
-            'title'       => 'ApprovalRequests',
-            'users'       => $users,
-            'userdata'    => $account,
-            'singleUser'  => $singleUser
-        ];
-        return view("adminDashboards/adminUserReq", $data);
+        $id = session()->get('userReviewed');
+        $review = $revModel->getReview($id);
+       
+        if (!empty($id)){
+            $singleUser = $loginModel->verifyUser($id);
+            //var_dump($review);
+            
+            $data = [
+                'title'       => 'ApprovalRequests',
+                'users'       => $users,
+                'userdata'    => $account,
+                'user'  => $singleUser,
+                'review'=> $review
+            ];
+            return view("adminDashboards/adminUserReq", $data);
+        }
     }
+    public function userReview($id = null){   
+        $id = $this->request->getVar('user_id');
+        var_dump($id);
+        if (!empty($id))
+        {
+            session()->set('userReviewed', $id);
+            session()->setFlashdata('success', 'Ensure to provide a request review comment to further either APPROVE or REJECT the account request.');
+            return redirect()->to('userRequest');
+        }
+    }
+    
+    //User Account Status Update by Admin
+    public function statusApproval()
+    {
+        if ($this->request->isAJAX()) {
+            $user_id = $this->request->getVar('userId');
+           
+            var_dump($user_id);
+            $memberRegModel = new MemberRegModel();
+    
+            // Process and save the comment        
+            $result =  $memberRegModel->approveStatus($user_id);
+    
+            // Return a JSON response
+            if ($result) 
+            {
+                return $this->response->setJSON(['status' => 'success', 'message' => 'Account approved successfully']);
+            } else {
+                return $this->response->setJSON(['status' => 'error', 'message' => 'Failed to approve account']);
+            }
+        }
+    }
+    //Approve User Account Status on USEr REQUEST PAGE
+    public function statApproval()
+    {
+        if ($this->request->getPost()) {
+            $user_id = $this->request->getVar('userId');
+            $status = "Approved";           
+            
+            $memberRegModel = new MemberRegModel(); 
+            $reviewModel =new ReviewModel();   
+            // Process and save the comment        
+            $result =  $memberRegModel->updateAccountStatus($user_id, $status);
+            //Fetch USer data
+            $user = $memberRegModel->verifyUserid($user_id);
+            var_dump($user);
+            $review = $reviewModel->getReview($user_id);
+
+            //email stuff
+            $templatePath = 'emailTemplates/approved';
+            $templateData = [
+                'user' => $user,
+                'review'=> $review     
+            ];
+            $email = \Config\Services::email();
+            $emailContent = view($templatePath, $templateData);
+
+            // Prepare the email
+            $email->setFrom('matovu@lwegatech.com', 'UCLF-MiS');
+            $email->setTo($user->Email);
+            $email->setSubject('Account Approval');
+            $email->setMessage($emailContent);
+
+            // Return a  response
+            if ($result) 
+            {
+                $email->send();
+                session()->setFlashdata("success", "Account approval successful");
+                return redirect()->to("userRequest");
+            } else {
+                session()->setFlashdata("error", "Account approval failed");
+                return redirect()->to(current_url());
+            }
+        }
+    }
+    //User Account Status Update by Admin
+    public function statusReject()
+    {
+        if ($this->request->isAJAX()) {
+            $user_id = $this->request->getVar('userId');
+           
+    
+            $memberRegModel = new MemberRegModel();
+    
+            // Process and save the comment        
+            $result =  $memberRegModel->rejectStatus($user_id);
+    
+            // Return a JSON response
+            if ($result) 
+            {
+                return $this->response->setJSON(['status' => 'success', 'message' => 'Account suspended successfully']);
+            } else {
+                return $this->response->setJSON(['status' => 'error', 'message' => 'Failed to suspended account']);
+            }
+        }
+    }
+    //Reject User Account Status on USEr REQUEST PAGE
+    public function statReject()
+    {
+        if ($this->request->getPost()) {
+            $user_id = $this->request->getVar('userId');
+            //var_dump($user_id);
+            $memberRegModel = new MemberRegModel();    
+            $reviewModel =new ReviewModel();   
+            // Process and save the comment        
+            $result =  $memberRegModel->rejectStatus($user_id );
+            //Fetch USer data
+            $user = $memberRegModel->verifyUserid($user_id);
+            //var_dump($user);
+            $review = $reviewModel->getReview($user_id);
+
+            //email stuff
+            $templatePath = 'emailTemplates/rejected';
+            $templateData = [
+                'user' => $user,
+                'review'=> $review     
+            ];
+            $email = \Config\Services::email();
+            $emailContent = view($templatePath, $templateData);
+
+            // Prepare the email
+            $email->setFrom('matovu@lwegatech.com', 'UCLF-MiS');
+            $email->setTo($user->Email);
+            $email->setSubject('Account Approval');
+            $email->setMessage($emailContent);
+            // Return a  response
+            if ($result) 
+            {
+                $email->send();
+                session()->setFlashdata("success", "Account suspended successfully");
+                return redirect()->to("userRequest");
+            } else {
+                session()->setFlashdata("error", "Account suspension failed.");
+                return redirect()->to(current_url());
+            }
+        }
+    }
+    
     public function student()
     {
         $loginModel = new loginModel;
@@ -884,7 +1128,7 @@ class AccDashboard extends BaseController
         $loginModel = new loginModel;
         $loggedInUserid = session()->get('loggedInUser');
         //$userdata = $adminModel->find($loggedInUserid);
-        $account = $adminModel->getEmail($loggedInUserid['email']);
+        $account = $adminModel->getEmail($loggedInUserid);
         $users  = $loginModel->findAll();
         
         $data = [
@@ -900,7 +1144,7 @@ class AccDashboard extends BaseController
         $loggedInUserid = session()->get('loggedInUser');
         var_dump($loggedInUserid);
         //$userdata = $adminModel->find($loggedInUserid);
-        $account = $adminModel->verifyEmail($loggedInUserid['email']);
+        $account = $adminModel->verifyEmail($loggedInUserid);
         //var_dump($account);
         
         $data = [
@@ -911,23 +1155,15 @@ class AccDashboard extends BaseController
         return view("adminDashboards/adminStaff");  
     }
 
-    //User Account Status Update by Admin
-    public function statusToggle()
+    public function getUserDetails($id)
     {
-        $loginModel = new loginModel();
-        $userId = $this->request->getPost('user_id');
-        $status = $this->request->getPost('status');
+        $loginModel = new LoginModel(); // Replace with your actual model namespace
+        $userDetails = $loginModel->verifyUser($id);
 
-        // Perform necessary validation and authentication checks
-
-        // Update the account status in the database
-        $Status_update = $loginModel->updateAccountStatus($userId, $status);
-        if($Status_update)
-        {
-            $this->session->setFlashdata('success', 'User Account status updated successfully.');
-            return redirect()->to('users');
-        }
+        // Return user details as JSON response
+        return $this->response->setJSON($userDetails);
     }
 
-
+    //User Account Status Update by Admin
+    
 }

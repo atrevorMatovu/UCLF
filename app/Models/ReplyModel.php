@@ -14,7 +14,7 @@ class ReplyModel extends Model
     protected $returnType     = 'array';
     protected $useSoftDeletes = true;
 
-    protected $allowedFields = ['reply','repliedBy','reply_id','qn_id','photo','user_id'];
+    protected $allowedFields = ['reply','repliedBy','comment_id','qn_id','photo','user_id'];
 
     protected $useTimestamps = false;
     protected $dateFormat    = 'datetime';
@@ -45,15 +45,15 @@ class ReplyModel extends Model
       }      
       public function fetchReplyCount()//Replies data to comment & count in new tabulated
       {
-          return $this->select('reply_id, COUNT(*) as replies')
-                      ->groupBy('reply_id')
+          return $this->select('comment_id, COUNT(*) as replies')
+                      ->groupBy('comment_id')
                       ->get()
                       ->getResultArray();
       }
       public function getReplyQNCOm()
       {
-          return $this->select('reply_id, qn_id, reply')
-                      ->groupBy('reply_id')
+          return $this->select('comment_id, qn_id, reply')
+                      ->groupBy('comment_id')
                       ->get()
                       ->getResultArray();
       }
